@@ -3,9 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkyLearn Academy</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="SkyLearn Academy - Plataforma de aprendizaje de inglés en línea con cursos interactivos, clases en vivo y profesores certificados.">
+    <meta name="keywords" content="aprender inglés, cursos de inglés, clases de inglés, academia de inglés, inglés online">
+    <meta name="author" content="SkyLearn Academy">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://skylearn-academy.com/">
+    <meta property="og:title" content="SkyLearn Academy - Aprende Inglés con Profesores Certificados">
+    <meta property="og:description" content="Plataforma de aprendizaje de inglés en línea con cursos interactivos, clases en vivo y profesores certificados.">
+    <meta property="og:image" content="https://skylearn-academy.com/images/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://skylearn-academy.com/">
+    <meta property="twitter:title" content="SkyLearn Academy - Aprende Inglés con Profesores Certificados">
+    <meta property="twitter:description" content="Plataforma de aprendizaje de inglés en línea con cursos interactivos, clases en vivo y profesores certificados.">
+    <meta property="twitter:image" content="https://skylearn-academy.com/images/og-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    
+    <title>SkyLearn Academy - Aprende Inglés con Profesores Certificados</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -17,543 +47,708 @@
     <!-- Pantalla de Bienvenida -->
     <div class="login-screen" id="loginScreen">
         <div class="logo-container">
-            <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="Logo SkyLearn" class="logo-spin">
+            <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="Logo SkyLearn Academy" class="logo-spin">
         </div>
         <h1>READY TO LEARN ENGLISH?</h1>
-        <button onclick="showMainContent()">COMENZAR</button>
+        <button class="btn btn-primary" onclick="showMainContent()">COMENZAR</button>
     </div>
 
-    <!-- Navegador -->
+    <!-- Navegación -->
     <nav class="navbar" id="navbar">
         <div class="nav-content">
-            <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="Logo" class="logo">
+            <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="SkyLearn Academy Logo" class="logo">
             <div class="nav-links">
-                <a href="#home" onclick="showSection('home')" class="active">Home</a>
+                <a href="#home" onclick="showSection('home')" class="active">Inicio</a>
                 <a href="#courses" onclick="showSection('courses')">Cursos</a>
                 <a href="#pricing" onclick="showSection('pricing')">Precios</a>
                 <a href="#live" onclick="showSection('live')">Clases en Vivo</a>
                 <a href="#access" onclick="showSection('access')">Acceso a Clases</a>
                 <a href="#contact" onclick="showSection('contact')">Contacto</a>
-                <a href="#admin" onclick="showAdminLogin()" class="admin-link" id="adminLink" style="display: none;">Admin Panel</a>
+                <a href="#admin" onclick="showAdminLogin()" class="admin-link" id="adminLink" style="display: none;">Admin</a>
             </div>
         </div>
     </nav>
 
-    <!-- Secciones -->
-    <!-- Home -->
-    <section id="home" class="section active">
-        <div class="home-slider">
-            <img src="https://via.placeholder.com/1200x500/3498db/ffffff?text=Learn+English+with+Us" alt="Banner" class="slider-image active">
-            <img src="https://via.placeholder.com/1200x500/2ecc71/ffffff?text=Native+Teachers" alt="Banner" class="slider-image">
-            <img src="https://via.placeholder.com/1200x500/e74c3c/ffffff?text=Interactive+Classes" alt="Banner" class="slider-image">
-            <div class="slider-controls">
-                <div class="slider-dot active" onclick="goToSlide(0)"></div>
-                <div class="slider-dot" onclick="goToSlide(1)"></div>
-                <div class="slider-dot" onclick="goToSlide(2)"></div>
-            </div>
-        </div>
-
-        <!-- Stats Section -->
-        <div class="stats-container">
-            <div class="stat-item">
-                <div class="stat-number" data-target="5000">0</div>
-                <div class="stat-label">Estudiantes</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" data-target="120">0</div>
-                <div class="stat-label">Cursos</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" data-target="50">0</div>
-                <div class="stat-label">Profesores</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" data-target="98">0</div>
-                <div class="stat-label">% Satisfacción</div>
-            </div>
-        </div>
-
-        <div class="news-section">
-            <h2>Últimas Noticias</h2>
-            <div class="news-content">
-                <div class="news-icon">
-                    <i class="fas fa-bullhorn"></i>
+    <!-- Contenido Principal -->
+    <main>
+        <!-- Sección Inicio -->
+        <section id="home" class="section active">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Aprende Inglés con los Mejores</h2>
+                    <p>Únete a miles de estudiantes que ya están mejorando su inglés con nuestros cursos interactivos y profesores certificados.</p>
                 </div>
-                <p id="newsText">¡¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA!! Válido hasta el 30 de noviembre.</p>
-            </div>
-        </div>
-
-        <div class="comments-section">
-            <h2>Comentarios Recientes</h2>
-            <div id="commentsContainer"></div>
-            <form onsubmit="addComment(event)">
-                <input type="text" id="commentInput" placeholder="Escribe un comentario..." required>
-                <button type="submit">
-                    <i class="fas fa-paper-plane"></i> Enviar
-                </button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Cursos -->
-    <section id="courses" class="section">
-        <h2>Cursos de Inglés Disponibles</h2>
-        <div class="courses-grid" id="coursesGrid">
-            <!-- Courses will be dynamically loaded here -->
-        </div>
-    </section>
-
-    <!-- Precios -->
-    <section id="pricing" class="section">
-        <h2>Precios y Horarios</h2>
-        <div class="pricing-container">
-            <div class="pricing-tabs">
-                <div class="pricing-tab active" onclick="showPricing('monthly')">Mensual</div>
-                <div class="pricing-tab" onclick="showPricing('quarterly')">Trimestral</div>
-                <div class="pricing-tab" onclick="showPricing('yearly')">Anual</div>
-            </div>
-            <table class="pricing-table">
-                <thead>
-                    <tr>
-                        <th>Curso</th>
-                        <th>Precio</th>
-                        <th>Horario</th>
-                        <th>Duración</th>
-                    </tr>
-                </thead>
-                <tbody id="pricingTableBody">
-                    <!-- Pricing data will be dynamically loaded here -->
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <!-- Clases en Vivo -->
-    <section id="live" class="section">
-        <div class="live-section">
-            <h2>Clases en Vivo</h2>
-            <p>Únete a nuestras clases interactivas en tiempo real con profesores certificados. Participa, haz preguntas y aprende en un entorno colaborativo.</p>
-            <div class="live-container">
-                <div class="live-video">
-                    <iframe src="https://www.youtube.com/embed/live_stream?channel=TU_ID_DEL_CANAL&autoplay=1" allowfullscreen></iframe>
-                </div>
-                <div class="live-chat">
-                    <div class="chat-header">
-                        <i class="fas fa-comments"></i> Chat en Vivo
-                    </div>
-                    <div class="chat-messages" id="liveChatMessages">
-                        <div class="chat-message other-message">
-                            ¡Bienvenidos a la clase de hoy! Vamos a practicar conversación.
-                        </div>
-                        <div class="chat-message user-message">
-                            ¡Hola! Tengo una pregunta sobre la pronunciación.
-                        </div>
-                        <div class="chat-message other-message">
-                            Claro, ¿cuál es tu duda? Estoy aquí para ayudarte.
-                        </div>
-                    </div>
-                    <div class="chat-input">
-                        <input type="text" id="liveChatInput" placeholder="Escribe tu mensaje..." onkeypress="handleLiveChatKeyPress(event)">
-                        <button onclick="sendLiveChatMessage()"><i class="fas fa-paper-plane"></i></button>
+                
+                <div class="home-slider">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Aprende inglés con SkyLearn Academy" class="slider-image active">
+                    <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80" alt="Profesores nativos de inglés" class="slider-image">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Clases interactivas de inglés" class="slider-image">
+                    <div class="slider-controls">
+                        <div class="slider-dot active" onclick="goToSlide(0)"></div>
+                        <div class="slider-dot" onclick="goToSlide(1)"></div>
+                        <div class="slider-dot" onclick="goToSlide(2)"></div>
                     </div>
                 </div>
-            </div>
-            <div class="live-schedule">
-                <h3>Próximas Clases</h3>
-                <div id="liveScheduleContainer">
-                    <!-- Live schedule will be dynamically loaded here -->
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Acceso a Clases -->
-    <section id="access" class="section">
-        <h2>Acceso a Clases</h2>
-        <div class="access-container">
-            <p>Ingresa a tus clases virtuales utilizando los enlaces a continuación. Se te redirigirá a Zoom o Google Meet según corresponda.</p>
-            <div class="access-grid" id="accessGrid">
-                <!-- Access links will be dynamically loaded here -->
-            </div>
-        </div>
-    </section>
+                <!-- Estadísticas -->
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="5000">0</div>
+                        <div class="stat-label">Estudiantes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="120">0</div>
+                        <div class="stat-label">Cursos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="50">0</div>
+                        <div class="stat-label">Profesores</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="98">0</div>
+                        <div class="stat-label">% Satisfacción</div>
+                    </div>
+                </div>
 
-    <!-- Contacto -->
-    <section id="contact" class="section">
-        <h2>Contacto</h2>
-        <div class="contact-container">
-            <div class="contact-grid">
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
+                <!-- Noticias -->
+                <div class="news-section">
+                    <div class="news-content">
+                        <div class="news-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <p id="newsText">¡¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA!! Válido hasta el 30 de noviembre.</p>
                     </div>
-                    <h3>Email</h3>
-                    <p id="contactEmail">Envíanos tus consultas y te responderemos en menos de 24 horas</p>
-                    <a href="mailto:info@skylearn.com" class="contact-link">
-                        <i class="fas fa-paper-plane"></i> Enviar Email
-                    </a>
                 </div>
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-phone-alt"></i>
-                    </div>
-                    <h3>Teléfono</h3>
-                    <p id="contactPhone">Disponibles de lunes a viernes de 9:00 a 18:00 horas</p>
-                    <a href="tel:+51 929601732" class="contact-link">
-                        <i class="fas fa-phone"></i> Llamar Ahora
-                    </a>
-                </div>
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <h3>Ubicación Virtual</h3>
-                    <p id="contactAddress">Oficina virtual - Atendemos a estudiantes de todo el mundo</p>
-                    <a href="https://skylearn.com/virtual-office" target="_blank" class="contact-link">
-                        <i class="fas fa-globe"></i> Visitar Sitio Web
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Redes Sociales -->
-            <div class="social-section">
-                <h3>Síguenos en Redes Sociales</h3>
-                <div class="social-links">
-                    <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Admin Panel -->
-    <section id="admin" class="section">
-        <div class="admin-panel">
-            <div class="admin-header">
-                <h2>Panel de Administración</h2>
-                <button class="admin-logout" onclick="adminLogout()">
-                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                </button>
-            </div>
-            <div class="admin-tabs">
-                <button class="admin-tab active" onclick="showAdminTab('dashboard')">Dashboard</button>
-                <button class="admin-tab" onclick="showAdminTab('home')">Home</button>
-                <button class="admin-tab" onclick="showAdminTab('news')">Noticias</button>
-                <button class="admin-tab" onclick="showAdminTab('courses')">Cursos</button>
-                <button class="admin-tab" onclick="showAdminTab('pricing')">Precios</button>
-                <button class="admin-tab" onclick="showAdminTab('live')">Clases en Vivo</button>
-                <button class="admin-tab" onclick="showAdminTab('access')">Acceso a Clases</button>
-                <button class="admin-tab" onclick="showAdminTab('banners')">Banners</button>
-            </div>
+                <!-- Comentarios -->
+                <div class="comments-section">
+                    <h2>Comentarios Recientes</h2>
+                    <div class="comments-list" id="commentsContainer"></div>
+                    <form onsubmit="addComment(event)">
+                        <input type="text" id="commentInput" placeholder="Escribe un comentario..." required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Enviar
+                        </button>
+                    </form>
+                </div>
 
-            <!-- Dashboard Admin -->
-            <div id="admin-dashboard" class="admin-content active">
-                <div class="admin-form">
-                    <h3>Resumen del Sistema</h3>
-                    <div class="stats-container">
-                        <div class="stat-item">
-                            <div class="stat-number" id="totalStudents">0</div>
-                            <div class="stat-label">Estudiantes Registrados</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" id="totalCourses">0</div>
-                            <div class="stat-label">Cursos Activos</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" id="totalComments">0</div>
-                            <div class="stat-label">Comentarios</div>
-                        </div>
-                        <div class="stat-item" id="adminStatContainer">
-                            <div class="stat-number" id="totalAdmins">1</div>
-                            <div class="stat-label">Administradores</div>
-                        </div>
-                    </div>
-                    <div class="admin-form">
-                        <h3>Actividad Reciente</h3>
-                        <div class="admin-list" id="recentActivity">
-                            <div class="admin-item">
-                                <div>
-                                    <strong>Último comentario:</strong> <span id="lastComment">No hay comentarios recientes</span>
+                <!-- Testimonios -->
+                <div class="testimonials-section">
+                    <h2>Testimonios de Estudiantes</h2>
+                    <div class="testimonials-container">
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <p>"SkyLearn Academy ha transformado mi inglés. Los profesores son increíbles y las clases son muy interactivas."</p>
+                            </div>
+                            <div class="testimonial-author">
+                                <img src="https://ui-avatars.com/api/?name=Ana+Garcia&background=1a3a8f&color=fff&size=60" alt="Ana Garcia" class="author-avatar">
+                                <div class="author-info">
+                                    <h4>Ana Garcia</h4>
+                                    <p>Estudiante de Inglés Intermedio</p>
                                 </div>
                             </div>
-                            <div class="admin-item">
-                                <div>
-                                    <strong>Último registro:</strong> <span id="lastRegistration">No hay registros recientes</span>
+                        </div>
+                        
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <p>"Gracias a SkyLearn Academy, pude aprobar el examen TOEFL con una puntuación alta. ¡Recomiendo sus cursos 100%!"</p>
+                            </div>
+                            <div class="testimonial-author">
+                                <img src="https://ui-avatars.com/api/?name=Carlos+Rodriguez&background=1a3a8f&color=fff&size=60" alt="Carlos Rodriguez" class="author-avatar">
+                                <div class="author-info">
+                                    <h4>Carlos Rodriguez</h4>
+                                    <p>Estudiante de Preparación TOEFL</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="testimonial-card">
+                            <div class="testimonial-content">
+                                <p>"Las clases en vivo son geniales. Puedo practicar mi inglés con profesores nativos desde la comodidad de mi hogar."</p>
+                            </div>
+                            <div class="testimonial-author">
+                                <img src="https://ui-avatars.com/api/?name=Maria+Lopez&background=1a3a8f&color=fff&size=60" alt="Maria Lopez" class="author-avatar">
+                                <div class="author-info">
+                                    <h4>Maria Lopez</h4>
+                                    <p>Estudiante de Conversación</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Home Admin -->
-            <div id="admin-home" class="admin-content">
-                <div class="admin-form">
-                    <h3>Editar Estadísticas de Home</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="statsStudents">Número de Estudiantes</label>
-                            <input type="number" id="statsStudents" value="5000">
-                        </div>
-                        <div class="form-group">
-                            <label for="statsCourses">Número de Cursos</label>
-                            <input type="number" id="statsCourses" value="120">
-                        </div>
+        <!-- Sección Cursos -->
+        <section id="courses" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Nuestros Cursos de Inglés</h2>
+                    <p>Ofrecemos una variedad de cursos diseñados para todos los niveles, desde principiantes hasta avanzados.</p>
+                </div>
+                
+                <div class="courses-grid" id="coursesGrid">
+                    <!-- Los cursos se cargarán dinámicamente aquí -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Precios -->
+        <section id="pricing" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Precios y Horarios</h2>
+                    <p>Elige el plan que mejor se adapte a tus necesidades y presupuesto.</p>
+                </div>
+                
+                <div class="pricing-container">
+                    <div class="pricing-tabs">
+                        <div class="pricing-tab active" onclick="showPricing('monthly')">Mensual</div>
+                        <div class="pricing-tab" onclick="showPricing('quarterly')">Trimestral</div>
+                        <div class="pricing-tab" onclick="showPricing('yearly')">Anual</div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="statsTeachers">Número de Profesores</label>
-                            <input type="number" id="statsTeachers" value="50">
-                        </div>
-                        <div class="form-group">
-                            <label for="statsSatisfaction">% Satisfacción</label>
-                            <input type="number" id="statsSatisfaction" value="98" min="0" max="100">
-                        </div>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="updateHomeStats()">Actualizar Estadísticas</button>
+                    
+                    <div class="table-responsive">
+                        <table class="pricing-table">
+                            <thead>
+                                <tr>
+                                    <th>Curso</th>
+                                    <th>Precio</th>
+                                    <th>Horario</th>
+                                    <th>Duración</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pricingTableBody">
+                                <!-- Los precios se cargarán dinámicamente aquí -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <!-- News Admin -->
-            <div id="admin-news" class="admin-content">
-                <form class="admin-form" onsubmit="updateNews(event)">
-                    <h3>Actualizar Noticias</h3>
-                    <div class="form-group">
-                        <label for="newsInput">Texto de la Noticia</label>
-                        <textarea id="newsInput" required>¡¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA!! Válido hasta el 30 de noviembre.</textarea>
+        <!-- Sección Clases en Vivo -->
+        <section id="live" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Clases en Vivo</h2>
+                    <p>Únete a nuestras clases interactivas en tiempo real con profesores certificados.</p>
+                </div>
+                
+                <div class="live-section">
+                    <div class="live-container">
+                        <div class="live-video">
+                            <iframe src="https://www.youtube.com/embed/live_stream?channel=TU_ID_DEL_CANAL&autoplay=1" allowfullscreen></iframe>
+                        </div>
+                        <div class="live-chat">
+                            <div class="chat-header">
+                                <i class="fas fa-comments"></i> Chat en Vivo
+                            </div>
+                            <div class="chat-messages" id="liveChatMessages">
+                                <div class="chat-message other-message">
+                                    ¡Bienvenidos a la clase de hoy! Vamos a practicar conversación.
+                                </div>
+                                <div class="chat-message user-message">
+                                    ¡Hola! Tengo una pregunta sobre la pronunciación.
+                                </div>
+                                <div class="chat-message other-message">
+                                    Claro, ¿cuál es tu duda? Estoy aquí para ayudarte.
+                                </div>
+                            </div>
+                            <div class="chat-input">
+                                <input type="text" id="liveChatInput" placeholder="Escribe tu mensaje..." onkeypress="handleLiveChatKeyPress(event)">
+                                <button onclick="sendLiveChatMessage()"><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Actualizar</button>
-                        <button type="button" class="btn-secondary" onclick="resetForm('news')">Cancelar</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Courses Admin -->
-            <div id="admin-courses" class="admin-content">
-                <div class="admin-form">
-                    <h3>Administrar Cursos</h3>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="showAddCourseForm()">Agregar Nuevo Curso</button>
+                    
+                    <div class="live-schedule">
+                        <h3>Próximas Clases</h3>
+                        <div id="liveScheduleContainer">
+                            <!-- El horario de clases se cargará dinámicamente aquí -->
+                        </div>
                     </div>
                 </div>
-                <div id="addCourseForm" style="display: none;" class="admin-form">
-                    <h3>Agregar Nuevo Curso</h3>
-                    <form onsubmit="addCourse(event)">
-                        <div class="form-group">
-                            <label for="newCourseTitle">Título del Curso</label>
-                            <input type="text" id="newCourseTitle" required>
+
+                <!-- Calendario -->
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <h3 id="currentMonth">Noviembre 2023</h3>
+                        <div class="calendar-nav">
+                            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
                         </div>
-                        <div class="form-group">
-                            <label for="newCourseTeacher">Profesor</label>
-                            <input type="text" id="newCourseTeacher" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newCourseDuration">Duración</label>
-                            <input type="text" id="newCourseDuration" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newCourseStudents">Estudiantes</label>
-                            <input type="text" id="newCourseStudents" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newCoursePrice">Precio</label>
-                            <input type="text" id="newCoursePrice" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newCourseImage">URL de la Imagen</label>
-                            <input type="text" id="newCourseImage" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newCourseDescription">Descripción</label>
-                            <textarea id="newCourseDescription" required></textarea>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn-primary">Agregar Curso</button>
-                            <button type="button" class="btn-secondary" onclick="hideAddCourseForm()">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="admin-list" id="adminCoursesList">
-                    <!-- Courses list will be dynamically loaded here -->
+                    </div>
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- El calendario se generará con JavaScript -->
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Pricing Admin -->
-            <div id="admin-pricing" class="admin-content">
-                <div class="admin-form">
-                    <h3>Administrar Precios</h3>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="showAddPricingForm()">Agregar Nuevo Precio</button>
-                    </div>
+        <!-- Sección Acceso a Clases -->
+        <section id="access" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Acceso a Clases</h2>
+                    <p>Ingresa a tus clases virtuales utilizando los enlaces a continuación.</p>
                 </div>
-                <div id="addPricingForm" style="display: none;" class="admin-form">
-                    <h3>Agregar Nuevo Precio</h3>
-                    <form onsubmit="addPricing(event)">
-                        <div class="form-group">
-                            <label for="pricingCourse">Curso</label>
-                            <input type="text" id="pricingCourse" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pricingPrice">Precio</label>
-                            <input type="text" id="pricingPrice" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pricingSchedule">Horario</label>
-                            <input type="text" id="pricingSchedule" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pricingDuration">Duración</label>
-                            <input type="text" id="pricingDuration" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="pricingType">Tipo (Mensual/Trimestral/Anual)</label>
-                            <select id="pricingType" required>
-                                <option value="monthly">Mensual</option>
-                                <option value="quarterly">Trimestral</option>
-                                <option value="yearly">Anual</option>
-                            </select>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn-primary">Agregar Precio</button>
-                            <button type="button" class="btn-secondary" onclick="hideAddPricingForm()">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="admin-list" id="adminPricingList">
-                    <!-- Pricing list will be dynamically loaded here -->
+                
+                <div class="access-grid" id="accessGrid">
+                    <!-- Los enlaces de acceso se cargarán dinámicamente aquí -->
                 </div>
             </div>
+        </section>
 
-            <!-- Live Classes Admin -->
-            <div id="admin-live" class="admin-content">
-                <div class="admin-form">
-                    <h3>Administrar Clases en Vivo</h3>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="showAddLiveClassForm()">Agregar Nueva Clase en Vivo</button>
+        <!-- Sección Preguntas Frecuentes -->
+        <section id="faq" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Preguntas Frecuentes</h2>
+                    <p>Encuentra respuestas a las preguntas más comunes sobre nuestros cursos y servicios.</p>
+                </div>
+                
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>¿Cómo me inscribo en un curso?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Puedes inscribirte en un curso haciendo clic en el botón "Inscribirse" en la página del curso que te interesa. Te pediremos algunos datos básicos y podrás elegir el método de pago que prefieras.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>¿Necesito tener conocimientos previos de inglés?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No necesitas tener conocimientos previos para nuestros cursos básicos. Ofrecemos cursos para todos los niveles, desde principiantes hasta avanzados. Si no estás seguro de tu nivel, podemos hacer una evaluación gratuita para recomendarte el curso adecuado.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>¿Qué pasa si no puedo asistir a una clase en vivo?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Si no puedes asistir a una clase en vivo, no te preocupes. Todas nuestras clases son grabadas y podrás verlas más tarde en tu área de estudiante. También tendrás acceso a los materiales de la clase para que no te pierdas nada.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <h3>¿Recibiré un certificado al finalizar un curso?</h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Sí, al finalizar satisfactoriamente uno de nuestros cursos, recibirás un certificado de SkyLearn Academy que podrás agregar a tu currículum o perfil de LinkedIn.</p>
+                        </div>
                     </div>
                 </div>
-                <div id="addLiveClassForm" style="display: none;" class="admin-form">
-                    <h3>Agregar Nueva Clase en Vivo</h3>
-                    <form onsubmit="addLiveClass(event)">
-                        <div class="form-group">
-                            <label for="liveClassTitle">Título de la Clase</label>
-                            <input type="text" id="liveClassTitle" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="liveClassDate">Fecha</label>
-                            <input type="date" id="liveClassDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="liveClassTime">Hora</label>
-                            <input type="time" id="liveClassTime" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="liveClassPlatform">Plataforma (YouTube/Twitch/Facebook)</label>
-                            <select id="liveClassPlatform" required>
-                                <option value="youtube">YouTube</option>
-                                <option value="twitch">Twitch</option>
-                                <option value="facebook">Facebook</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="liveClassUrl">URL de la Transmisión</label>
-                            <input type="text" id="liveClassUrl" required>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn-primary">Agregar Clase en Vivo</button>
-                            <button type="button" class="btn-secondary" onclick="hideAddLiveClassForm()">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="admin-list" id="adminLiveClassesList">
-                    <!-- Live classes list will be dynamically loaded here -->
-                </div>
             </div>
+        </section>
 
-            <!-- Access Classes Admin -->
-            <div id="admin-access" class="admin-content">
-                <div class="admin-form">
-                    <h3>Administrar Acceso a Clases</h3>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="showAddAccessClassForm()">Agregar Nuevo Acceso a Clase</button>
+        <!-- Sección Contacto -->
+        <section id="contact" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Contacto</h2>
+                    <p>Estamos aquí para ayudarte. Contáctanos por cualquier consulta.</p>
+                </div>
+                
+                <div class="contact-container">
+                    <div class="contact-grid">
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <h3>Email</h3>
+                            <p id="contactEmail">Envíanos tus consultas y te responderemos en menos de 24 horas</p>
+                            <a href="mailto:info@skylearn.com" class="contact-link">
+                                <i class="fas fa-paper-plane"></i> Enviar Email
+                            </a>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <h3>Teléfono</h3>
+                            <p id="contactPhone">Disponibles de lunes a viernes de 9:00 a 18:00 horas</p>
+                            <a href="tel:+51 929601732" class="contact-link">
+                                <i class="fas fa-phone"></i> Llamar Ahora
+                            </a>
+                        </div>
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <h3>Ubicación Virtual</h3>
+                            <p id="contactAddress">Oficina virtual - Atendemos a estudiantes de todo el mundo</p>
+                            <a href="https://skylearn.com/virtual-office" target="_blank" class="contact-link">
+                                <i class="fas fa-globe"></i> Visitar Sitio Web
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Redes Sociales -->
+                    <div class="social-section">
+                        <h3>Síguenos en Redes Sociales</h3>
+                        <div class="social-links">
+                            <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                        </div>
                     </div>
                 </div>
-                <div id="addAccessClassForm" style="display: none;" class="admin-form">
-                    <h3>Agregar Nuevo Acceso a Clase</h3>
-                    <form onsubmit="addAccessClass(event)">
-                        <div class="form-group">
-                            <label for="accessClassTitle">Título de la Clase</label>
-                            <input type="text" id="accessClassTitle" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="accessClassPlatform">Plataforma (Zoom/Google Meet)</label>
-                            <select id="accessClassPlatform" required>
-                                <option value="zoom">Zoom</option>
-                                <option value="meet">Google Meet</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="accessClassUrl">URL de la Clase</label>
-                            <input type="text" id="accessClassUrl" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="accessClassTeacher">Profesor</label>
-                            <input type="text" id="accessClassTeacher" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="accessClassSchedule">Horario</label>
-                            <input type="text" id="accessClassSchedule" required>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn-primary">Agregar Acceso a Clase</button>
-                            <button type="button" class="btn-secondary" onclick="hideAddAccessClassForm()">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="admin-list" id="adminAccessClassesList">
-                    <!-- Access classes list will be dynamically loaded here -->
-                </div>
             </div>
+        </section>
 
-            <!-- Banners Admin -->
-            <div id="admin-banners" class="admin-content">
-                <div class="admin-form">
-                    <h3>Administrar Banners</h3>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="showAddBannerForm()">Agregar Nuevo Banner</button>
+        <!-- Panel de Administración -->
+        <section id="admin" class="section">
+            <div class="container">
+                <div class="admin-panel">
+                    <div class="admin-header">
+                        <h2>Panel de Administración</h2>
+                        <button class="btn btn-danger" onclick="adminLogout()">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                    
+                    <div class="admin-tabs">
+                        <button class="admin-tab active" onclick="showAdminTab('dashboard')">Dashboard</button>
+                        <button class="admin-tab" onclick="showAdminTab('home')">Inicio</button>
+                        <button class="admin-tab" onclick="showAdminTab('news')">Noticias</button>
+                        <button class="admin-tab" onclick="showAdminTab('courses')">Cursos</button>
+                        <button class="admin-tab" onclick="showAdminTab('pricing')">Precios</button>
+                        <button class="admin-tab" onclick="showAdminTab('live')">Clases en Vivo</button>
+                        <button class="admin-tab" onclick="showAdminTab('access')">Acceso a Clases</button>
+                        <button class="admin-tab" onclick="showAdminTab('banners')">Banners</button>
+                    </div>
+
+                    <!-- Dashboard Admin -->
+                    <div id="admin-dashboard" class="admin-content active">
+                        <div class="admin-form">
+                            <h3>Resumen del Sistema</h3>
+                            <div class="stats-container">
+                                <div class="stat-item">
+                                    <div class="stat-number" id="totalStudents">0</div>
+                                    <div class="stat-label">Estudiantes Registrados</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number" id="totalCourses">0</div>
+                                    <div class="stat-label">Cursos Activos</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number" id="totalComments">0</div>
+                                    <div class="stat-label">Comentarios</div>
+                                </div>
+                                <div class="stat-item" id="adminStatContainer">
+                                    <div class="stat-number" id="totalAdmins">1</div>
+                                    <div class="stat-label">Administradores</div>
+                                </div>
+                            </div>
+                            
+                            <div class="admin-form">
+                                <h3>Actividad Reciente</h3>
+                                <div class="admin-list" id="recentActivity">
+                                    <div class="admin-item">
+                                        <div>
+                                            <strong>Último comentario:</strong> <span id="lastComment">No hay comentarios recientes</span>
+                                        </div>
+                                    </div>
+                                    <div class="admin-item">
+                                        <div>
+                                            <strong>Último registro:</strong> <span id="lastRegistration">No hay registros recientes</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Home Admin -->
+                    <div id="admin-home" class="admin-content">
+                        <div class="admin-form">
+                            <h3>Editar Estadísticas de Inicio</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="statsStudents">Número de Estudiantes</label>
+                                    <input type="number" id="statsStudents" value="5000">
+                                </div>
+                                <div class="form-group">
+                                    <label for="statsCourses">Número de Cursos</label>
+                                    <input type="number" id="statsCourses" value="120">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="statsTeachers">Número de Profesores</label>
+                                    <input type="number" id="statsTeachers" value="50">
+                                </div>
+                                <div class="form-group">
+                                    <label for="statsSatisfaction">% Satisfacción</label>
+                                    <input type="number" id="statsSatisfaction" value="98" min="0" max="100">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-primary" onclick="updateHomeStats()">Actualizar Estadísticas</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- News Admin -->
+                    <div id="admin-news" class="admin-content">
+                        <form class="admin-form" onsubmit="updateNews(event)">
+                            <h3>Actualizar Noticias</h3>
+                            <div class="form-group">
+                                <label for="newsInput">Texto de la Noticia</label>
+                                <textarea id="newsInput" required>¡¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA!! Válido hasta el 30 de noviembre.</textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Actualizar</button>
+                                <button type="button" class="btn btn-secondary" onclick="resetForm('news')">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Courses Admin -->
+                    <div id="admin-courses" class="admin-content">
+                        <div class="admin-form">
+                            <h3>Administrar Cursos</h3>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-primary" onclick="showAddCourseForm()">Agregar Nuevo Curso</button>
+                            </div>
+                        </div>
+                        
+                        <div id="addCourseForm" style="display: none;" class="admin-form">
+                            <h3>Agregar Nuevo Curso</h3>
+                            <form onsubmit="addCourse(event)">
+                                <div class="form-group">
+                                    <label for="newCourseTitle">Título del Curso</label>
+                                    <input type="text" id="newCourseTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newCourseTeacher">Profesor</label>
+                                    <input type="text" id="newCourseTeacher" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newCourseDuration">Duración</label>
+                                    <input type="text" id="newCourseDuration" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newCourseStudents">Estudiantes</label>
+                                    <input type="text" id="newCourseStudents" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newCoursePrice">Precio</label>
+                                    <input type="text" id="newCoursePrice" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newCourseImage">URL de la Imagen</label>
+                                    <input type="text" id="newCourseImage" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="newCourseDescription">Descripción</label>
+                                    <textarea id="newCourseDescription" required></textarea>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Agregar Curso</button>
+                                    <button type="button" class="btn btn-secondary" onclick="hideAddCourseForm()">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="admin-list" id="adminCoursesList">
+                            <!-- La lista de cursos se cargará dinámicamente aquí -->
+                        </div>
+                    </div>
+
+                    <!-- Pricing Admin -->
+                    <div id="admin-pricing" class="admin-content">
+                        <div class="admin-form">
+                            <h3>Administrar Precios</h3>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-primary" onclick="showAddPricingForm()">Agregar Nuevo Precio</button>
+                            </div>
+                        </div>
+                        
+                        <div id="addPricingForm" style="display: none;" class="admin-form">
+                            <h3>Agregar Nuevo Precio</h3>
+                            <form onsubmit="addPricing(event)">
+                                <div class="form-group">
+                                    <label for="pricingCourse">Curso</label>
+                                    <input type="text" id="pricingCourse" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pricingPrice">Precio</label>
+                                    <input type="text" id="pricingPrice" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pricingSchedule">Horario</label>
+                                    <input type="text" id="pricingSchedule" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pricingDuration">Duración</label>
+                                    <input type="text" id="pricingDuration" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pricingType">Tipo (Mensual/Trimestral/Anual)</label>
+                                    <select id="pricingType" required>
+                                        <option value="monthly">Mensual</option>
+                                        <option value="quarterly">Trimestral</option>
+                                        <option value="yearly">Anual</option>
+                                    </select>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Agregar Precio</button>
+                                    <button type="button" class="btn btn-secondary" onclick="hideAddPricingForm()">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="admin-list" id="adminPricingList">
+                            <!-- La lista de precios se cargará dinámicamente aquí -->
+                        </div>
+                    </div>
+
+                    <!-- Live Classes Admin -->
+                    <div id="admin-live" class="admin-content">
+                        <div class="admin-form">
+                            <h3>Administrar Clases en Vivo</h3>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-primary" onclick="showAddLiveClassForm()">Agregar Nueva Clase en Vivo</button>
+                            </div>
+                        </div>
+                        
+                        <div id="addLiveClassForm" style="display: none;" class="admin-form">
+                            <h3>Agregar Nueva Clase en Vivo</h3>
+                            <form onsubmit="addLiveClass(event)">
+                                <div class="form-group">
+                                    <label for="liveClassTitle">Título de la Clase</label>
+                                    <input type="text" id="liveClassTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="liveClassDate">Fecha</label>
+                                    <input type="date" id="liveClassDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="liveClassTime">Hora</label>
+                                    <input type="time" id="liveClassTime" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="liveClassPlatform">Plataforma (YouTube/Twitch/Facebook)</label>
+                                    <select id="liveClassPlatform" required>
+                                        <option value="youtube">YouTube</option>
+                                        <option value="twitch">Twitch</option>
+                                        <option value="facebook">Facebook</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="liveClassUrl">URL de la Transmisión</label>
+                                    <input type="text" id="liveClassUrl" required>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Agregar Clase en Vivo</button>
+                                    <button type="button" class="btn btn-secondary" onclick="hideAddLiveClassForm()">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="admin-list" id="adminLiveClassesList">
+                            <!-- La lista de clases en vivo se cargará dinámicamente aquí -->
+                        </div>
+                    </div>
+
+                    <!-- Access Classes Admin -->
+                    <div id="admin-access" class="admin-content">
+                        <div class="admin-form">
+                            <h3>Administrar Acceso a Clases</h3>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-primary" onclick="showAddAccessClassForm()">Agregar Nuevo Acceso a Clase</button>
+                            </div>
+                        </div>
+                        
+                        <div id="addAccessClassForm" style="display: none;" class="admin-form">
+                            <h3>Agregar Nuevo Acceso a Clase</h3>
+                            <form onsubmit="addAccessClass(event)">
+                                <div class="form-group">
+                                    <label for="accessClassTitle">Título de la Clase</label>
+                                    <input type="text" id="accessClassTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="accessClassPlatform">Plataforma (Zoom/Google Meet)</label>
+                                    <select id="accessClassPlatform" required>
+                                        <option value="zoom">Zoom</option>
+                                        <option value="meet">Google Meet</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="accessClassUrl">URL de la Clase</label>
+                                    <input type="text" id="accessClassUrl" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="accessClassTeacher">Profesor</label>
+                                    <input type="text" id="accessClassTeacher" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="accessClassSchedule">Horario</label>
+                                    <input type="text" id="accessClassSchedule" required>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Agregar Acceso a Clase</button>
+                                    <button type="button" class="btn btn-secondary" onclick="hideAddAccessClassForm()">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="admin-list" id="adminAccessClassesList">
+                            <!-- La lista de acceso a clases se cargará dinámicamente aquí -->
+                        </div>
+                    </div>
+
+                    <!-- Banners Admin -->
+                    <div id="admin-banners" class="admin-content">
+                        <div class="admin-form">
+                            <h3>Administrar Banners</h3>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-primary" onclick="showAddBannerForm()">Agregar Nuevo Banner</button>
+                            </div>
+                        </div>
+                        
+                        <div id="addBannerForm" style="display: none;" class="admin-form">
+                            <h3>Agregar Nuevo Banner</h3>
+                            <form onsubmit="addBanner(event)">
+                                <div class="form-group">
+                                    <label for="bannerTitle">Título del Banner</label>
+                                    <input type="text" id="bannerTitle" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bannerUrl">URL de la Imagen</label>
+                                    <input type="text" id="bannerUrl" required>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">Agregar Banner</button>
+                                    <button type="button" class="btn btn-secondary" onclick="hideAddBannerForm()">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="admin-list" id="adminBannersList">
+                            <!-- La lista de banners se cargará dinámicamente aquí -->
+                        </div>
                     </div>
                 </div>
-                <div id="addBannerForm" style="display: none;" class="admin-form">
-                    <h3>Agregar Nuevo Banner</h3>
-                    <form onsubmit="addBanner(event)">
-                        <div class="form-group">
-                            <label for="bannerTitle">Título del Banner</label>
-                            <input type="text" id="bannerTitle" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="bannerUrl">URL de la Imagen</label>
-                            <input type="text" id="bannerUrl" required>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn-primary">Agregar Banner</button>
-                            <button type="button" class="btn-secondary" onclick="hideAddBannerForm()">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="admin-list" id="adminBannersList">
-                    <!-- Banners list will be dynamically loaded here -->
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Login Modal -->
+    <!-- Modal de Inicio de Sesión -->
     <div class="login-modal" id="loginModal">
         <div class="login-modal-content">
             <span class="login-modal-close" onclick="closeLoginModal()">&times;</span>
@@ -567,7 +762,7 @@
                     <label for="adminPassword">Contraseña</label>
                     <input type="password" id="adminPassword" required>
                 </div>
-                <button type="submit" class="admin-btn">Iniciar Sesión</button>
+                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
             </form>
         </div>
     </div>
@@ -595,8 +790,8 @@
     <footer>
         <div class="footer-container">
             <div class="footer-about">
-                <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="Logo" class="footer-logo">
-                <p>SkyLearn Academy es una institución dedicada a la enseñanza del inglés con métodos innovadores y profesores certificados.</p>
+                <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="SkyLearn Academy Logo" class="footer-logo">
+                <p>SkyLearn Academy es una institución líder en la enseñanza del inglés con métodos innovadores y profesores certificados.</p>
                 <div class="social-links">
                     <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
@@ -608,7 +803,7 @@
             <div class="footer-links">
                 <h3>Enlaces Rápidos</h3>
                 <ul>
-                    <li><a href="#home" onclick="showSection('home')">Home</a></li>
+                    <li><a href="#home" onclick="showSection('home')">Inicio</a></li>
                     <li><a href="#courses" onclick="showSection('courses')">Cursos</a></li>
                     <li><a href="#pricing" onclick="showSection('pricing')">Precios</a></li>
                     <li><a href="#live" onclick="showSection('live')">Clases en Vivo</a></li>
@@ -637,6 +832,7 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="js/main.js"></script>
     <script src="js/admin.js"></script>
 </body>
