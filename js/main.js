@@ -178,7 +178,7 @@ function getDefaultCourses() {
             duration: "3 meses",
             students: "120",
             price: "$99",
-            image: "https://via.placeholder.com/400x300/3498db/ffffff?text=Basic+English",
+            image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
             description: "Aprende los fundamentos del inglés con vocabulario básico y estructuras simples."
         },
         {
@@ -188,7 +188,7 @@ function getDefaultCourses() {
             duration: "4 meses",
             students: "85",
             price: "$149",
-            image: "https://via.placeholder.com/400x300/2ecc71/ffffff?text=Intermediate+English",
+            image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80",
             description: "Desarrolla tu fluidez con conversaciones y estructuras gramaticales más complejas."
         },
         {
@@ -198,7 +198,7 @@ function getDefaultCourses() {
             duration: "5 meses",
             students: "65",
             price: "$199",
-            image: "https://via.placeholder.com/400x300/e74c3c/ffffff?text=Advanced+English",
+            image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
             description: "Perfecciona tu inglés con vocabulario avanzado y expresiones idiomáticas."
         },
         {
@@ -208,7 +208,7 @@ function getDefaultCourses() {
             duration: "2 meses",
             students: "95",
             price: "$129",
-            image: "https://via.placeholder.com/400x300/f39c12/ffffff?text=Conversation",
+            image: "https://images.unsplash.com/photo-1533228268271-b7a49525b3d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
             description: "Practica tu habilidad para mantener conversaciones fluidas en inglés."
         },
         {
@@ -218,7 +218,7 @@ function getDefaultCourses() {
             duration: "6 meses",
             students: "45",
             price: "$249",
-            image: "https://via.placeholder.com/400x300/9b59b6/ffffff?text=TOEFL+Preparation",
+            image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
             description: "Prepárate para el examen TOEFL con estrategias y práctica intensiva."
         },
         {
@@ -228,7 +228,7 @@ function getDefaultCourses() {
             duration: "4 meses",
             students: "70",
             price: "$179",
-            image: "https://via.placeholder.com/400x300/1abc9c/ffffff?text=Business+English",
+            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
             description: "Aprende el inglés necesario para el entorno empresarial y profesional."
         }
     ];
@@ -246,7 +246,7 @@ function createCourseCard(course) {
         <div class="course-info">
             <h3>${course.title}</h3>
             <div class="course-teacher">
-                <img src="https://via.placeholder.com/40/4361ee/ffffff?text=${course.teacher.charAt(0)}" alt="${course.teacher}" class="teacher-avatar">
+                <img src="https://ui-avatars.com/api/?name=${course.teacher}&background=1a3a8f&color=fff&size=40" alt="${course.teacher}" class="teacher-avatar">
                 <span class="teacher-name">${course.teacher}</span>
             </div>
             <div class="course-meta">
@@ -616,18 +616,18 @@ function getDefaultBanners() {
     return [
         {
             id: 1,
-            title: "Learn English with Us",
-            url: "https://via.placeholder.com/1200x500/3498db/ffffff?text=Learn+English+with+Us"
+            title: "Aprende inglés con SkyLearn Academy",
+            url: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
         },
         {
             id: 2,
-            title: "Native Teachers",
-            url: "https://via.placeholder.com/1200x500/2ecc71/ffffff?text=Native+Teachers"
+            title: "Profesores nativos de inglés",
+            url: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80"
         },
         {
             id: 3,
-            title: "Interactive Classes",
-            url: "https://via.placeholder.com/1200x500/e74c3c/ffffff?text=Interactive+Classes"
+            title: "Clases interactivas de inglés",
+            url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
         }
     ];
 }
