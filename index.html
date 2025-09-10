@@ -1,1899 +1,2041 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SkyLearn Academy - Plataforma de aprendizaje de inglés en línea con cursos interactivos, clases en vivo y profesores certificados.">
-    <meta name="keywords" content="aprender inglés, cursos de inglés, clases de inglés, academia de inglés, inglés online">
-    <meta name="author" content="SkyLearn Academy">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SkyLearn Academy - Plataforma de aprendizaje de inglés en línea con cursos interactivos, clases en vivo y profesores certificados.">
+<meta name="keywords" content="aprender inglés, cursos de inglés, clases de inglés, academia de inglés, inglés online">
+<meta name="author" content="SkyLearn Academy">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://skylearn-academy.com/">
+<meta property="og:title" content="SkyLearn Academy - Aprende Inglés con Profesores Certificados">
+<meta property="og:description" content="Plataforma de aprendizaje de inglés en línea con cursos interactivos, clases en vivo y profesores certificados.">
+<meta property="og:image" content="https://skylearn-academy.com/images/og-image.jpg">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://skylearn-academy.com/">
+<meta property="twitter:title" content="SkyLearn Academy - Aprende Inglés con Profesores Certificados">
+<meta property="twitter:description" content="Plataforma de aprendizaje de inglés en línea con cursos interactivos, clases en vivo y profesores certificados.">
+<meta property="twitter:image" content="https://skylearn-academy.com/images/og-image.jpg">
+
+<!-- Favicon -->
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+
+<title>SkyLearn Academy - Aprende Inglés con Profesores Certificados</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="css/styles.css">
+
+<!-- Script para funciones básicas -->
+<script>
+// Función para verificar si es la primera visita
+function checkFirstVisit() {
+    const hasVisited = localStorage.getItem('hasVisited');
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://skylearn-academy.com/">
-    <meta property="og:title" content="SkyLearn Academy - Aprende Inglés con Profesores Certificados">
-    <meta property="og:description" content="Plataforma de aprendizaje de inglés en línea con cursos interactivos, clases en vivo y profesores certificados.">
-    <meta property="og:image" content="https://skylearn-academy.com/images/og-image.jpg">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://skylearn-academy.com/">
-    <meta property="twitter:title" content="SkyLearn Academy - Aprende Inglés con Profesores Certificados">
-    <meta property="twitter:description" content="Plataforma de aprendizaje de inglés en línea con cursos interactivos, clases en vivo y profesores certificados.">
-    <meta property="twitter:image" content="https://skylearn-academy.com/images/og-image.jpg">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    
-    <title>SkyLearn Academy - Aprende Inglés con Profesores Certificados</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/styles.css">
-    
-    <!-- Script para funciones básicas -->
-    <script>
-        // Función para mostrar el contenido principal
-        function showMainContent() {
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('navbar').style.display = 'block';
-            document.querySelector('main').style.display = 'block';
-            
-            // Inicializar componentes después de mostrar el contenido
-            initializeComponents();
-        }
+    if (hasVisited) {
+        // Si ya ha visitado, mostrar directamente el contenido principal
+        showMainContent();
+    } else {
+        // Si es la primera visita, mostrar la pantalla de bienvenida
+        document.getElementById('loginScreen').style.display = 'flex';
         
-        // Función para inicializar componentes
-        function initializeComponents() {
-            // Inicializar contador de estadísticas
-            animateStats();
-            
-            // Inicializar carrusel
-            initSlider();
-            
-            // Cargar datos dinámicos
-            loadCourses();
-            loadPricing('monthly');
-            loadLiveClasses();
-            loadAccessClasses();
-            loadComments();
+        // Guardar que ya ha visitado
+        localStorage.setItem('hasVisited', 'true');
+    }
+}
+
+// Función para mostrar el contenido principal
+function showMainContent() {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('navbar').style.display = 'block';
+    document.querySelector('main').style.display = 'block';
+
+    // Inicializar componentes después de mostrar el contenido
+    initializeComponents();
+}
+
+// Función para inicializar componentes
+function initializeComponents() {
+    // Inicializar contador de estadísticas
+    animateStats();
+
+    // Inicializar carrusel
+    initSlider();
+
+    // Cargar datos dinámicos
+    loadCourses();
+    loadPricing('monthly');
+    loadLiveClasses();
+    loadAccessClasses();
+    loadComments();
+}
+
+// Función para mostrar secciones
+function showSection(sectionId) {
+    // Ocultar todas las secciones
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        section.classList.remove('active');
+    });
+
+    // Mostrar la sección seleccionada
+    document.getElementById(sectionId).classList.add('active');
+
+    // Actualizar enlace activo en la navegación
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${sectionId}`) {
+            link.classList.add('active');
         }
-        
-        // Función para mostrar secciones
-        function showSection(sectionId) {
-            // Ocultar todas las secciones
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Mostrar la sección seleccionada
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Actualizar enlace activo en la navegación
-            const navLinks = document.querySelectorAll('.nav-links a');
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${sectionId}`) {
-                    link.classList.add('active');
-                }
-            });
-            
-            // Cargar contenido específico de la sección si es necesario
-            if (sectionId === 'courses') {
-                loadCourses();
-            } else if (sectionId === 'pricing') {
-                loadPricing('monthly');
-            } else if (sectionId === 'live') {
-                loadLiveClasses();
-                initCalendar();
-            } else if (sectionId === 'access') {
-                loadAccessClasses();
-            }
-        }
-        
-        // Función para animar estadísticas
-        function animateStats() {
-            const statNumbers = document.querySelectorAll('.stat-number');
-            
-            statNumbers.forEach(stat => {
-                const target = parseInt(stat.getAttribute('data-target'));
-                let count = 0;
-                const increment = target / 100;
-                
-                const updateCount = () => {
-                    if (count < target) {
-                        count += increment;
-                        stat.innerText = Math.ceil(count);
-                        setTimeout(updateCount, 20);
-                    } else {
-                        stat.innerText = target;
-                    }
-                };
-                
-                updateCount();
-            });
-        }
-        
-        // Función para inicializar el carrusel
-        function initSlider() {
-            let currentSlide = 0;
-            const slides = document.querySelectorAll('.slider-image');
-            const dots = document.querySelectorAll('.slider-dot');
-            
-            function showSlide(index) {
-                slides.forEach(slide => slide.classList.remove('active'));
-                dots.forEach(dot => dot.classList.remove('active'));
-                
-                slides[index].classList.add('active');
-                dots[index].classList.add('active');
-                currentSlide = index;
-            }
-            
-            // Asignar evento a los puntos
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => showSlide(index));
-            });
-            
-            // Cambiar automáticamente de slide cada 5 segundos
-            setInterval(() => {
-                currentSlide = (currentSlide + 1) % slides.length;
-                showSlide(currentSlide);
-            }, 5000);
-        }
-        
-        // Función para cargar cursos
-        function loadCourses() {
-            const coursesGrid = document.getElementById('coursesGrid');
-            
-            // Datos de cursos de ejemplo
-            const courses = [
-                {
-                    title: "Inglés Básico",
-                    teacher: "Prof. John Smith",
-                    duration: "8 semanas",
-                    students: "120",
-                    price: "$99",
-                    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
-                    description: "Curso ideal para principiantes que quieren aprender los fundamentos del inglés."
-                },
-                {
-                    title: "Inglés Intermedio",
-                    teacher: "Prof. Sarah Johnson",
-                    duration: "12 semanas",
-                    students: "85",
-                    price: "$149",
-                    image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80",
-                    description: "Perfecciona tu inglés con este curso diseñado para estudiantes de nivel intermedio."
-                },
-                {
-                    title: "Inglés Avanzado",
-                    teacher: "Prof. Michael Brown",
-                    duration: "16 semanas",
-                    students: "65",
-                    price: "$199",
-                    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-                    description: "Domina el inglés a nivel avanzado con técnicas especializadas y práctica intensiva."
-                },
-                {
-                    title: "Preparación TOEFL",
-                    teacher: "Prof. Emily Davis",
-                    duration: "10 semanas",
-                    students: "45",
-                    price: "$179",
-                    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-                    description: "Prepárate para el examen TOEFL con estrategias probadas y simulacros."
-                }
-            ];
-            
-            // Limpiar el contenedor
-            coursesGrid.innerHTML = '';
-            
-            // Generar las tarjetas de cursos
-            courses.forEach(course => {
-                const courseCard = document.createElement('div');
-                courseCard.className = 'course-card';
-                courseCard.innerHTML = `
-                    <div class="course-image">
-                        <img src="${course.image}" alt="${course.title}">
-                    </div>
-                    <div class="course-content">
-                        <h3>${course.title}</h3>
-                        <p class="course-teacher"><i class="fas fa-user-tie"></i> ${course.teacher}</p>
-                        <p class="course-duration"><i class="fas fa-clock"></i> ${course.duration}</p>
-                        <p class="course-students"><i class="fas fa-users"></i> ${course.students} estudiantes</p>
-                        <p class="course-description">${course.description}</p>
-                        <div class="course-footer">
-                            <span class="course-price">${course.price}</span>
-                            <button class="btn btn-primary">Inscribirse</button>
-                        </div>
-                    </div>
-                `;
-                coursesGrid.appendChild(courseCard);
-            });
-        }
-        
-        // Función para cargar precios
-        function loadPricing(type) {
-            const pricingTableBody = document.getElementById('pricingTableBody');
-            
-            // Datos de precios de ejemplo
-            const pricingData = {
-                monthly: [
-                    { course: "Inglés Básico", price: "$99", schedule: "Lunes y Miércoles 18:00-20:00", duration: "8 semanas" },
-                    { course: "Inglés Intermedio", price: "$149", schedule: "Martes y Jueves 18:00-20:00", duration: "12 semanas" },
-                    { course: "Inglés Avanzado", price: "$199", schedule: "Lunes y Miércoles 20:00-22:00", duration: "16 semanas" },
-                    { course: "Preparación TOEFL", price: "$179", schedule: "Sábados 10:00-13:00", duration: "10 semanas" }
-                ],
-                quarterly: [
-                    { course: "Inglés Básico", price: "$269", schedule: "Lunes y Miércoles 18:00-20:00", duration: "8 semanas" },
-                    { course: "Inglés Intermedio", price: "$399", schedule: "Martes y Jueves 18:00-20:00", duration: "12 semanas" },
-                    { course: "Inglés Avanzado", price: "$539", schedule: "Lunes y Miércoles 20:00-22:00", duration: "16 semanas" },
-                    { course: "Preparación TOEFL", price: "$479", schedule: "Sábados 10:00-13:00", duration: "10 semanas" }
-                ],
-                yearly: [
-                    { course: "Inglés Básico", price: "$999", schedule: "Lunes y Miércoles 18:00-20:00", duration: "8 semanas" },
-                    { course: "Inglés Intermedio", price: "$1499", schedule: "Martes y Jueves 18:00-20:00", duration: "12 semanas" },
-                    { course: "Inglés Avanzado", price: "$1999", schedule: "Lunes y Miércoles 20:00-22:00", duration: "16 semanas" },
-                    { course: "Preparación TOEFL", price: "$1799", schedule: "Sábados 10:00-13:00", duration: "10 semanas" }
-                ]
-            };
-            
-            // Limpiar el contenedor
-            pricingTableBody.innerHTML = '';
-            
-            // Generar las filas de la tabla
-            pricingData[type].forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${item.course}</td>
-                    <td>${item.price}</td>
-                    <td>${item.schedule}</td>
-                    <td>${item.duration}</td>
-                `;
-                pricingTableBody.appendChild(row);
-            });
-        }
-        
-        // Función para cambiar la vista de precios
-        function showPricing(type) {
-            // Actualizar pestañas activas
-            const tabs = document.querySelectorAll('.pricing-tab');
-            tabs.forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.textContent.toLowerCase() === type || 
-                    (type === 'quarterly' && tab.textContent === 'Trimestral') ||
-                    (type === 'yearly' && tab.textContent === 'Anual')) {
-                    tab.classList.add('active');
-                }
-            });
-            
-            // Cargar los datos de precios
-            loadPricing(type);
-        }
-        
-        // Función para cargar clases en vivo
-        function loadLiveClasses() {
-            const liveScheduleContainer = document.getElementById('liveScheduleContainer');
-            
-            // Datos de clases en vivo de ejemplo
-            const liveClasses = [
-                { title: "Conversación en Inglés", date: "2023-11-15", time: "18:00", platform: "YouTube" },
-                { title: "Gramática Avanzada", date: "2023-11-17", time: "19:30", platform: "Twitch" },
-                { title: "Pronunciación Perfecta", date: "2023-11-20", time: "17:00", platform: "YouTube" },
-                { title: "Vocabulario de Negocios", date: "2023-11-22", time: "20:00", platform: "Facebook" }
-            ];
-            
-            // Limpiar el contenedor
-            liveScheduleContainer.innerHTML = '';
-            
-            // Generar las tarjetas de clases en vivo
-            liveClasses.forEach(classItem => {
-                const classCard = document.createElement('div');
-                classCard.className = 'live-class-card';
-                classCard.innerHTML = `
-                    <div class="live-class-date">${formatDate(classItem.date)}</div>
-                    <div class="live-class-time">${classItem.time}</div>
-                    <div class="live-class-title">${classItem.title}</div>
-                    <div class="live-class-platform"><i class="fab fa-${classItem.platform.toLowerCase()}"></i> ${classItem.platform}</div>
-                    <button class="btn btn-primary">Unirse a la Clase</button>
-                `;
-                liveScheduleContainer.appendChild(classCard);
-            });
-        }
-        
-        // Función para cargar acceso a clases
-        function loadAccessClasses() {
-            const accessGrid = document.getElementById('accessGrid');
-            
-            // Datos de acceso a clases de ejemplo
-            const accessClasses = [
-                { title: "Inglés Básico - Grupo A", platform: "Zoom", teacher: "Prof. John Smith", schedule: "Lunes y Miércoles 18:00-20:00" },
-                { title: "Inglés Intermedio - Grupo B", platform: "Google Meet", teacher: "Prof. Sarah Johnson", schedule: "Martes y Jueves 18:00-20:00" },
-                { title: "Inglés Avanzado - Grupo A", platform: "Zoom", teacher: "Prof. Michael Brown", schedule: "Lunes y Miércoles 20:00-22:00" },
-                { title: "Preparación TOEFL - Grupo A", platform: "Google Meet", teacher: "Prof. Emily Davis", schedule: "Sábados 10:00-13:00" }
-            ];
-            
-            // Limpiar el contenedor
-            accessGrid.innerHTML = '';
-            
-            // Generar las tarjetas de acceso a clases
-            accessClasses.forEach(classItem => {
-                const accessCard = document.createElement('div');
-                accessCard.className = 'access-card';
-                accessCard.innerHTML = `
-                    <div class="access-card-header">
-                        <h3>${classItem.title}</h3>
-                        <span class="access-platform">${classItem.platform}</span>
-                    </div>
-                    <div class="access-card-content">
-                        <p><i class="fas fa-user-tie"></i> ${classItem.teacher}</p>
-                        <p><i class="fas fa-clock"></i> ${classItem.schedule}</p>
-                    </div>
-                    <div class="access-card-footer">
-                        <button class="btn btn-primary">Unirse a la Clase</button>
-                    </div>
-                `;
-                accessGrid.appendChild(accessCard);
-            });
-        }
-        
-        // Función para cargar comentarios
-        function loadComments() {
-            const commentsContainer = document.getElementById('commentsContainer');
-            
-            // Datos de comentarios de ejemplo
-            const comments = [
-                { user: "Ana García", text: "¡Excelente plataforma! He mejorado mi inglés mucho desde que me inscribí.", date: "2023-11-10" },
-                { user: "Carlos Rodríguez", text: "Los profesores son muy profesionales y las clases son muy interactivas.", date: "2023-11-08" },
-                { user: "María López", text: "Recomiendo totalmente los cursos de preparación para exámenes. Me ayudó a aprobar el TOEFL.", date: "2023-11-05" }
-            ];
-            
-            // Limpiar el contenedor
-            commentsContainer.innerHTML = '';
-            
-            // Generar los comentarios
-            comments.forEach(comment => {
-                const commentElement = document.createElement('div');
-                commentElement.className = 'comment';
-                commentElement.innerHTML = `
-                    <div class="comment-header">
-                        <div class="comment-user">${comment.user}</div>
-                        <div class="comment-date">${formatDate(comment.date)}</div>
-                    </div>
-                    <div class="comment-text">${comment.text}</div>
-                `;
-                commentsContainer.appendChild(commentElement);
-            });
-        }
-        
-        // Función para agregar un comentario
-        function addComment(event) {
-            event.preventDefault();
-            
-            const commentInput = document.getElementById('commentInput');
-            const commentText = commentInput.value.trim();
-            
-            if (commentText) {
-                const commentsContainer = document.getElementById('commentsContainer');
-                
-                // Crear nuevo comentario
-                const commentElement = document.createElement('div');
-                commentElement.className = 'comment';
-                commentElement.innerHTML = `
-                    <div class="comment-header">
-                        <div class="comment-user">Tú</div>
-                        <div class="comment-date">${formatDate(new Date().toISOString().split('T')[0])}</div>
-                    </div>
-                    <div class="comment-text">${commentText}</div>
-                `;
-                
-                // Agregar al principio de la lista
-                commentsContainer.insertBefore(commentElement, commentsContainer.firstChild);
-                
-                // Limpiar el input
-                commentInput.value = '';
-            }
-        }
-        
-        // Función para formatear fecha
-        function formatDate(dateString) {
-            const options = { day: 'numeric', month: 'long', year: 'numeric' };
-            const date = new Date(dateString);
-            return date.toLocaleDateString('es-ES', options);
-        }
-        
-        // Función para inicializar el calendario
-        function initCalendar() {
-            const calendarGrid = document.getElementById('calendarGrid');
-            const currentMonthElement = document.getElementById('currentMonth');
-            const prevMonthButton = document.getElementById('prevMonth');
-            const nextMonthButton = document.getElementById('nextMonth');
-            
-            let currentDate = new Date();
-            let currentMonth = currentDate.getMonth();
-            let currentYear = currentDate.getFullYear();
-            
-            function renderCalendar() {
-                // Limpiar el calendario
-                calendarGrid.innerHTML = '';
-                
-                // Actualizar el mes y año mostrados
-                const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-                currentMonthElement.textContent = `${monthNames[currentMonth]} ${currentYear}`;
-                
-                // Obtener el primer día del mes y el número de días
-                const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-                
-                // Agregar encabezados de días de la semana
-                const dayHeaders = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-                dayHeaders.forEach(day => {
-                    const dayElement = document.createElement('div');
-                    dayElement.className = 'calendar-day-header';
-                    dayElement.textContent = day;
-                    calendarGrid.appendChild(dayElement);
-                });
-                
-                // Agregar días vacíos antes del primer día del mes
-                for (let i = 0; i < firstDay; i++) {
-                    const emptyDay = document.createElement('div');
-                    emptyDay.className = 'calendar-day empty';
-                    calendarGrid.appendChild(emptyDay);
-                }
-                
-                // Agregar los días del mes
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const dayElement = document.createElement('div');
-                    dayElement.className = 'calendar-day';
-                    dayElement.textContent = day;
-                    
-                    // Marcar el día actual
-                    if (currentYear === currentDate.getFullYear() && 
-                        currentMonth === currentDate.getMonth() && 
-                        day === currentDate.getDate()) {
-                        dayElement.classList.add('today');
-                    }
-                    
-                    // Marcar días con clases (ejemplo)
-                    if ((day === 15 || day === 17 || day === 20 || day === 22) && currentMonth === 10) {
-                        dayElement.classList.add('has-class');
-                    }
-                    
-                    calendarGrid.appendChild(dayElement);
-                }
-            }
-            
-            // Eventos para cambiar de mes
-            prevMonthButton.addEventListener('click', () => {
-                currentMonth--;
-                if (currentMonth < 0) {
-                    currentMonth = 11;
-                    currentYear--;
-                }
-                renderCalendar();
-            });
-            
-            nextMonthButton.addEventListener('click', () => {
-                currentMonth++;
-                if (currentMonth > 11) {
-                    currentMonth = 0;
-                    currentYear++;
-                }
-                renderCalendar();
-            });
-            
-            // Renderizar el calendario inicial
-            renderCalendar();
-        }
-        
-        // Función para enviar mensaje del chatbot
-        function sendChatMessage() {
-            const chatInput = document.getElementById('chatInput');
-            const chatMessages = document.getElementById('chatMessages');
-            const messageText = chatInput.value.trim();
-            
-            if (messageText) {
-                // Agregar mensaje del usuario
-                const userMessage = document.createElement('div');
-                userMessage.className = 'user-message';
-                userMessage.textContent = messageText;
-                chatMessages.appendChild(userMessage);
-                
-                // Limpiar el input
-                chatInput.value = '';
-                
-                // Simular respuesta del bot
-                setTimeout(() => {
-                    const botMessage = document.createElement('div');
-                    botMessage.className = 'bot-message';
-                    botMessage.textContent = 'Gracias por tu mensaje. Un representante de SkyLearn Academy te responderá pronto.';
-                    chatMessages.appendChild(botMessage);
-                    
-                    // Desplazar hacia abajo
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }, 1000);
-                
-                // Desplazar hacia abajo
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-        }
-        
-        // Función para manejar tecla Enter en el chat
-        function handleChatKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendChatMessage();
-            }
-        }
-        
-        // Función para enviar mensaje del chat en vivo
-        function sendLiveChatMessage() {
-            const liveChatInput = document.getElementById('liveChatInput');
-            const liveChatMessages = document.getElementById('liveChatMessages');
-            const messageText = liveChatInput.value.trim();
-            
-            if (messageText) {
-                // Agregar mensaje del usuario
-                const userMessage = document.createElement('div');
-                userMessage.className = 'chat-message user-message';
-                userMessage.textContent = messageText;
-                liveChatMessages.appendChild(userMessage);
-                
-                // Limpiar el input
-                liveChatInput.value = '';
-                
-                // Desplazar hacia abajo
-                liveChatMessages.scrollTop = liveChatMessages.scrollHeight;
-            }
-        }
-        
-        // Función para manejar tecla Enter en el chat en vivo
-        function handleLiveChatKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendLiveChatMessage();
-            }
-        }
-        
-        // Función para alternar la ventana del chatbot
-        function toggleChat() {
-            const chatWindow = document.getElementById('chatWindow');
-            chatWindow.classList.toggle('active');
-        }
-        
-        // Función para mostrar el formulario de inicio de sesión de administrador
-        function showAdminLogin() {
-            document.getElementById('loginModal').style.display = 'block';
-        }
-        
-        // Función para cerrar el formulario de inicio de sesión de administrador
-        function closeLoginModal() {
-            document.getElementById('loginModal').style.display = 'none';
-        }
-        
-        // Función para iniciar sesión como administrador
-        function adminLogin(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('adminEmail').value;
-            const password = document.getElementById('adminPassword').value;
-            
-            // Verificar credenciales (esto es solo un ejemplo)
-            if (email === 'admin@skylearn.com' && password === 'admin123') {
-                // Cerrar el modal
-                closeLoginModal();
-                
-                // Mostrar el enlace de administración
-                document.getElementById('adminLink').style.display = 'block';
-                
-                // Mostrar la sección de administración
-                showSection('admin');
-                
-                // Cargar datos del panel de administración
-                loadAdminData();
+    });
+
+    // Cargar contenido específico de la sección si es necesario
+    if (sectionId === 'courses') {
+        loadCourses();
+    } else if (sectionId === 'pricing') {
+        loadPricing('monthly');
+    } else if (sectionId === 'live') {
+        loadLiveClasses();
+        initCalendar();
+    } else if (sectionId === 'access') {
+        loadAccessClasses();
+    }
+}
+
+// Función para animar estadísticas
+function animateStats() {
+    const statNumbers = document.querySelectorAll('.stat-number');
+
+    statNumbers.forEach(stat => {
+        const target = parseInt(stat.getAttribute('data-target'));
+        let count = 0;
+        const increment = target / 100;
+
+        const updateCount = () => {
+            if (count < target) {
+                count += increment;
+                stat.innerText = Math.ceil(count);
+                setTimeout(updateCount, 20);
             } else {
-                alert('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
+                stat.innerText = target;
             }
+        };
+
+        updateCount();
+    });
+}
+
+// Función para inicializar el carrusel
+function initSlider() {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slider-image');
+    const dots = document.querySelectorAll('.slider-dot');
+
+    function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+        currentSlide = index;
+    }
+
+    // Asignar evento a los puntos
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => showSlide(index));
+    });
+
+    // Cambiar automáticamente de slide cada 5 segundos
+    setInterval(() => {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }, 5000);
+}
+
+// Función para cargar cursos
+function loadCourses() {
+    const coursesGrid = document.getElementById('coursesGrid');
+
+    // Datos de cursos de ejemplo
+    const courses = [
+        {
+            title: "Inglés Básico",
+            teacher: "Prof. John Smith",
+            duration: "8 semanas",
+            students: "120",
+            price: "$99",
+            image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
+            description: "Curso ideal para principiantes que quieren aprender los fundamentos del inglés."
+        },
+        {
+            title: "Inglés Intermedio",
+            teacher: "Prof. Sarah Johnson",
+            duration: "12 semanas",
+            students: "85",
+            price: "$149",
+            image: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80",
+            description: "Perfecciona tu inglés con este curso diseñado para estudiantes de nivel intermedio."
+        },
+        {
+            title: "Inglés Avanzado",
+            teacher: "Prof. Michael Brown",
+            duration: "16 semanas",
+            students: "65",
+            price: "$199",
+            image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+            description: "Domina el inglés a nivel avanzado con técnicas especializadas y práctica intensiva."
+        },
+        {
+            title: "Preparación TOEFL",
+            teacher: "Prof. Emily Davis",
+            duration: "10 semanas",
+            students: "45",
+            price: "$179",
+            image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+            description: "Prepárate para el examen TOEFL con estrategias probadas y simulacros."
         }
-        
-        // Función para cerrar sesión de administrador
-        function adminLogout() {
-            // Ocultar el enlace de administración
-            document.getElementById('adminLink').style.display = 'none';
-            
-            // Mostrar la sección de inicio
-            showSection('home');
+    ];
+
+    // Limpiar el contenedor
+    coursesGrid.innerHTML = '';
+
+    // Generar las tarjetas de cursos
+    courses.forEach(course => {
+        const courseCard = document.createElement('div');
+        courseCard.className = 'course-card';
+        courseCard.innerHTML = `
+            <div class="course-image">
+                <img src="${course.image}" alt="${course.title}">
+            </div>
+            <div class="course-content">
+                <h3>${course.title}</h3>
+                <p class="course-teacher"><i class="fas fa-user-tie"></i> ${course.teacher}</p>
+                <p class="course-duration"><i class="fas fa-clock"></i> ${course.duration}</p>
+                <p class="course-students"><i class="fas fa-users"></i> ${course.students} estudiantes</p>
+                <p class="course-description">${course.description}</p>
+                <div class="course-footer">
+                    <span class="course-price">${course.price}</span>
+                    <button class="btn btn-primary">Inscribirse</button>
+                </div>
+            </div>
+        `;
+        coursesGrid.appendChild(courseCard);
+    });
+}
+
+// Función para cargar precios
+function loadPricing(type) {
+    const pricingTableBody = document.getElementById('pricingTableBody');
+
+    // Datos de precios de ejemplo
+    const pricingData = {
+        monthly: [
+            { course: "Inglés Básico", price: "$99", schedule: "Lunes y Miércoles 18:00-20:00", duration: "8 semanas" },
+            { course: "Inglés Intermedio", price: "$149", schedule: "Martes y Jueves 18:00-20:00", duration: "12 semanas" },
+            { course: "Inglés Avanzado", price: "$199", schedule: "Lunes y Miércoles 20:00-22:00", duration: "16 semanas" },
+            { course: "Preparación TOEFL", price: "$179", schedule: "Sábados 10:00-13:00", duration: "10 semanas" }
+        ],
+        quarterly: [
+            { course: "Inglés Básico", price: "$269", schedule: "Lunes y Miércoles 18:00-20:00", duration: "8 semanas" },
+            { course: "Inglés Intermedio", price: "$399", schedule: "Martes y Jueves 18:00-20:00", duration: "12 semanas" },
+            { course: "Inglés Avanzado", price: "$539", schedule: "Lunes y Miércoles 20:00-22:00", duration: "16 semanas" },
+            { course: "Preparación TOEFL", price: "$479", schedule: "Sábados 10:00-13:00", duration: "10 semanas" }
+        ],
+        yearly: [
+            { course: "Inglés Básico", price: "$999", schedule: "Lunes y Miércoles 18:00-20:00", duration: "8 semanas" },
+            { course: "Inglés Intermedio", price: "$1499", schedule: "Martes y Jueves 18:00-20:00", duration: "12 semanas" },
+            { course: "Inglés Avanzado", price: "$1999", schedule: "Lunes y Miércoles 20:00-22:00", duration: "16 semanas" },
+            { course: "Preparación TOEFL", price: "$1799", schedule: "Sábados 10:00-13:00", duration: "10 semanas" }
+        ]
+    };
+
+    // Limpiar el contenedor
+    pricingTableBody.innerHTML = '';
+
+    // Generar las filas de la tabla
+    pricingData[type].forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${item.course}</td>
+            <td>${item.price}</td>
+            <td>${item.schedule}</td>
+            <td>${item.duration}</td>
+        `;
+        pricingTableBody.appendChild(row);
+    });
+}
+
+// Función para cambiar la vista de precios
+function showPricing(type) {
+    // Actualizar pestañas activas
+    const tabs = document.querySelectorAll('.pricing-tab');
+    tabs.forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.textContent.toLowerCase() === type ||
+            (type === 'quarterly' && tab.textContent === 'Trimestral') ||
+            (type === 'yearly' && tab.textContent === 'Anual')) {
+            tab.classList.add('active');
         }
-        
-        // Función para cargar datos del panel de administración
-        function loadAdminData() {
-            // Actualizar estadísticas del panel
-            document.getElementById('totalStudents').textContent = '5000';
-            document.getElementById('totalCourses').textContent = '120';
-            document.getElementById('totalComments').textContent = '45';
-            
-            // Cargar última actividad
-            document.getElementById('lastComment').textContent = '¡Excelente plataforma! - Ana García';
-            document.getElementById('lastRegistration').textContent = 'Carlos Rodríguez - Inglés Intermedio';
+    });
+
+    // Cargar los datos de precios
+    loadPricing(type);
+}
+
+// Función para cargar clases en vivo
+function loadLiveClasses() {
+    const liveScheduleContainer = document.getElementById('liveScheduleContainer');
+
+    // Datos de clases en vivo de ejemplo
+    const liveClasses = [
+        { title: "Conversación en Inglés", date: "2023-11-15", time: "18:00", platform: "YouTube" },
+        { title: "Gramática Avanzada", date: "2023-11-17", time: "19:30", platform: "Twitch" },
+        { title: "Pronunciación Perfecta", date: "2023-11-20", time: "17:00", platform: "YouTube" },
+        { title: "Vocabulario de Negocios", date: "2023-11-22", time: "20:00", platform: "Facebook" }
+    ];
+
+    // Limpiar el contenedor
+    liveScheduleContainer.innerHTML = '';
+
+    // Generar las tarjetas de clases en vivo
+    liveClasses.forEach(classItem => {
+        const classCard = document.createElement('div');
+        classCard.className = 'live-class-card';
+        classCard.innerHTML = `
+            <div class="live-class-date">${formatDate(classItem.date)}</div>
+            <div class="live-class-time">${classItem.time}</div>
+            <div class="live-class-title">${classItem.title}</div>
+            <div class="live-class-platform"><i class="fab fa-${classItem.platform.toLowerCase()}"></i> ${classItem.platform}</div>
+            <button class="btn btn-primary">Unirse a la Clase</button>
+        `;
+        liveScheduleContainer.appendChild(classCard);
+    });
+}
+
+// Función para cargar acceso a clases
+function loadAccessClasses() {
+    const accessGrid = document.getElementById('accessGrid');
+
+    // Datos de acceso a clases de ejemplo
+    const accessClasses = [
+        { title: "Inglés Básico - Grupo A", platform: "Zoom", teacher: "Prof. John Smith", schedule: "Lunes y Miércoles 18:00-20:00" },
+        { title: "Inglés Intermedio - Grupo B", platform: "Google Meet", teacher: "Prof. Sarah Johnson", schedule: "Martes y Jueves 18:00-20:00" },
+        { title: "Inglés Avanzado - Grupo A", platform: "Zoom", teacher: "Prof. Michael Brown", schedule: "Lunes y Miércoles 20:00-22:00" },
+        { title: "Preparación TOEFL - Grupo A", platform: "Google Meet", teacher: "Prof. Emily Davis", schedule: "Sábados 10:00-13:00" }
+    ];
+
+    // Limpiar el contenedor
+    accessGrid.innerHTML = '';
+
+    // Generar las tarjetas de acceso a clases
+    accessClasses.forEach(classItem => {
+        const accessCard = document.createElement('div');
+        accessCard.className = 'access-card';
+        accessCard.innerHTML = `
+            <div class="access-card-header">
+                <h3>${classItem.title}</h3>
+                <span class="access-platform">${classItem.platform}</span>
+            </div>
+            <div class="access-card-content">
+                <p><i class="fas fa-user-tie"></i> ${classItem.teacher}</p>
+                <p><i class="fas fa-clock"></i> ${classItem.schedule}</p>
+            </div>
+            <div class="access-card-footer">
+                <button class="btn btn-primary">Unirse a la Clase</button>
+            </div>
+        `;
+        accessGrid.appendChild(accessCard);
+    });
+}
+
+// Función para cargar comentarios
+function loadComments() {
+    const commentsContainer = document.getElementById('commentsContainer');
+
+    // Datos de comentarios de ejemplo
+    const comments = [
+        { user: "Ana García", text: "¡Excelente plataforma! He mejorado mi inglés mucho desde que me inscribí.", date: "2023-11-10" },
+        { user: "Carlos Rodríguez", text: "Los profesores son muy profesionales y las clases son muy interactivas.", date: "2023-11-08" },
+        { user: "María López", text: "Recomiendo totalmente los cursos de preparación para exámenes. Me ayudó a aprobar el TOEFL.", date: "2023-11-05" }
+    ];
+
+    // Limpiar el contenedor
+    commentsContainer.innerHTML = '';
+
+    // Generar los comentarios
+    comments.forEach(comment => {
+        const commentElement = document.createElement('div');
+        commentElement.className = 'comment';
+        commentElement.innerHTML = `
+            <div class="comment-header">
+                <div class="comment-user">${comment.user}</div>
+                <div class="comment-date">${formatDate(comment.date)}</div>
+            </div>
+            <div class="comment-text">${comment.text}</div>
+        `;
+        commentsContainer.appendChild(commentElement);
+    });
+}
+
+// Función para agregar un comentario
+function addComment(event) {
+    event.preventDefault();
+
+    const commentInput = document.getElementById('commentInput');
+    const commentText = commentInput.value.trim();
+
+    if (commentText) {
+        const commentsContainer = document.getElementById('commentsContainer');
+
+        // Crear nuevo comentario
+        const commentElement = document.createElement('div');
+        commentElement.className = 'comment';
+        commentElement.innerHTML = `
+            <div class="comment-header">
+                <div class="comment-user">Tú</div>
+                <div class="comment-date">${formatDate(new Date().toISOString().split('T')[0])}</div>
+            </div>
+            <div class="comment-text">${commentText}</div>
+        `;
+
+        // Agregar al principio de la lista
+        commentsContainer.insertBefore(commentElement, commentsContainer.firstChild);
+
+        // Limpiar el input
+        commentInput.value = '';
+    }
+}
+
+// Función para formatear fecha
+function formatDate(dateString) {
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-ES', options);
+}
+
+// Función para inicializar el calendario
+function initCalendar() {
+    const calendarGrid = document.getElementById('calendarGrid');
+    const currentMonthElement = document.getElementById('currentMonth');
+    const prevMonthButton = document.getElementById('prevMonth');
+    const nextMonthButton = document.getElementById('nextMonth');
+
+    let currentDate = new Date();
+    let currentMonth = currentDate.getMonth();
+    let currentYear = currentDate.getFullYear();
+
+    function renderCalendar() {
+        // Limpiar el calendario
+        calendarGrid.innerHTML = '';
+
+        // Actualizar el mes y año mostrados
+        const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        currentMonthElement.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+        // Obtener el primer día del mes y el número de días
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        // Agregar encabezados de días de la semana
+        const dayHeaders = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+        dayHeaders.forEach(day => {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day-header';
+            dayElement.textContent = day;
+            calendarGrid.appendChild(dayElement);
+        });
+
+        // Agregar días vacíos antes del primer día del mes
+        for (let i = 0; i < firstDay; i++) {
+            const emptyDay = document.createElement('div');
+            emptyDay.className = 'calendar-day empty';
+            calendarGrid.appendChild(emptyDay);
         }
-        
-        // Función para mostrar pestaña de administración
-        function showAdminTab(tabName) {
-            // Ocultar todos los contenidos de administración
-            const adminContents = document.querySelectorAll('.admin-content');
-            adminContents.forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            // Mostrar el contenido seleccionado
-            document.getElementById(`admin-${tabName}`).classList.add('active');
-            
-            // Actualizar pestañas activas
-            const adminTabs = document.querySelectorAll('.admin-tab');
-            adminTabs.forEach(tab => {
-                tab.classList.remove('active');
-                if (tab.textContent.toLowerCase().includes(tabName) || 
-                    (tabName === 'dashboard' && tab.textContent === 'Dashboard')) {
-                    tab.classList.add('active');
-                }
-            });
-            
-            // Cargar datos específicos de la pestaña
-            if (tabName === 'courses') {
-                loadAdminCourses();
-            } else if (tabName === 'pricing') {
-                loadAdminPricing();
-            } else if (tabName === 'live') {
-                loadAdminLiveClasses();
-            } else if (tabName === 'access') {
-                loadAdminAccessClasses();
-            } else if (tabName === 'banners') {
-                loadAdminBanners();
+
+        // Agregar los días del mes
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dayElement = document.createElement('div');
+            dayElement.className = 'calendar-day';
+            dayElement.textContent = day;
+
+            // Marcar el día actual
+            if (currentYear === currentDate.getFullYear() &&
+                currentMonth === currentDate.getMonth() &&
+                day === currentDate.getDate()) {
+                dayElement.classList.add('today');
             }
-        }
-        
-        // Función para actualizar estadísticas de inicio
-        function updateHomeStats() {
-            const students = document.getElementById('statsStudents').value;
-            const courses = document.getElementById('statsCourses').value;
-            const teachers = document.getElementById('statsTeachers').value;
-            const satisfaction = document.getElementById('statsSatisfaction').value;
-            
-            // Actualizar los atributos data-target
-            document.querySelector('.stat-item:nth-child(1) .stat-number').setAttribute('data-target', students);
-            document.querySelector('.stat-item:nth-child(2) .stat-number').setAttribute('data-target', courses);
-            document.querySelector('.stat-item:nth-child(3) .stat-number').setAttribute('data-target', teachers);
-            document.querySelector('.stat-item:nth-child(4) .stat-number').setAttribute('data-target', satisfaction);
-            
-            // Actualizar los valores mostrados
-            document.querySelector('.stat-item:nth-child(1) .stat-number').textContent = students;
-            document.querySelector('.stat-item:nth-child(2) .stat-number').textContent = courses;
-            document.querySelector('.stat-item:nth-child(3) .stat-number').textContent = teachers;
-            document.querySelector('.stat-item:nth-child(4) .stat-number').textContent = satisfaction;
-            
-            alert('Estadísticas actualizadas correctamente.');
-        }
-        
-        // Función para actualizar noticias
-        function updateNews(event) {
-            event.preventDefault();
-            
-            const newsText = document.getElementById('newsInput').value;
-            document.getElementById('newsText').textContent = newsText;
-            
-            alert('Noticia actualizada correctamente.');
-        }
-        
-        // Función para mostrar formulario de agregar curso
-        function showAddCourseForm() {
-            document.getElementById('addCourseForm').style.display = 'block';
-        }
-        
-        // Función para ocultar formulario de agregar curso
-        function hideAddCourseForm() {
-            document.getElementById('addCourseForm').style.display = 'none';
-        }
-        
-        // Función para agregar curso
-        function addCourse(event) {
-            event.preventDefault();
-            
-            // Obtener valores del formulario
-            const title = document.getElementById('newCourseTitle').value;
-            const teacher = document.getElementById('newCourseTeacher').value;
-            const duration = document.getElementById('newCourseDuration').value;
-            const students = document.getElementById('newCourseStudents').value;
-            const price = document.getElementById('newCoursePrice').value;
-            const image = document.getElementById('newCourseImage').value;
-            const description = document.getElementById('newCourseDescription').value;
-            
-            // Aquí se agregaría el curso a la base de datos
-            // Por ahora, solo mostramos un mensaje
-            alert(`Curso "${title}" agregado correctamente.`);
-            
-            // Ocultar el formulario
-            hideAddCourseForm();
-            
-            // Recargar la lista de cursos
-            loadAdminCourses();
-        }
-        
-        // Función para cargar cursos en el panel de administración
-        function loadAdminCourses() {
-            const adminCoursesList = document.getElementById('adminCoursesList');
-            
-            // Datos de cursos de ejemplo
-            const courses = [
-                { id: 1, title: "Inglés Básico", teacher: "Prof. John Smith", duration: "8 semanas", students: "120", price: "$99" },
-                { id: 2, title: "Inglés Intermedio", teacher: "Prof. Sarah Johnson", duration: "12 semanas", students: "85", price: "$149" },
-                { id: 3, title: "Inglés Avanzado", teacher: "Prof. Michael Brown", duration: "16 semanas", students: "65", price: "$199" },
-                { id: 4, title: "Preparación TOEFL", teacher: "Prof. Emily Davis", duration: "10 semanas", students: "45", price: "$179" }
-            ];
-            
-            // Limpiar el contenedor
-            adminCoursesList.innerHTML = '';
-            
-            // Generar la lista de cursos
-            courses.forEach(course => {
-                const courseItem = document.createElement('div');
-                courseItem.className = 'admin-item';
-                courseItem.innerHTML = `
-                    <div>
-                        <strong>${course.title}</strong> - ${course.teacher} - ${course.duration} - ${course.students} estudiantes - ${course.price}
-                    </div>
-                    <div class="admin-actions">
-                        <button class="btn btn-secondary" onclick="editCourse(${course.id})">Editar</button>
-                        <button class="btn btn-danger" onclick="deleteCourse(${course.id})">Eliminar</button>
-                    </div>
-                `;
-                adminCoursesList.appendChild(courseItem);
-            });
-        }
-        
-        // Función para mostrar formulario de agregar precio
-        function showAddPricingForm() {
-            document.getElementById('addPricingForm').style.display = 'block';
-        }
-        
-        // Función para ocultar formulario de agregar precio
-        function hideAddPricingForm() {
-            document.getElementById('addPricingForm').style.display = 'none';
-        }
-        
-        // Función para agregar precio
-        function addPricing(event) {
-            event.preventDefault();
-            
-            // Obtener valores del formulario
-            const course = document.getElementById('pricingCourse').value;
-            const price = document.getElementById('pricingPrice').value;
-            const schedule = document.getElementById('pricingSchedule').value;
-            const duration = document.getElementById('pricingDuration').value;
-            const type = document.getElementById('pricingType').value;
-            
-            // Aquí se agregaría el precio a la base de datos
-            // Por ahora, solo mostramos un mensaje
-            alert(`Precio para "${course}" agregado correctamente.`);
-            
-            // Ocultar el formulario
-            hideAddPricingForm();
-            
-            // Recargar la lista de precios
-            loadAdminPricing();
-        }
-        
-        // Función para cargar precios en el panel de administración
-        function loadAdminPricing() {
-            const adminPricingList = document.getElementById('adminPricingList');
-            
-            // Datos de precios de ejemplo
-            const pricing = [
-                { id: 1, course: "Inglés Básico", price: "$99", schedule: "Lunes y Miércoles 18:00-20:00", duration: "8 semanas", type: "monthly" },
-                { id: 2, course: "Inglés Intermedio", price: "$149", schedule: "Martes y Jueves 18:00-20:00", duration: "12 semanas", type: "monthly" },
-                { id: 3, course: "Inglés Avanzado", price: "$199", schedule: "Lunes y Miércoles 20:00-22:00", duration: "16 semanas", type: "monthly" },
-                { id: 4, course: "Preparación TOEFL", price: "$179", schedule: "Sábados 10:00-13:00", duration: "10 semanas", type: "monthly" }
-            ];
-            
-            // Limpiar el contenedor
-            adminPricingList.innerHTML = '';
-            
-            // Generar la lista de precios
-            pricing.forEach(item => {
-                const pricingItem = document.createElement('div');
-                pricingItem.className = 'admin-item';
-                pricingItem.innerHTML = `
-                    <div>
-                        <strong>${item.course}</strong> - ${item.price} - ${item.schedule} - ${item.duration} - ${item.type}
-                    </div>
-                    <div class="admin-actions">
-                        <button class="btn btn-secondary" onclick="editPricing(${item.id})">Editar</button>
-                        <button class="btn btn-danger" onclick="deletePricing(${item.id})">Eliminar</button>
-                    </div>
-                `;
-                adminPricingList.appendChild(pricingItem);
-            });
-        }
-        
-        // Función para mostrar formulario de agregar clase en vivo
-        function showAddLiveClassForm() {
-            document.getElementById('addLiveClassForm').style.display = 'block';
-        }
-        
-        // Función para ocultar formulario de agregar clase en vivo
-        function hideAddLiveClassForm() {
-            document.getElementById('addLiveClassForm').style.display = 'none';
-        }
-        
-        // Función para agregar clase en vivo
-        function addLiveClass(event) {
-            event.preventDefault();
-            
-            // Obtener valores del formulario
-            const title = document.getElementById('liveClassTitle').value;
-            const date = document.getElementById('liveClassDate').value;
-            const time = document.getElementById('liveClassTime').value;
-            const platform = document.getElementById('liveClassPlatform').value;
-            const url = document.getElementById('liveClassUrl').value;
-            
-            // Aquí se agregaría la clase en vivo a la base de datos
-            // Por ahora, solo mostramos un mensaje
-            alert(`Clase en vivo "${title}" agregada correctamente.`);
-            
-            // Ocultar el formulario
-            hideAddLiveClassForm();
-            
-            // Recargar la lista de clases en vivo
-            loadAdminLiveClasses();
-        }
-        
-        // Función para cargar clases en vivo en el panel de administración
-        function loadAdminLiveClasses() {
-            const adminLiveClassesList = document.getElementById('adminLiveClassesList');
-            
-            // Datos de clases en vivo de ejemplo
-            const liveClasses = [
-                { id: 1, title: "Conversación en Inglés", date: "2023-11-15", time: "18:00", platform: "YouTube" },
-                { id: 2, title: "Gramática Avanzada", date: "2023-11-17", time: "19:30", platform: "Twitch" },
-                { id: 3, title: "Pronunciación Perfecta", date: "2023-11-20", time: "17:00", platform: "YouTube" },
-                { id: 4, title: "Vocabulario de Negocios", date: "2023-11-22", time: "20:00", platform: "Facebook" }
-            ];
-            
-            // Limpiar el contenedor
-            adminLiveClassesList.innerHTML = '';
-            
-            // Generar la lista de clases en vivo
-            liveClasses.forEach(classItem => {
-                const classItemElement = document.createElement('div');
-                classItemElement.className = 'admin-item';
-                classItemElement.innerHTML = `
-                    <div>
-                        <strong>${classItem.title}</strong> - ${formatDate(classItem.date)} - ${classItem.time} - ${classItem.platform}
-                    </div>
-                    <div class="admin-actions">
-                        <button class="btn btn-secondary" onclick="editLiveClass(${classItem.id})">Editar</button>
-                        <button class="btn btn-danger" onclick="deleteLiveClass(${classItem.id})">Eliminar</button>
-                    </div>
-                `;
-                adminLiveClassesList.appendChild(classItemElement);
-            });
-        }
-        
-        // Función para mostrar formulario de agregar acceso a clase
-        function showAddAccessClassForm() {
-            document.getElementById('addAccessClassForm').style.display = 'block';
-        }
-        
-        // Función para ocultar formulario de agregar acceso a clase
-        function hideAddAccessClassForm() {
-            document.getElementById('addAccessClassForm').style.display = 'none';
-        }
-        
-        // Función para agregar acceso a clase
-        function addAccessClass(event) {
-            event.preventDefault();
-            
-            // Obtener valores del formulario
-            const title = document.getElementById('accessClassTitle').value;
-            const platform = document.getElementById('accessClassPlatform').value;
-            const url = document.getElementById('accessClassUrl').value;
-            const teacher = document.getElementById('accessClassTeacher').value;
-            const schedule = document.getElementById('accessClassSchedule').value;
-            
-            // Aquí se agregaría el acceso a clase a la base de datos
-            // Por ahora, solo mostramos un mensaje
-            alert(`Acceso a clase "${title}" agregado correctamente.`);
-            
-            // Ocultar el formulario
-            hideAddAccessClassForm();
-            
-            // Recargar la lista de acceso a clases
-            loadAdminAccessClasses();
-        }
-        
-        // Función para cargar acceso a clases en el panel de administración
-        function loadAdminAccessClasses() {
-            const adminAccessClassesList = document.getElementById('adminAccessClassesList');
-            
-            // Datos de acceso a clases de ejemplo
-            const accessClasses = [
-                { id: 1, title: "Inglés Básico - Grupo A", platform: "Zoom", teacher: "Prof. John Smith", schedule: "Lunes y Miércoles 18:00-20:00" },
-                { id: 2, title: "Inglés Intermedio - Grupo B", platform: "Google Meet", teacher: "Prof. Sarah Johnson", schedule: "Martes y Jueves 18:00-20:00" },
-                { id: 3, title: "Inglés Avanzado - Grupo A", platform: "Zoom", teacher: "Prof. Michael Brown", schedule: "Lunes y Miércoles 20:00-22:00" },
-                { id: 4, title: "Preparación TOEFL - Grupo A", platform: "Google Meet", teacher: "Prof. Emily Davis", schedule: "Sábados 10:00-13:00" }
-            ];
-            
-            // Limpiar el contenedor
-            adminAccessClassesList.innerHTML = '';
-            
-            // Generar la lista de acceso a clases
-            accessClasses.forEach(classItem => {
-                const classItemElement = document.createElement('div');
-                classItemElement.className = 'admin-item';
-                classItemElement.innerHTML = `
-                    <div>
-                        <strong>${classItem.title}</strong> - ${classItem.platform} - ${classItem.teacher} - ${classItem.schedule}
-                    </div>
-                    <div class="admin-actions">
-                        <button class="btn btn-secondary" onclick="editAccessClass(${classItem.id})">Editar</button>
-                        <button class="btn btn-danger" onclick="deleteAccessClass(${classItem.id})">Eliminar</button>
-                    </div>
-                `;
-                adminAccessClassesList.appendChild(classItemElement);
-            });
-        }
-        
-        // Función para mostrar formulario de agregar banner
-        function showAddBannerForm() {
-            document.getElementById('addBannerForm').style.display = 'block';
-        }
-        
-        // Función para ocultar formulario de agregar banner
-        function hideAddBannerForm() {
-            document.getElementById('addBannerForm').style.display = 'none';
-        }
-        
-        // Función para agregar banner
-        function addBanner(event) {
-            event.preventDefault();
-            
-            // Obtener valores del formulario
-            const title = document.getElementById('bannerTitle').value;
-            const url = document.getElementById('bannerUrl').value;
-            
-            // Aquí se agregaría el banner a la base de datos
-            // Por ahora, solo mostramos un mensaje
-            alert(`Banner "${title}" agregado correctamente.`);
-            
-            // Ocultar el formulario
-            hideAddBannerForm();
-            
-            // Recargar la lista de banners
-            loadAdminBanners();
-        }
-        
-        // Función para cargar banners en el panel de administración
-        function loadAdminBanners() {
-            const adminBannersList = document.getElementById('adminBannersList');
-            
-            // Datos de banners de ejemplo
-            const banners = [
-                { id: 1, title: "Promoción de Verano", url: "https://example.com/banner1.jpg" },
-                { id: 2, title: "Nuevo Curso de Negocios", url: "https://example.com/banner2.jpg" },
-                { id: 3, title: "Clases Gratuitas", url: "https://example.com/banner3.jpg" }
-            ];
-            
-            // Limpiar el contenedor
-            adminBannersList.innerHTML = '';
-            
-            // Generar la lista de banners
-            banners.forEach(banner => {
-                const bannerItem = document.createElement('div');
-                bannerItem.className = 'admin-item';
-                bannerItem.innerHTML = `
-                    <div>
-                        <strong>${banner.title}</strong> - ${banner.url}
-                    </div>
-                    <div class="admin-actions">
-                        <button class="btn btn-secondary" onclick="editBanner(${banner.id})">Editar</button>
-                        <button class="btn btn-danger" onclick="deleteBanner(${banner.id})">Eliminar</button>
-                    </div>
-                `;
-                adminBannersList.appendChild(bannerItem);
-            });
-        }
-        
-        // Función para suscribirse al boletín
-        function subscribeNewsletter(event) {
-            event.preventDefault();
-            
-            const email = event.target.querySelector('input[type="email"]').value;
-            
-            // Aquí se enviaría el email a la base de datos
-            // Por ahora, solo mostramos un mensaje
-            alert(`Gracias por suscribirte con el email: ${email}`);
-            
-            // Limpiar el formulario
-            event.target.reset();
-        }
-        
-        // Función para ir a un slide específico
-        function goToSlide(index) {
-            const slides = document.querySelectorAll('.slider-image');
-            const dots = document.querySelectorAll('.slider-dot');
-            
-            slides.forEach(slide => slide.classList.remove('active'));
-            dots.forEach(dot => dot.classList.remove('active'));
-            
-            slides[index].classList.add('active');
-            dots[index].classList.add('active');
-        }
-        
-        // Función para resetear formulario
-        function resetForm(formName) {
-            if (formName === 'news') {
-                document.getElementById('newsInput').value = '¡¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA!! Válido hasta el 30 de noviembre.';
+
+            // Marcar días con clases (ejemplo)
+            if ((day === 15 || day === 17 || day === 20 || day === 22) && currentMonth === 10) {
+                dayElement.classList.add('has-class');
             }
+
+            calendarGrid.appendChild(dayElement);
         }
+    }
+
+    // Eventos para cambiar de mes
+    prevMonthButton.addEventListener('click', () => {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        renderCalendar();
+    });
+
+    nextMonthButton.addEventListener('click', () => {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        renderCalendar();
+    });
+
+    // Renderizar el calendario inicial
+    renderCalendar();
+}
+
+// Función para enviar mensaje del chatbot
+function sendChatMessage() {
+    const chatInput = document.getElementById('chatInput');
+    const chatMessages = document.getElementById('chatMessages');
+    const messageText = chatInput.value.trim();
+
+    if (messageText) {
+        // Agregar mensaje del usuario
+        const userMessage = document.createElement('div');
+        userMessage.className = 'user-message';
+        userMessage.textContent = messageText;
+        chatMessages.appendChild(userMessage);
+
+        // Limpiar el input
+        chatInput.value = '';
+
+        // Simular respuesta del bot
+        setTimeout(() => {
+            const botMessage = document.createElement('div');
+            botMessage.className = 'bot-message';
+            botMessage.textContent = 'Gracias por tu mensaje. Un representante de SkyLearn Academy te responderá pronto.';
+            chatMessages.appendChild(botMessage);
+
+            // Desplazar hacia abajo
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 1000);
+
+        // Desplazar hacia abajo
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+}
+
+// Función para manejar tecla Enter en el chat
+function handleChatKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendChatMessage();
+    }
+}
+
+// Función para enviar mensaje del chat en vivo
+function sendLiveChatMessage() {
+    const liveChatInput = document.getElementById('liveChatInput');
+    const liveChatMessages = document.getElementById('liveChatMessages');
+    const messageText = liveChatInput.value.trim();
+
+    if (messageText) {
+        // Agregar mensaje del usuario
+        const userMessage = document.createElement('div');
+        userMessage.className = 'chat-message user-message';
+        userMessage.textContent = messageText;
+        liveChatMessages.appendChild(userMessage);
+
+        // Limpiar el input
+        liveChatInput.value = '';
+
+        // Desplazar hacia abajo
+        liveChatMessages.scrollTop = liveChatMessages.scrollHeight;
+    }
+}
+
+// Función para manejar tecla Enter en el chat en vivo
+function handleLiveChatKeyPress(event) {
+    if (event.key === 'Enter') {
+        sendLiveChatMessage();
+    }
+}
+
+// Función para alternar la ventana del chatbot
+function toggleChat() {
+    const chatWindow = document.getElementById('chatWindow');
+    chatWindow.classList.toggle('active');
+}
+
+// Función para mostrar el formulario de inicio de sesión de administrador
+function showAdminLogin() {
+    document.getElementById('loginModal').style.display = 'block';
+}
+
+// Función para cerrar el formulario de inicio de sesión de administrador
+function closeLoginModal() {
+    document.getElementById('loginModal').style.display = 'none';
+}
+
+// Función para iniciar sesión como administrador
+function adminLogin(event) {
+    event.preventDefault();
+
+    const email = document.getElementById('adminEmail').value;
+    const password = document.getElementById('adminPassword').value;
+
+    // Verificar credenciales (esto es solo un ejemplo)
+    if (email === 'admin@skylearn.com' && password === 'admin123') {
+        // Cerrar el modal
+        closeLoginModal();
+
+        // Mostrar el enlace de administración
+        document.getElementById('adminLink').style.display = 'block';
+
+        // Mostrar la sección de administración
+        showSection('admin');
+
+        // Cargar datos del panel de administración
+        loadAdminData();
+    } else {
+        alert('Credenciales incorrectas. Por favor, inténtalo de nuevo.');
+    }
+}
+
+// Función para cerrar sesión de administrador
+function adminLogout() {
+    // Ocultar el enlace de administración
+    document.getElementById('adminLink').style.display = 'none';
+
+    // Mostrar la sección de inicio
+    showSection('home');
+}
+
+// Función para cargar datos del panel de administración
+function loadAdminData() {
+    // Actualizar estadísticas del panel
+    document.getElementById('totalStudents').textContent = '5000';
+    document.getElementById('totalCourses').textContent = '120';
+    document.getElementById('totalComments').textContent = '45';
+
+    // Cargar última actividad
+    document.getElementById('lastComment').textContent = '¡Excelente plataforma! - Ana García';
+    document.getElementById('lastRegistration').textContent = 'Carlos Rodríguez - Inglés Intermedio';
+}
+
+// Función para mostrar pestaña de administración
+function showAdminTab(tabName) {
+    // Ocultar todos los contenidos de administración
+    const adminContents = document.querySelectorAll('.admin-content');
+    adminContents.forEach(content => {
+        content.classList.remove('active');
+    });
+
+    // Mostrar el contenido seleccionado
+    document.getElementById(`admin-${tabName}`).classList.add('active');
+
+    // Actualizar pestañas activas
+    const adminTabs = document.querySelectorAll('.admin-tab');
+    adminTabs.forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.textContent.toLowerCase().includes(tabName) ||
+            (tabName === 'dashboard' && tab.textContent === 'Dashboard')) {
+            tab.classList.add('active');
+        }
+    });
+
+    // Cargar datos específicos de la pestaña
+    if (tabName === 'courses') {
+        loadAdminCourses();
+    } else if (tabName === 'pricing') {
+        loadAdminPricing();
+    } else if (tabName === 'live') {
+        loadAdminLiveClasses();
+    } else if (tabName === 'access') {
+        loadAdminAccessClasses();
+    } else if (tabName === 'banners') {
+        loadAdminBanners();
+    }
+}
+
+// Función para actualizar estadísticas de inicio
+function updateHomeStats() {
+    const students = document.getElementById('statsStudents').value;
+    const courses = document.getElementById('statsCourses').value;
+    const teachers = document.getElementById('statsTeachers').value;
+    const satisfaction = document.getElementById('statsSatisfaction').value;
+
+    // Actualizar los atributos data-target
+    document.querySelector('.stat-item:nth-child(1) .stat-number').setAttribute('data-target', students);
+    document.querySelector('.stat-item:nth-child(2) .stat-number').setAttribute('data-target', courses);
+    document.querySelector('.stat-item:nth-child(3) .stat-number').setAttribute('data-target', teachers);
+    document.querySelector('.stat-item:nth-child(4) .stat-number').setAttribute('data-target', satisfaction);
+
+    // Actualizar los valores mostrados
+    document.querySelector('.stat-item:nth-child(1) .stat-number').textContent = students;
+    document.querySelector('.stat-item:nth-child(2) .stat-number').textContent = courses;
+    document.querySelector('.stat-item:nth-child(3) .stat-number').textContent = teachers;
+    document.querySelector('.stat-item:nth-child(4) .stat-number').textContent = satisfaction;
+    
+    // Volver a animar las estadísticas
+    animateStats();
+
+    alert('Estadísticas actualizadas correctamente.');
+}
+
+// Función para actualizar noticias
+function updateNews(event) {
+    event.preventDefault();
+
+    const newsText = document.getElementById('newsInput').value;
+    document.getElementById('newsText').textContent = newsText;
+
+    alert('Noticia actualizada correctamente.');
+}
+
+// Función para mostrar formulario de agregar curso
+function showAddCourseForm() {
+    document.getElementById('addCourseForm').style.display = 'block';
+}
+
+// Función para ocultar formulario de agregar curso
+function hideAddCourseForm() {
+    document.getElementById('addCourseForm').style.display = 'none';
+}
+
+// Función para agregar curso
+function addCourse(event) {
+    event.preventDefault();
+
+    // Obtener valores del formulario
+    const title = document.getElementById('newCourseTitle').value;
+    const teacher = document.getElementById('newCourseTeacher').value;
+    const duration = document.getElementById('newCourseDuration').value;
+    const students = document.getElementById('newCourseStudents').value;
+    const price = document.getElementById('newCoursePrice').value;
+    const image = document.getElementById('newCourseImage').value;
+    const description = document.getElementById('newCourseDescription').value;
+
+    // Aquí se agregaría el curso a la base de datos
+    // Por ahora, solo mostramos un mensaje
+    alert(`Curso "${title}" agregado correctamente.`);
+
+    // Ocultar el formulario
+    hideAddCourseForm();
+
+    // Recargar la lista de cursos
+    loadAdminCourses();
+    loadCourses(); // También recargar los cursos en la sección pública
+}
+
+// Función para cargar cursos en el panel de administración
+function loadAdminCourses() {
+    const adminCoursesList = document.getElementById('adminCoursesList');
+
+    // Datos de cursos de ejemplo
+    const courses = [
+        { id: 1, title: "Inglés Básico", teacher: "Prof. John Smith", duration: "8 semanas", students: "120", price: "$99" },
+        { id: 2, title: "Inglés Intermedio", teacher: "Prof. Sarah Johnson", duration: "12 semanas", students: "85", price: "$149" },
+        { id: 3, title: "Inglés Avanzado", teacher: "Prof. Michael Brown", duration: "16 semanas", students: "65", price: "$199" },
+        { id: 4, title: "Preparación TOEFL", teacher: "Prof. Emily Davis", duration: "10 semanas", students: "45", price: "$179" }
+    ];
+
+    // Limpiar el contenedor
+    adminCoursesList.innerHTML = '';
+
+    // Generar la lista de cursos
+    courses.forEach(course => {
+        const courseItem = document.createElement('div');
+        courseItem.className = 'admin-item';
+        courseItem.innerHTML = `
+            <div>
+                <strong>${course.title}</strong> - ${course.teacher} - ${course.duration} - ${course.students} estudiantes - ${course.price}
+            </div>
+            <div class="admin-actions">
+                <button class="btn btn-secondary" onclick="editCourse(${course.id})">Editar</button>
+                <button class="btn btn-danger" onclick="deleteCourse(${course.id})">Eliminar</button>
+            </div>
+        `;
+        adminCoursesList.appendChild(courseItem);
+    });
+}
+
+// Función para mostrar formulario de agregar precio
+function showAddPricingForm() {
+    document.getElementById('addPricingForm').style.display = 'block';
+}
+
+// Función para ocultar formulario de agregar precio
+function hideAddPricingForm() {
+    document.getElementById('addPricingForm').style.display = 'none';
+}
+
+// Función para agregar precio
+function addPricing(event) {
+    event.preventDefault();
+
+    // Obtener valores del formulario
+    const course = document.getElementById('pricingCourse').value;
+    const price = document.getElementById('pricingPrice').value;
+    const schedule = document.getElementById('pricingSchedule').value;
+    const duration = document.getElementById('pricingDuration').value;
+    const type = document.getElementById('pricingType').value;
+
+    // Aquí se agregaría el precio a la base de datos
+    // Por ahora, solo mostramos un mensaje
+    alert(`Precio para "${course}" agregado correctamente.`);
+
+    // Ocultar el formulario
+    hideAddPricingForm();
+
+    // Recargar la lista de precios
+    loadAdminPricing();
+    loadPricing(type); // También recargar los precios en la sección pública
+}
+
+// Función para cargar precios en el panel de administración
+function loadAdminPricing() {
+    const adminPricingList = document.getElementById('adminPricingList');
+
+    // Datos de precios de ejemplo
+    const pricing = [
+        { id: 1, course: "Inglés Básico", price: "$99", schedule: "Lunes y Miércoles 18:00-20:00", duration: "8 semanas", type: "monthly" },
+        { id: 2, course: "Inglés Intermedio", price: "$149", schedule: "Martes y Jueves 18:00-20:00", duration: "12 semanas", type: "monthly" },
+        { id: 3, course: "Inglés Avanzado", price: "$199", schedule: "Lunes y Miércoles 20:00-22:00", duration: "16 semanas", type: "monthly" },
+        { id: 4, course: "Preparación TOEFL", price: "$179", schedule: "Sábados 10:00-13:00", duration: "10 semanas", type: "monthly" }
+    ];
+
+    // Limpiar el contenedor
+    adminPricingList.innerHTML = '';
+
+    // Generar la lista de precios
+    pricing.forEach(item => {
+        const pricingItem = document.createElement('div');
+        pricingItem.className = 'admin-item';
+        pricingItem.innerHTML = `
+            <div>
+                <strong>${item.course}</strong> - ${item.price} - ${item.schedule} - ${item.duration} - ${item.type}
+            </div>
+            <div class="admin-actions">
+                <button class="btn btn-secondary" onclick="editPricing(${item.id})">Editar</button>
+                <button class="btn btn-danger" onclick="deletePricing(${item.id})">Eliminar</button>
+            </div>
+        `;
+        adminPricingList.appendChild(pricingItem);
+    });
+}
+
+// Función para mostrar formulario de agregar clase en vivo
+function showAddLiveClassForm() {
+    document.getElementById('addLiveClassForm').style.display = 'block';
+}
+
+// Función para ocultar formulario de agregar clase en vivo
+function hideAddLiveClassForm() {
+    document.getElementById('addLiveClassForm').style.display = 'none';
+}
+
+// Función para agregar clase en vivo
+function addLiveClass(event) {
+    event.preventDefault();
+
+    // Obtener valores del formulario
+    const title = document.getElementById('liveClassTitle').value;
+    const date = document.getElementById('liveClassDate').value;
+    const time = document.getElementById('liveClassTime').value;
+    const platform = document.getElementById('liveClassPlatform').value;
+    const url = document.getElementById('liveClassUrl').value;
+
+    // Aquí se agregaría la clase en vivo a la base de datos
+    // Por ahora, solo mostramos un mensaje
+    alert(`Clase en vivo "${title}" agregada correctamente.`);
+
+    // Ocultar el formulario
+    hideAddLiveClassForm();
+
+    // Recargar la lista de clases en vivo
+    loadAdminLiveClasses();
+    loadLiveClasses(); // También recargar las clases en vivo en la sección pública
+}
+
+// Función para cargar clases en vivo en el panel de administración
+function loadAdminLiveClasses() {
+    const adminLiveClassesList = document.getElementById('adminLiveClassesList');
+
+    // Datos de clases en vivo de ejemplo
+    const liveClasses = [
+        { id: 1, title: "Conversación en Inglés", date: "2023-11-15", time: "18:00", platform: "YouTube" },
+        { id: 2, title: "Gramática Avanzada", date: "2023-11-17", time: "19:30", platform: "Twitch" },
+        { id: 3, title: "Pronunciación Perfecta", date: "2023-11-20", time: "17:00", platform: "YouTube" },
+        { id: 4, title: "Vocabulario de Negocios", date: "2023-11-22", time: "20:00", platform: "Facebook" }
+    ];
+
+    // Limpiar el contenedor
+    adminLiveClassesList.innerHTML = '';
+
+    // Generar la lista de clases en vivo
+    liveClasses.forEach(classItem => {
+        const classItemElement = document.createElement('div');
+        classItemElement.className = 'admin-item';
+        classItemElement.innerHTML = `
+            <div>
+                <strong>${classItem.title}</strong> - ${formatDate(classItem.date)} - ${classItem.time} - ${classItem.platform}
+            </div>
+            <div class="admin-actions">
+                <button class="btn btn-secondary" onclick="editLiveClass(${classItem.id})">Editar</button>
+                <button class="btn btn-danger" onclick="deleteLiveClass(${classItem.id})">Eliminar</button>
+            </div>
+        `;
+        adminLiveClassesList.appendChild(classItemElement);
+    });
+}
+
+// Función para mostrar formulario de agregar acceso a clase
+function showAddAccessClassForm() {
+    document.getElementById('addAccessClassForm').style.display = 'block';
+}
+
+// Función para ocultar formulario de agregar acceso a clase
+function hideAddAccessClassForm() {
+    document.getElementById('addAccessClassForm').style.display = 'none';
+}
+
+// Función para agregar acceso a clase
+function addAccessClass(event) {
+    event.preventDefault();
+
+    // Obtener valores del formulario
+    const title = document.getElementById('accessClassTitle').value;
+    const platform = document.getElementById('accessClassPlatform').value;
+    const url = document.getElementById('accessClassUrl').value;
+    const teacher = document.getElementById('accessClassTeacher').value;
+    const schedule = document.getElementById('accessClassSchedule').value;
+
+    // Aquí se agregaría el acceso a clase a la base de datos
+    // Por ahora, solo mostramos un mensaje
+    alert(`Acceso a clase "${title}" agregado correctamente.`);
+
+    // Ocultar el formulario
+    hideAddAccessClassForm();
+
+    // Recargar la lista de acceso a clases
+    loadAdminAccessClasses();
+    loadAccessClasses(); // También recargar los accesos a clases en la sección pública
+}
+
+// Función para cargar acceso a clases en el panel de administración
+function loadAdminAccessClasses() {
+    const adminAccessClassesList = document.getElementById('adminAccessClassesList');
+
+    // Datos de acceso a clases de ejemplo
+    const accessClasses = [
+        { id: 1, title: "Inglés Básico - Grupo A", platform: "Zoom", teacher: "Prof. John Smith", schedule: "Lunes y Miércoles 18:00-20:00" },
+        { id: 2, title: "Inglés Intermedio - Grupo B", platform: "Google Meet", teacher: "Prof. Sarah Johnson", schedule: "Martes y Jueves 18:00-20:00" },
+        { id: 3, title: "Inglés Avanzado - Grupo A", platform: "Zoom", teacher: "Prof. Michael Brown", schedule: "Lunes y Miércoles 20:00-22:00" },
+        { id: 4, title: "Preparación TOEFL - Grupo A", platform: "Google Meet", teacher: "Prof. Emily Davis", schedule: "Sábados 10:00-13:00" }
+    ];
+
+    // Limpiar el contenedor
+    adminAccessClassesList.innerHTML = '';
+
+    // Generar la lista de acceso a clases
+    accessClasses.forEach(classItem => {
+        const classItemElement = document.createElement('div');
+        classItemElement.className = 'admin-item';
+        classItemElement.innerHTML = `
+            <div>
+                <strong>${classItem.title}</strong> - ${classItem.platform} - ${classItem.teacher} - ${classItem.schedule}
+            </div>
+            <div class="admin-actions">
+                <button class="btn btn-secondary" onclick="editAccessClass(${classItem.id})">Editar</button>
+                <button class="btn btn-danger" onclick="deleteAccessClass(${classItem.id})">Eliminar</button>
+            </div>
+        `;
+        adminAccessClassesList.appendChild(classItemElement);
+    });
+}
+
+// Función para mostrar formulario de agregar banner
+function showAddBannerForm() {
+    document.getElementById('addBannerForm').style.display = 'block';
+}
+
+// Función para ocultar formulario de agregar banner
+function hideAddBannerForm() {
+    document.getElementById('addBannerForm').style.display = 'none';
+}
+
+// Función para agregar banner
+function addBanner(event) {
+    event.preventDefault();
+
+    // Obtener valores del formulario
+    const title = document.getElementById('bannerTitle').value;
+    const url = document.getElementById('bannerUrl').value;
+
+    // Aquí se agregaría el banner a la base de datos
+    // Por ahora, solo mostramos un mensaje
+    alert(`Banner "${title}" agregado correctamente.`);
+
+    // Ocultar el formulario
+    hideAddBannerForm();
+
+    // Recargar la lista de banners
+    loadAdminBanners();
+}
+
+// Función para cargar banners en el panel de administración
+function loadAdminBanners() {
+    const adminBannersList = document.getElementById('adminBannersList');
+
+    // Datos de banners de ejemplo
+    const banners = [
+        { id: 1, title: "Promoción de Verano", url: "https://example.com/banner1.jpg" },
+        { id: 2, title: "Nuevo Curso de Negocios", url: "https://example.com/banner2.jpg" },
+        { id: 3, title: "Clases Gratuitas", url: "https://example.com/banner3.jpg" }
+    ];
+
+    // Limpiar el contenedor
+    adminBannersList.innerHTML = '';
+
+    // Generar la lista de banners
+    banners.forEach(banner => {
+        const bannerItem = document.createElement('div');
+        bannerItem.className = 'admin-item';
+        bannerItem.innerHTML = `
+            <div>
+                <strong>${banner.title}</strong> - ${banner.url}
+            </div>
+            <div class="admin-actions">
+                <button class="btn btn-secondary" onclick="editBanner(${banner.id})">Editar</button>
+                <button class="btn btn-danger" onclick="deleteBanner(${banner.id})">Eliminar</button>
+            </div>
+        `;
+        adminBannersList.appendChild(bannerItem);
+    });
+}
+
+// Función para suscribirse al boletín
+function subscribeNewsletter(event) {
+    event.preventDefault();
+
+    const email = event.target.querySelector('input[type="email"]').value;
+
+    // Aquí se enviaría el email a la base de datos
+    // Por ahora, solo mostramos un mensaje
+    alert(`Gracias por suscribirte con el email: ${email}`);
+
+    // Limpiar el formulario
+    event.target.reset();
+}
+
+// Función para ir a un slide específico
+function goToSlide(index) {
+    const slides = document.querySelectorAll('.slider-image');
+    const dots = document.querySelectorAll('.slider-dot');
+
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+}
+
+// Función para resetear formulario
+function resetForm(formName) {
+    if (formName === 'news') {
+        document.getElementById('newsInput').value = '¡¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA!! Válido hasta el 30 de noviembre.';
+    }
+}
+
+// Funciones de edición y eliminación (modificadas para actualizar en tiempo real)
+function editCourse(id) {
+    // Aquí deberías mostrar un formulario con los datos actuales del curso
+    // Por ahora, solo simularemos la actualización
+    
+    // Simulación de actualización
+    alert(`Editando curso con ID: ${id}`);
+    
+    // Después de editar, recargar los cursos para que se vean los cambios
+    loadCourses();
+    loadAdminCourses();
+}
+
+function deleteCourse(id) {
+    if (confirm('¿Estás seguro de que quieres eliminar este curso?')) {
+        alert(`Curso con ID: ${id} eliminado correctamente.`);
+        loadCourses();
+        loadAdminCourses();
+    }
+}
+
+function editPricing(id) {
+    // Simulación de actualización
+    alert(`Editando precio con ID: ${id}`);
+    
+    // Recargar los precios
+    const activeTab = document.querySelector('.pricing-tab.active').textContent.toLowerCase();
+    let pricingType = 'monthly';
+    
+    if (activeTab.includes('trimestral')) pricingType = 'quarterly';
+    if (activeTab.includes('anual')) pricingType = 'yearly';
+    
+    loadPricing(pricingType);
+    loadAdminPricing();
+}
+
+function deletePricing(id) {
+    if (confirm('¿Estás seguro de que quieres eliminar este precio?')) {
+        alert(`Precio con ID: ${id} eliminado correctamente.`);
         
-        // Funciones de edición y eliminación (placeholder)
-        function editCourse(id) {
-            alert(`Editar curso con ID: ${id}`);
-        }
+        const activeTab = document.querySelector('.pricing-tab.active').textContent.toLowerCase();
+        let pricingType = 'monthly';
         
-        function deleteCourse(id) {
-            if (confirm('¿Estás seguro de que quieres eliminar este curso?')) {
-                alert(`Curso con ID: ${id} eliminado correctamente.`);
-                loadAdminCourses();
-            }
-        }
+        if (activeTab.includes('trimestral')) pricingType = 'quarterly';
+        if (activeTab.includes('anual')) pricingType = 'yearly';
         
-        function editPricing(id) {
-            alert(`Editar precio con ID: ${id}`);
-        }
-        
-        function deletePricing(id) {
-            if (confirm('¿Estás seguro de que quieres eliminar este precio?')) {
-                alert(`Precio con ID: ${id} eliminado correctamente.`);
-                loadAdminPricing();
-            }
-        }
-        
-        function editLiveClass(id) {
-            alert(`Editar clase en vivo con ID: ${id}`);
-        }
-        
-        function deleteLiveClass(id) {
-            if (confirm('¿Estás seguro de que quieres eliminar esta clase en vivo?')) {
-                alert(`Clase en vivo con ID: ${id} eliminada correctamente.`);
-                loadAdminLiveClasses();
-            }
-        }
-        
-        function editAccessClass(id) {
-            alert(`Editar acceso a clase con ID: ${id}`);
-        }
-        
-        function deleteAccessClass(id) {
-            if (confirm('¿Estás seguro de que quieres eliminar este acceso a clase?')) {
-                alert(`Acceso a clase con ID: ${id} eliminado correctamente.`);
-                loadAdminAccessClasses();
-            }
-        }
-        
-        function editBanner(id) {
-            alert(`Editar banner con ID: ${id}`);
-        }
-        
-        function deleteBanner(id) {
-            if (confirm('¿Estás seguro de que quieres eliminar este banner?')) {
-                alert(`Banner con ID: ${id} eliminado correctamente.`);
-                loadAdminBanners();
-            }
-        }
-    </script>
+        loadPricing(pricingType);
+        loadAdminPricing();
+    }
+}
+
+function editLiveClass(id) {
+    // Simulación de actualización
+    alert(`Editando clase en vivo con ID: ${id}`);
+    
+    // Recargar las clases en vivo
+    loadLiveClasses();
+    loadAdminLiveClasses();
+}
+
+function deleteLiveClass(id) {
+    if (confirm('¿Estás seguro de que quieres eliminar esta clase en vivo?')) {
+        alert(`Clase en vivo con ID: ${id} eliminada correctamente.`);
+        loadLiveClasses();
+        loadAdminLiveClasses();
+    }
+}
+
+function editAccessClass(id) {
+    // Simulación de actualización
+    alert(`Editando acceso a clase con ID: ${id}`);
+    
+    // Recargar los accesos a clases
+    loadAccessClasses();
+    loadAdminAccessClasses();
+}
+
+function deleteAccessClass(id) {
+    if (confirm('¿Estás seguro de que quieres eliminar este acceso a clase?')) {
+        alert(`Acceso a clase con ID: ${id} eliminado correctamente.`);
+        loadAccessClasses();
+        loadAdminAccessClasses();
+    }
+}
+
+function editBanner(id) {
+    // Simulación de actualización
+    alert(`Editando banner con ID: ${id}`);
+    
+    // Recargar los banners
+    loadAdminBanners();
+}
+
+function deleteBanner(id) {
+    if (confirm('¿Estás seguro de que quieres eliminar este banner?')) {
+        alert(`Banner con ID: ${id} eliminado correctamente.`);
+        loadAdminBanners();
+    }
+}
+
+// Evento para verificar primera visita al cargar la página
+window.addEventListener('load', checkFirstVisit);
+</script>
 </head>
 <body>
-    <!-- Loading Bar -->
-    <div class="loading-bar">
-        <div class="loading-progress" id="loadingProgress"></div>
-    </div>
+<!-- Loading Bar -->
+<div class="loading-bar">
+<div class="loading-progress" id="loadingProgress"></div>
+</div>
+
+<!-- Pantalla de Bienvenida -->
+<div class="login-screen" id="loginScreen">
+<div class="logo-container">
+<img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="Logo SkyLearn Academy" class="logo-spin">
+</div>
+<h1>READY TO LEARN ENGLISH?</h1>
+<button class="btn btn-primary" onclick="showMainContent()">COMENZAR</button>
+</div>
+
+<!-- Navegación -->
+<nav class="navbar" id="navbar" style="display: none;">
+<div class="nav-content">
+<img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="SkyLearn Academy Logo" class="logo">
+<div class="nav-links">
+<a href="#home" onclick="showSection('home')" class="active">Inicio</a>
+<a href="#courses" onclick="showSection('courses')">Cursos</a>
+<a href="#pricing" onclick="showSection('pricing')">Precios</a>
+<a href="#live" onclick="showSection('live')">Clases en Vivo</a>
+<a href="#access" onclick="showSection('access')">Acceso a Clases</a>
+<a href="#contact" onclick="showSection('contact')">Contacto</a>
+<a href="#admin" onclick="showAdminLogin()" class="admin-link" id="adminLink" style="display: none;">Admin</a>
+</div>
+</div>
+</nav>
+
+<!-- Contenido Principal -->
+<main style="display: none;">
+<!-- Sección Inicio -->
+<section id="home" class="section active">
+<div class="container">
+<div class="section-header">
+<h2>Aprende Inglés con los Mejores</h2>
+<p>Únete a miles de estudiantes que ya están mejorando su inglés con nuestros cursos interactivos y profesores certificados.</p>
+</div>
+
+<div class="home-slider">
+<img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Aprende inglés con SkyLearn Academy" class="slider-image active">
+<img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80" alt="Profesores nativos de inglés" class="slider-image">
+<img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Clases interactivas de inglés" class="slider-image">
+<div class="slider-controls">
+<div class="slider-dot active" onclick="goToSlide(0)"></div>
+<div class="slider-dot" onclick="goToSlide(1)"></div>
+<div class="slider-dot" onclick="goToSlide(2)"></div>
+</div>
+</div>
+
+<!-- Estadísticas -->
+<div class="stats-container">
+<div class="stat-item">
+<div class="stat-number" data-target="5000">0</div>
+<div class="stat-label">Estudiantes</div>
+</div>
+<div class="stat-item">
+<div class="stat-number" data-target="120">0</div>
+<div class="stat-label">Cursos</div>
+</div>
+<div class="stat-item">
+<div class="stat-number" data-target="50">0</div>
+<div class="stat-label">Profesores</div>
+</div>
+<div class="stat-item">
+<div class="stat-number" data-target="98">0</div>
+<div class="stat-label">% Satisfacción</div>
+</div>
+</div>
+
+<!-- Noticias -->
+<div class="news-section">
+<div class="news-content">
+<div class="news-icon">
+<i class="fas fa-bullhorn"></i>
+</div>
+<p id="newsText">¡¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA!! Válido hasta el 30 de noviembre.</p>
+</div>
+</div>
+
+<!-- Comentarios -->
+<div class="comments-section">
+<h2>Comentarios Recientes</h2>
+<div class="comments-list" id="commentsContainer"></div>
+<form onsubmit="addComment(event)">
+<input type="text" id="commentInput" placeholder="Escribe un comentario..." required>
+<button type="submit" class="btn btn-primary">
+<i class="fas fa-paper-plane"></i> Enviar
+</button>
+</form>
+</div>
+
+<!-- Testimonios -->
+<div class="testimonials-section">
+<h2>Testimonios de Estudiantes</h2>
+<div class="testimonials-container">
+<div class="testimonial-card">
+<div class="testimonial-content">
+<p>"SkyLearn Academy ha transformado mi inglés. Los profesores son increíbles y las clases son muy interactivas."</p>
+</div>
+<div class="testimonial-author">
+<img src="https://ui-avatars.com/api/?name=Ana+Garcia&background=1a3a8f&color=fff&size=60" alt="Ana Garcia" class="author-avatar">
+<div class="author-info">
+<h4>Ana Garcia</h4>
+<p>Estudiante de Inglés Intermedio</p>
+</div>
+</div>
+</div>
+
+<div class="testimonial-card">
+<div class="testimonial-content">
+<p>"Gracias a SkyLearn Academy, pude aprobar el examen TOEFL con una puntuación alta. ¡Recomiendo sus cursos 100%!"</p>
+</div>
+<div class="testimonial-author">
+<img src="https://ui-avatars.com/api/?name=Carlos+Rodriguez&background=1a3a8f&color=fff&size=60" alt="Carlos Rodriguez" class="author-avatar">
+<div class="author-info">
+<h4>Carlos Rodriguez</h4>
+<p>Estudiante de Preparación TOEFL</p>
+</div>
+</div>
+</div>
+
+<div class="testimonial-card">
+<div class="testimonial-content">
+<p>"Las clases en vivo son geniales. Puedo practicar mi inglés con profesores nativos desde la comodidad de mi hogar."</p>
+</div>
+<div class="testimonial-author">
+<img src="https://ui-avatars.com/api/?name=Maria+Lopez&background=1a3a8f&color=fff&size=60" alt="Maria Lopez" class="author-avatar">
+<div class="author-info">
+<h4>Maria Lopez</h4>
+<p>Estudiante de Conversación</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Sección Cursos -->
+<section id="courses" class="section">
+<div class="container">
+<div class="section-header">
+<h2>Nuestros Cursos de Inglés</h2>
+<p>Ofrecemos una variedad de cursos diseñados para todos los niveles, desde principiantes hasta avanzados.</p>
+</div>
+
+<div class="courses-grid" id="coursesGrid">
+<!-- Los cursos se cargarán dinámicamente aquí -->
+</div>
+</div>
+</section>
+
+<!-- Sección Precios -->
+<section id="pricing" class="section">
+<div class="container">
+<div class="section-header">
+<h2>Precios y Horarios</h2>
+<p>Elige el plan que mejor se adapte a tus necesidades y presupuesto.</p>
+</div>
+
+<div class="pricing-container">
+<div class="pricing-tabs">
+<div class="pricing-tab active" onclick="showPricing('monthly')">Mensual</div>
+<div class="pricing-tab" onclick="showPricing('quarterly')">Trimestral</div>
+<div class="pricing-tab" onclick="showPricing('yearly')">Anual</div>
+</div>
+
+<div class="table-responsive">
+<table class="pricing-table">
+<thead>
+<tr>
+<th>Curso</th>
+<th>Precio</th>
+<th>Horario</th>
+<th>Duración</th>
+</tr>
+</thead>
+<tbody id="pricingTableBody">
+<!-- Los precios se cargarán dinámicamente aquí -->
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Sección Clases en Vivo -->
+<section id="live" class="section">
+<div class="container">
+<div class="section-header">
+<h2>Clases en Vivo</h2>
+<p>Únete a nuestras clases interactivas en tiempo real con profesores certificados.</p>
+</div>
+
+<div class="live-section">
+<div class="live-container">
+<div class="live-video">
+<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+</div>
+<div class="live-chat">
+<div class="chat-header">
+<i class="fas fa-comments"></i> Chat en Vivo
+</div>
+<div class="chat-messages" id="liveChatMessages">
+<div class="chat-message other-message">
+¡Bienvenidos a la clase de hoy! Vamos a practicar conversación.
+</div>
+<div class="chat-message user-message">
+¡Hola! Tengo una pregunta sobre la pronunciación.
+</div>
+<div class="chat-message other-message">
+Claro, ¿cuál es tu duda? Estoy aquí para ayudarte.
+</div>
+</div>
+<div class="chat-input">
+<input type="text" id="liveChatInput" placeholder="Escribe tu mensaje..." onkeypress="handleLiveChatKeyPress(event)">
+<button onclick="sendLiveChatMessage()"><i class="fas fa-paper-plane"></i></button>
+</div>
+</div>
+</div>
+
+<div class="live-schedule">
+<h3>Próximas Clases</h3>
+<div id="liveScheduleContainer">
+<!-- El horario de clases se cargará dinámicamente aquí -->
+</div>
+</div>
+</div>
+
+<!-- Calendario -->
+<div class="calendar-container">
+<div class="calendar-header">
+<h3 id="currentMonth">Noviembre 2023</h3>
+<div class="calendar-nav">
+<button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+<button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+</div>
+</div>
+<div class="calendar-grid" id="calendarGrid">
+<!-- El calendario se generará con JavaScript -->
+</div>
+</div>
+</div>
+</section>
+
+<!-- Sección Acceso a Clases -->
+<section id="access" class="section">
+<div class="container">
+<div class="section-header">
+<h2>Acceso a Clases</h2>
+<p>Ingresa a tus clases virtuales utilizando los enlaces a continuación.</p>
+</div>
+
+<div class="access-grid" id="accessGrid">
+<!-- Los enlaces de acceso se cargarán dinámicamente aquí -->
+</div>
+</div>
+</section>
+
+<!-- Sección Preguntas Frecuentes -->
+<section id="faq" class="section">
+<div class="container">
+<div class="section-header">
+<h2>Preguntas Frecuentes</h2>
+<p>Encuentra respuestas a las preguntas más comunes sobre nuestros cursos y servicios.</p>
+</div>
+
+<div class="faq-container">
+<div class="faq-item">
+<div class="faq-question">
+<h3>¿Cómo me inscribo en un curso?</h3>
+<i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>Puedes inscribirte en un curso haciendo clic en el botón "Inscribirse" en la página del curso que te interesa. Te pediremos algunos datos básicos y podrás elegir el método de pago que prefieras.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+<h3>¿Necesito tener conocimientos previos de inglés?</h3>
+<i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>No necesitas tener conocimientos previos para nuestros cursos básicos. Ofrecemos cursos para todos los niveles, desde principiantes hasta avanzados. Si no estás seguro de tu nivel, podemos hacer una evaluación gratuita para recomendarte el curso adecuado.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+<h3>¿Qué pasa si no puedo asistir a una clase en vivo?</h3>
+<i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>Si no puedes asistir a una clase en vivo, no te preocupes. Todas nuestras clases son grabadas y podrás verlas más tarde en tu área de estudiante. También tendrás acceso a los materiales de la clase para que no te pierdas nada.</p>
+</div>
+</div>
+
+<div class="faq-item">
+<div class="faq-question">
+<h3>¿Recibiré un certificado al finalizar un curso?</h3>
+<i class="fas fa-chevron-down"></i>
+</div>
+<div class="faq-answer">
+<p>Sí, al finalizar satisfactoriamente uno de nuestros cursos, recibirás un certificado de completion que puedes agregar a tu currículum o perfil de LinkedIn. Nuestros certificados son reconocidos por muchas instituciones y empresas.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Sección Contacto -->
+<section id="contact" class="section">
+<div class="container">
+<div class="section-header">
+<h2>Contacto</h2>
+<p>¿Tienes preguntas o comentarios? No dudes en contactarnos.</p>
+</div>
+
+<div class="contact-container">
+<div class="contact-info">
+<div class="contact-item">
+<i class="fas fa-map-marker-alt"></i>
+<div>
+<h3>Dirección</h3>
+<p>123 Calle Aprendizaje, Ciudad Educativa</p>
+</div>
+</div>
+
+<div class="contact-item">
+<i class="fas fa-phone"></i>
+<div>
+<h3>Teléfono</h3>
+<p>+1 (555) 123-4567</p>
+</div>
+</div>
+
+<div class="contact-item">
+<i class="fas fa-envelope"></i>
+<div>
+<h3>Email</h3>
+<p>info@skylearn-academy.com</p>
+</div>
+</div>
+
+<div class="contact-item">
+<i class="fas fa-clock"></i>
+<div>
+<h3>Horario</h3>
+<p>Lunes a Viernes: 9:00 AM - 6:00 PM</p>
+</div>
+</div>
+</div>
+
+<div class="contact-form">
+<form onsubmit="submitContactForm(event)">
+<div class="form-group">
+<label for="name">Nombre</label>
+<input type="text" id="name" required>
+</div>
+
+<div class="form-group">
+<label for="email">Email</label>
+<input type="email" id="email" required>
+</div>
+
+<div class="form-group">
+<label for="subject">Asunto</label>
+<input type="text" id="subject" required>
+</div>
+
+<div class="form-group">
+<label for="message">Mensaje</label>
+<textarea id="message" rows="5" required></textarea>
+</div>
+
+<button type="submit" class="btn btn-primary">Enviar Mensaje</button>
+</form>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Sección Administración -->
+<section id="admin" class="section">
+<div class="container">
+<div class="section-header">
+<h2>Panel de Administración</h2>
+<p>Gestiona los contenidos de la plataforma.</p>
+</div>
+
+<div class="admin-tabs">
+<div class="admin-tab active" onclick="showAdminTab('dashboard')">Dashboard</div>
+<div class="admin-tab" onclick="showAdminTab('home')">Inicio</div>
+<div class="admin-tab" onclick="showAdminTab('courses')">Cursos</div>
+<div class="admin-tab" onclick="showAdminTab('pricing')">Precios</div>
+<div class="admin-tab" onclick="showAdminTab('live')">Clases en Vivo</div>
+<div class="admin-tab" onclick="showAdminTab('access')">Acceso a Clases</div>
+<div class="admin-tab" onclick="showAdminTab('banners')">Banners</div>
+<div class="admin-tab" onclick="adminLogout()">Cerrar Sesión</div>
+</div>
+
+<!-- Dashboard -->
+<div id="admin-dashboard" class="admin-content active">
+<div class="admin-stats">
+<div class="admin-stat-card">
+<div class="stat-icon">
+<i class="fas fa-users"></i>
+</div>
+<div class="stat-info">
+<h3>Estudiantes</h3>
+<p id="totalStudents">5000</p>
+</div>
+</div>
+
+<div class="admin-stat-card">
+<div class="stat-icon">
+<i class="fas fa-book"></i>
+</div>
+<div class="stat-info">
+<h3>Cursos</h3>
+<p id="totalCourses">120</p>
+</div>
+</div>
+
+<div class="admin-stat-card">
+<div class="stat-icon">
+<i class="fas fa-comments"></i>
+</div>
+<div class="stat-info">
+<h3>Comentarios</h3>
+<p id="totalComments">45</p>
+</div>
+</div>
+</div>
+
+<div class="admin-recent-activity">
+<h3>Actividad Reciente</h3>
+<div class="activity-item">
+<div class="activity-icon">
+<i class="fas fa-comment"></i>
+</div>
+<div class="activity-info">
+<p id="lastComment">¡Excelente plataforma! - Ana García</p>
+<span class="activity-time">Hace 2 horas</span>
+</div>
+</div>
+
+<div class="activity-item">
+<div class="activity-icon">
+<i class="fas fa-user-plus"></i>
+</div>
+<div class="activity-info">
+<p id="lastRegistration">Carlos Rodríguez - Inglés Intermedio</p>
+<span class="activity-time">Hace 5 horas</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Administración Inicio -->
+<div id="admin-home" class="admin-content">
+<h3>Editar Página de Inicio</h3>
+
+<div class="admin-form-container">
+<h4>Estadísticas</h4>
+<form onsubmit="updateHomeStats()">
+<div class="form-group">
+<label for="statsStudents">Número de Estudiantes</label>
+<input type="number" id="statsStudents" value="5000" required>
+</div>
+
+<div class="form-group">
+<label for="statsCourses">Número de Cursos</label>
+<input type="number" id="statsCourses" value="120" required>
+</div>
+
+<div class="form-group">
+<label for="statsTeachers">Número de Profesores</label>
+<input type="number" id="statsTeachers" value="50" required>
+</div>
+
+<div class="form-group">
+<label for="statsSatisfaction">% Satisfacción</label>
+<input type="number" id="statsSatisfaction" value="98" min="0" max="100" required>
+</div>
+
+<button type="submit" class="btn btn-primary">Actualizar Estadísticas</button>
+</form>
+</div>
+
+<div class="admin-form-container">
+<h4>Noticias</h4>
+<form onsubmit="updateNews(event)">
+<div class="form-group">
+<label for="newsInput">Texto de Noticias</label>
+<textarea id="newsInput" rows="3" required>¡¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA!! Válido hasta el 30 de noviembre.</textarea>
+</div>
+
+<div class="form-actions">
+<button type="submit" class="btn btn-primary">Actualizar Noticias</button>
+<button type="button" class="btn btn-secondary" onclick="resetForm('news')">Restablecer</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- Administración Cursos -->
+<div id="admin-courses" class="admin-content">
+<h3>Gestión de Cursos</h3>
+
+<div class="admin-actions">
+<button class="btn btn-primary" onclick="showAddCourseForm()">Agregar Curso</button>
+</div>
+
+<div id="adminCoursesList">
+<!-- Los cursos se cargarán dinámicamente aquí -->
+</div>
+
+<!-- Formulario para agregar curso -->
+<div id="addCourseForm" class="admin-form-container" style="display: none;">
+<h4>Agregar Nuevo Curso</h4>
+<form onsubmit="addCourse(event)">
+<div class="form-group">
+<label for="newCourseTitle">Título del Curso</label>
+<input type="text" id="newCourseTitle" required>
+</div>
+
+<div class="form-group">
+<label for="newCourseTeacher">Profesor</label>
+<input type="text" id="newCourseTeacher" required>
+</div>
+
+<div class="form-group">
+<label for="newCourseDuration">Duración</label>
+<input type="text" id="newCourseDuration" required>
+</div>
+
+<div class="form-group">
+<label for="newCourseStudents">Número de Estudiantes</label>
+<input type="number" id="newCourseStudents" required>
+</div>
+
+<div class="form-group">
+<label for="newCoursePrice">Precio</label>
+<input type="text" id="newCoursePrice" required>
+</div>
+
+<div class="form-group">
+<label for="newCourseImage">URL de la Imagen</label>
+<input type="text" id="newCourseImage" required>
+</div>
+
+<div class="form-group">
+<label for="newCourseDescription">Descripción</label>
+<textarea id="newCourseDescription" rows="3" required></textarea>
+</div>
+
+<div class="form-actions">
+<button type="submit" class="btn btn-primary">Agregar Curso</button>
+<button type="button" class="btn btn-secondary" onclick="hideAddCourseForm()">Cancelar</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- Administración Precios -->
+<div id="admin-pricing" class="admin-content">
+<h3>Gestión de Precios</h3>
+
+<div class="admin-actions">
+<button class="btn btn-primary" onclick="showAddPricingForm()">Agregar Precio</button>
+</div>
+
+<div id="adminPricingList">
+<!-- Los precios se cargarán dinámicamente aquí -->
+</div>
+
+<!-- Formulario para agregar precio -->
+<div id="addPricingForm" class="admin-form-container" style="display: none;">
+<h4>Agregar Nuevo Precio</h4>
+<form onsubmit="addPricing(event)">
+<div class="form-group">
+<label for="pricingCourse">Curso</label>
+<input type="text" id="pricingCourse" required>
+</div>
+
+<div class="form-group">
+<label for="pricingPrice">Precio</label>
+<input type="text" id="pricingPrice" required>
+</div>
+
+<div class="form-group">
+<label for="pricingSchedule">Horario</label>
+<input type="text" id="pricingSchedule" required>
+</div>
+
+<div class="form-group">
+<label for="pricingDuration">Duración</label>
+<input type="text" id="pricingDuration" required>
+</div>
+
+<div class="form-group">
+<label for="pricingType">Tipo (monthly, quarterly, yearly)</label>
+<select id="pricingType" required>
+<option value="monthly">Mensual</option>
+<option value="quarterly">Trimestral</option>
+<option value="yearly">Anual</option>
+</select>
+</div>
+
+<div class="form-actions">
+<button type="submit" class="btn btn-primary">Agregar Precio</button>
+<button type="button" class="btn btn-secondary" onclick="hideAddPricingForm()">Cancelar</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- Administración Clases en Vivo -->
+<div id="admin-live" class="admin-content">
+<h3>Gestión de Clases en Vivo</h3>
+
+<div class="admin-actions">
+<button class="btn btn-primary" onclick="showAddLiveClassForm()">Agregar Clase en Vivo</button>
+</div>
+
+<div id="adminLiveClassesList">
+<!-- Las clases en vivo se cargarán dinámicamente aquí -->
+</div>
+
+<!-- Formulario para agregar clase en vivo -->
+<div id="addLiveClassForm" class="admin-form-container" style="display: none;">
+<h4>Agregar Nueva Clase en Vivo</h4>
+<form onsubmit="addLiveClass(event)">
+<div class="form-group">
+<label for="liveClassTitle">Título de la Clase</label>
+<input type="text" id="liveClassTitle" required>
+</div>
+
+<div class="form-group">
+<label for="liveClassDate">Fecha</label>
+<input type="date" id="liveClassDate" required>
+</div>
+
+<div class="form-group">
+<label for="liveClassTime">Hora</label>
+<input type="time" id="liveClassTime" required>
+</div>
+
+<div class="form-group">
+<label for="liveClassPlatform">Plataforma</label>
+<select id="liveClassPlatform" required>
+<option value="YouTube">YouTube</option>
+<option value="Twitch">Twitch</option>
+<option value="Facebook">Facebook</option>
+</select>
+</div>
+
+<div class="form-group">
+<label for="liveClassUrl">URL de Transmisión</label>
+<input type="text" id="liveClassUrl" required>
+</div>
+
+<div class="form-actions">
+<button type="submit" class="btn btn-primary">Agregar Clase en Vivo</button>
+<button type="button" class="btn btn-secondary" onclick="hideAddLiveClassForm()">Cancelar</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- Administración Acceso a Clases -->
+<div id="admin-access" class="admin-content">
+<h3>Gestión de Acceso a Clases</h3>
+
+<div class="admin-actions">
+<button class="btn btn-primary" onclick="showAddAccessClassForm()">Agregar Acceso a Clase</button>
+</div>
+
+<div id="adminAccessClassesList">
+<!-- Los accesos a clases se cargarán dinámicamente aquí -->
+</div>
+
+<!-- Formulario para agregar acceso a clase -->
+<div id="addAccessClassForm" class="admin-form-container" style="display: none;">
+<h4>Agregar Nuevo Acceso a Clase</h4>
+<form onsubmit="addAccessClass(event)">
+<div class="form-group">
+<label for="accessClassTitle">Título de la Clase</label>
+<input type="text" id="accessClassTitle" required>
+</div>
+
+<div class="form-group">
+<label for="accessClassPlatform">Plataforma</label>
+<select id="accessClassPlatform" required>
+<option value="Zoom">Zoom</option>
+<option value="Google Meet">Google Meet</option>
+<option value="Microsoft Teams">Microsoft Teams</option>
+</select>
+</div>
+
+<div class="form-group">
+<label for="accessClassUrl">URL de Acceso</label>
+<input type="text" id="accessClassUrl" required>
+</div>
+
+<div class="form-group">
+<label for="accessClassTeacher">Profesor</label>
+<input type="text" id="accessClassTeacher" required>
+</div>
+
+<div class="form-group">
+<label for="accessClassSchedule">Horario</label>
+<input type="text" id="accessClassSchedule" required>
+</div>
+
+<div class="form-actions">
+<button type="submit" class="btn btn-primary">Agregar Acceso a Clase</button>
+<button type="button" class="btn btn-secondary" onclick="hideAddAccessClassForm()">Cancelar</button>
+</div>
+</form>
+</div>
+</div>
+
+<!-- Administración Banners -->
+<div id="admin-banners" class="admin-content">
+<h3>Gestión de Banners</h3>
+
+<div class="admin-actions">
+<button class="btn btn-primary" onclick="showAddBannerForm()">Agregar Banner</button>
+</div>
+
+<div id="adminBannersList">
+<!-- Los banners se cargarán dinámicamente aquí -->
+</div>
+
+<!-- Formulario para agregar banner -->
+<div id="addBannerForm" class="admin-form-container" style="display: none;">
+<h4>Agregar Nuevo Banner</h4>
+<form onsubmit="addBanner(event)">
+<div class="form-group">
+<label for="bannerTitle">Título del Banner</label>
+<input type="text" id="bannerTitle" required>
+</div>
+
+<div class="form-group">
+<label for="bannerUrl">URL de la Imagen</label>
+<input type="text" id="bannerUrl" required>
+</div>
+
+<div class="form-actions">
+<button type="submit" class="btn btn-primary">Agregar Banner</button>
+<button type="button" class="btn btn-secondary" onclick="hideAddBannerForm()">Cancelar</button>
+</div>
+</form>
+</div>
+</div>
+</div>
+</section>
+</main>
+
+<!-- Modal de Inicio de Sesión de Administrador -->
+<div id="loginModal" class="modal">
+<div class="modal-content">
+<div class="modal-header">
+<h2>Iniciar Sesión como Administrador</h2>
+<span class="close" onclick="closeLoginModal()">&times;</span>
+</div>
+<div class="modal-body">
+<form onsubmit="adminLogin(event)">
+<div class="form-group">
+<label for="adminEmail">Email</label>
+<input type="email" id="adminEmail" required>
+</div>
+
+<div class="form-group">
+<label for="adminPassword">Contraseña</label>
+<input type="password" id="adminPassword" required>
+</div>
+
+<button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+</form>
+</div>
+</div>
+</div>
+
+<!-- Chatbot -->
+<div class="chat-container">
+<div class="chat-button" onclick="toggleChat()">
+<i class="fas fa-comments"></i>
+</div>
+<div class="chat-window" id="chatWindow">
+<div class="chat-header">
+<h3>Asistente Virtual</h3>
+<span class="close" onclick="toggleChat()">&times;</span>
+</div>
+<div class="chat-messages" id="chatMessages">
+<div class="bot-message">
+¡Hola! Soy el asistente virtual de SkyLearn Academy. ¿En qué puedo ayudarte hoy?
+</div>
+</div>
+<div class="chat-input">
+<input type="text" id="chatInput" placeholder="Escribe tu mensaje..." onkeypress="handleChatKeyPress(event)">
+<button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
+</div>
+</div>
+</div>
+
+<!-- Footer -->
+<footer>
+<div class="container">
+<div class="footer-content">
+<div class="footer-section">
+<h3>SkyLearn Academy</h3>
+<p>Plataforma de aprendizaje de inglés en línea con cursos interactivos, clases en vivo y profesores certificados.</p>
+<div class="social-links">
+<a href="#"><i class="fab fa-facebook-f"></i></a>
+<a href="#"><i class="fab fa-twitter"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-linkedin-in"></i></a>
+</div>
+</div>
+
+<div class="footer-section">
+<h3>Enlaces Rápidos</h3>
+<ul>
+<li><a href="#home" onclick="showSection('home')">Inicio</a></li>
+<li><a href="#courses" onclick="showSection('courses')">Cursos</a></li>
+<li><a href="#pricing" onclick="showSection('pricing')">Precios</a></li>
+<li><a href="#live" onclick="showSection('live')">Clases en Vivo</a></li>
+<li><a href="#access" onclick="showSection('access')">Acceso a Clases</a></li>
+<li><a href="#faq" onclick="showSection('faq')">Preguntas Frecuentes</a></li>
+<li><a href="#contact" onclick="showSection('contact')">Contacto</a></li>
+</ul>
+</div>
+
+<div class="footer-section">
+<h3>Boletín Informativo</h3>
+<p>Suscríbete para recibir las últimas noticias y ofertas.</p>
+<form onsubmit="subscribeNewsletter(event)">
+<input type="email" placeholder="Tu email" required>
+<button type="submit" class="btn btn-primary">Suscribirse</button>
+</form>
+</div>
+</div>
+
+<div class="footer-bottom">
+<p>&copy; 2023 SkyLearn Academy. Todos los derechos reservados.</p>
+</div>
+</div>
+</footer>
+
+<!-- Función para enviar formulario de contacto -->
+<script>
+function submitContactForm(event) {
+    event.preventDefault();
     
-    <!-- Pantalla de Bienvenida -->
-    <div class="login-screen" id="loginScreen">
-        <div class="logo-container">
-            <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="Logo SkyLearn Academy" class="logo-spin">
-        </div>
-        <h1>READY TO LEARN ENGLISH?</h1>
-        <button class="btn btn-primary" onclick="showMainContent()">COMENZAR</button>
-    </div>
+    // Aquí se enviaría el formulario a un servidor
+    // Por ahora, solo mostramos un mensaje
+    alert('Gracias por contactarnos. Te responderemos pronto.');
     
-    <!-- Navegación -->
-    <nav class="navbar" id="navbar" style="display: none;">
-        <div class="nav-content">
-            <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="SkyLearn Academy Logo" class="logo">
-            <div class="nav-links">
-                <a href="#home" onclick="showSection('home')" class="active">Inicio</a>
-                <a href="#courses" onclick="showSection('courses')">Cursos</a>
-                <a href="#pricing" onclick="showSection('pricing')">Precios</a>
-                <a href="#live" onclick="showSection('live')">Clases en Vivo</a>
-                <a href="#access" onclick="showSection('access')">Acceso a Clases</a>
-                <a href="#contact" onclick="showSection('contact')">Contacto</a>
-                <a href="#admin" onclick="showAdminLogin()" class="admin-link" id="adminLink" style="display: none;">Admin</a>
-            </div>
-        </div>
-    </nav>
-    
-    <!-- Contenido Principal -->
-    <main style="display: none;">
-        <!-- Sección Inicio -->
-        <section id="home" class="section active">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Aprende Inglés con los Mejores</h2>
-                    <p>Únete a miles de estudiantes que ya están mejorando su inglés con nuestros cursos interactivos y profesores certificados.</p>
-                </div>
-                
-                <div class="home-slider">
-                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Aprende inglés con SkyLearn Academy" class="slider-image active">
-                    <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80" alt="Profesores nativos de inglés" class="slider-image">
-                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Clases interactivas de inglés" class="slider-image">
-                    <div class="slider-controls">
-                        <div class="slider-dot active" onclick="goToSlide(0)"></div>
-                        <div class="slider-dot" onclick="goToSlide(1)"></div>
-                        <div class="slider-dot" onclick="goToSlide(2)"></div>
-                    </div>
-                </div>
-                
-                <!-- Estadísticas -->
-                <div class="stats-container">
-                    <div class="stat-item">
-                        <div class="stat-number" data-target="5000">0</div>
-                        <div class="stat-label">Estudiantes</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" data-target="120">0</div>
-                        <div class="stat-label">Cursos</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" data-target="50">0</div>
-                        <div class="stat-label">Profesores</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number" data-target="98">0</div>
-                        <div class="stat-label">% Satisfacción</div>
-                    </div>
-                </div>
-                
-                <!-- Noticias -->
-                <div class="news-section">
-                    <div class="news-content">
-                        <div class="news-icon">
-                            <i class="fas fa-bullhorn"></i>
-                        </div>
-                        <p id="newsText">¡¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA!! Válido hasta el 30 de noviembre.</p>
-                    </div>
-                </div>
-                
-                <!-- Comentarios -->
-                <div class="comments-section">
-                    <h2>Comentarios Recientes</h2>
-                    <div class="comments-list" id="commentsContainer"></div>
-                    <form onsubmit="addComment(event)">
-                        <input type="text" id="commentInput" placeholder="Escribe un comentario..." required>
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-paper-plane"></i> Enviar
-                        </button>
-                    </form>
-                </div>
-                
-                <!-- Testimonios -->
-                <div class="testimonials-section">
-                    <h2>Testimonios de Estudiantes</h2>
-                    <div class="testimonials-container">
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <p>"SkyLearn Academy ha transformado mi inglés. Los profesores son increíbles y las clases son muy interactivas."</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <img src="https://ui-avatars.com/api/?name=Ana+Garcia&background=1a3a8f&color=fff&size=60" alt="Ana Garcia" class="author-avatar">
-                                <div class="author-info">
-                                    <h4>Ana Garcia</h4>
-                                    <p>Estudiante de Inglés Intermedio</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <p>"Gracias a SkyLearn Academy, pude aprobar el examen TOEFL con una puntuación alta. ¡Recomiendo sus cursos 100%!"</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <img src="https://ui-avatars.com/api/?name=Carlos+Rodriguez&background=1a3a8f&color=fff&size=60" alt="Carlos Rodriguez" class="author-avatar">
-                                <div class="author-info">
-                                    <h4>Carlos Rodriguez</h4>
-                                    <p>Estudiante de Preparación TOEFL</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="testimonial-card">
-                            <div class="testimonial-content">
-                                <p>"Las clases en vivo son geniales. Puedo practicar mi inglés con profesores nativos desde la comodidad de mi hogar."</p>
-                            </div>
-                            <div class="testimonial-author">
-                                <img src="https://ui-avatars.com/api/?name=Maria+Lopez&background=1a3a8f&color=fff&size=60" alt="Maria Lopez" class="author-avatar">
-                                <div class="author-info">
-                                    <h4>Maria Lopez</h4>
-                                    <p>Estudiante de Conversación</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Sección Cursos -->
-        <section id="courses" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Nuestros Cursos de Inglés</h2>
-                    <p>Ofrecemos una variedad de cursos diseñados para todos los niveles, desde principiantes hasta avanzados.</p>
-                </div>
-                
-                <div class="courses-grid" id="coursesGrid">
-                    <!-- Los cursos se cargarán dinámicamente aquí -->
-                </div>
-            </div>
-        </section>
-        
-        <!-- Sección Precios -->
-        <section id="pricing" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Precios y Horarios</h2>
-                    <p>Elige el plan que mejor se adapte a tus necesidades y presupuesto.</p>
-                </div>
-                
-                <div class="pricing-container">
-                    <div class="pricing-tabs">
-                        <div class="pricing-tab active" onclick="showPricing('monthly')">Mensual</div>
-                        <div class="pricing-tab" onclick="showPricing('quarterly')">Trimestral</div>
-                        <div class="pricing-tab" onclick="showPricing('yearly')">Anual</div>
-                    </div>
-                    
-                    <div class="table-responsive">
-                        <table class="pricing-table">
-                            <thead>
-                                <tr>
-                                    <th>Curso</th>
-                                    <th>Precio</th>
-                                    <th>Horario</th>
-                                    <th>Duración</th>
-                                </tr>
-                            </thead>
-                            <tbody id="pricingTableBody">
-                                <!-- Los precios se cargarán dinámicamente aquí -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Sección Clases en Vivo -->
-        <section id="live" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Clases en Vivo</h2>
-                    <p>Únete a nuestras clases interactivas en tiempo real con profesores certificados.</p>
-                </div>
-                
-                <div class="live-section">
-                    <div class="live-container">
-                        <div class="live-video">
-                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-                        </div>
-                        <div class="live-chat">
-                            <div class="chat-header">
-                                <i class="fas fa-comments"></i> Chat en Vivo
-                            </div>
-                            <div class="chat-messages" id="liveChatMessages">
-                                <div class="chat-message other-message">
-                                    ¡Bienvenidos a la clase de hoy! Vamos a practicar conversación.
-                                </div>
-                                <div class="chat-message user-message">
-                                    ¡Hola! Tengo una pregunta sobre la pronunciación.
-                                </div>
-                                <div class="chat-message other-message">
-                                    Claro, ¿cuál es tu duda? Estoy aquí para ayudarte.
-                                </div>
-                            </div>
-                            <div class="chat-input">
-                                <input type="text" id="liveChatInput" placeholder="Escribe tu mensaje..." onkeypress="handleLiveChatKeyPress(event)">
-                                <button onclick="sendLiveChatMessage()"><i class="fas fa-paper-plane"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="live-schedule">
-                        <h3>Próximas Clases</h3>
-                        <div id="liveScheduleContainer">
-                            <!-- El horario de clases se cargará dinámicamente aquí -->
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Calendario -->
-                <div class="calendar-container">
-                    <div class="calendar-header">
-                        <h3 id="currentMonth">Noviembre 2023</h3>
-                        <div class="calendar-nav">
-                            <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
-                            <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
-                        </div>
-                    </div>
-                    <div class="calendar-grid" id="calendarGrid">
-                        <!-- El calendario se generará con JavaScript -->
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Sección Acceso a Clases -->
-        <section id="access" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Acceso a Clases</h2>
-                    <p>Ingresa a tus clases virtuales utilizando los enlaces a continuación.</p>
-                </div>
-                
-                <div class="access-grid" id="accessGrid">
-                    <!-- Los enlaces de acceso se cargarán dinámicamente aquí -->
-                </div>
-            </div>
-        </section>
-        
-        <!-- Sección Preguntas Frecuentes -->
-        <section id="faq" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Preguntas Frecuentes</h2>
-                    <p>Encuentra respuestas a las preguntas más comunes sobre nuestros cursos y servicios.</p>
-                </div>
-                
-                <div class="faq-container">
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>¿Cómo me inscribo en un curso?</h3>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Puedes inscribirte en un curso haciendo clic en el botón "Inscribirse" en la página del curso que te interesa. Te pediremos algunos datos básicos y podrás elegir el método de pago que prefieras.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>¿Necesito tener conocimientos previos de inglés?</h3>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>No necesitas tener conocimientos previos para nuestros cursos básicos. Ofrecemos cursos para todos los niveles, desde principiantes hasta avanzados. Si no estás seguro de tu nivel, podemos hacer una evaluación gratuita para recomendarte el curso adecuado.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>¿Qué pasa si no puedo asistir a una clase en vivo?</h3>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Si no puedes asistir a una clase en vivo, no te preocupes. Todas nuestras clases son grabadas y podrás verlas más tarde en tu área de estudiante. También tendrás acceso a los materiales de la clase para que no te pierdas nada.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <h3>¿Recibiré un certificado al finalizar un curso?</h3>
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Sí, al finalizar satisfactoriamente uno de nuestros cursos, recibirás un certificado de SkyLearn Academy que podrás agregar a tu currículum o perfil de LinkedIn.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Sección Contacto -->
-        <section id="contact" class="section">
-            <div class="container">
-                <div class="section-header">
-                    <h2>Contacto</h2>
-                    <p>Estamos aquí para ayudarte. Contáctanos por cualquier consulta.</p>
-                </div>
-                
-                <div class="contact-container">
-                    <div class="contact-grid">
-                        <div class="contact-card">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <h3>Email</h3>
-                            <p id="contactEmail">Envíanos tus consultas y te responderemos en menos de 24 horas</p>
-                            <a href="mailto:info@skylearn.com" class="contact-link">
-                                <i class="fas fa-paper-plane"></i> Enviar Email
-                            </a>
-                        </div>
-                        <div class="contact-card">
-                            <div class="contact-icon">
-                                <i class="fas fa-phone-alt"></i>
-                            </div>
-                            <h3>Teléfono</h3>
-                            <p id="contactPhone">Disponibles de lunes a viernes de 9:00 a 18:00 horas</p>
-                            <a href="tel:+51 929601732" class="contact-link">
-                                <i class="fas fa-phone"></i> Llamar Ahora
-                            </a>
-                        </div>
-                        <div class="contact-card">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <h3>Ubicación Virtual</h3>
-                            <p id="contactAddress">Oficina virtual - Atendemos a estudiantes de todo el mundo</p>
-                            <a href="https://skylearn.com/virtual-office" target="_blank" class="contact-link">
-                                <i class="fas fa-globe"></i> Visitar Sitio Web
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Redes Sociales -->
-                    <div class="social-section">
-                        <h3>Síguenos en Redes Sociales</h3>
-                        <div class="social-links">
-                            <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                            <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Panel de Administración -->
-        <section id="admin" class="section">
-            <div class="container">
-                <div class="admin-panel">
-                    <div class="admin-header">
-                        <h2>Panel de Administración</h2>
-                        <button class="btn btn-danger" onclick="adminLogout()">
-                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                        </button>
-                    </div>
-                    
-                    <div class="admin-tabs">
-                        <button class="admin-tab active" onclick="showAdminTab('dashboard')">Dashboard</button>
-                        <button class="admin-tab" onclick="showAdminTab('home')">Inicio</button>
-                        <button class="admin-tab" onclick="showAdminTab('news')">Noticias</button>
-                        <button class="admin-tab" onclick="showAdminTab('courses')">Cursos</button>
-                        <button class="admin-tab" onclick="showAdminTab('pricing')">Precios</button>
-                        <button class="admin-tab" onclick="showAdminTab('live')">Clases en Vivo</button>
-                        <button class="admin-tab" onclick="showAdminTab('access')">Acceso a Clases</button>
-                        <button class="admin-tab" onclick="showAdminTab('banners')">Banners</button>
-                    </div>
-                    
-                    <!-- Dashboard Admin -->
-                    <div id="admin-dashboard" class="admin-content active">
-                        <div class="admin-form">
-                            <h3>Resumen del Sistema</h3>
-                            <div class="stats-container">
-                                <div class="stat-item">
-                                    <div class="stat-number" id="totalStudents">0</div>
-                                    <div class="stat-label">Estudiantes Registrados</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-number" id="totalCourses">0</div>
-                                    <div class="stat-label">Cursos Activos</div>
-                                </div>
-                                <div class="stat-item">
-                                    <div class="stat-number" id="totalComments">0</div>
-                                    <div class="stat-label">Comentarios</div>
-                                </div>
-                                <div class="stat-item" id="adminStatContainer">
-                                    <div class="stat-number" id="totalAdmins">1</div>
-                                    <div class="stat-label">Administradores</div>
-                                </div>
-                            </div>
-                            
-                            <div class="admin-form">
-                                <h3>Actividad Reciente</h3>
-                                <div class="admin-list" id="recentActivity">
-                                    <div class="admin-item">
-                                        <div>
-                                            <strong>Último comentario:</strong> <span id="lastComment">No hay comentarios recientes</span>
-                                        </div>
-                                    </div>
-                                    <div class="admin-item">
-                                        <div>
-                                            <strong>Último registro:</strong> <span id="lastRegistration">No hay registros recientes</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Home Admin -->
-                    <div id="admin-home" class="admin-content">
-                        <div class="admin-form">
-                            <h3>Editar Estadísticas de Inicio</h3>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="statsStudents">Número de Estudiantes</label>
-                                    <input type="number" id="statsStudents" value="5000">
-                                </div>
-                                <div class="form-group">
-                                    <label for="statsCourses">Número de Cursos</label>
-                                    <input type="number" id="statsCourses" value="120">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="statsTeachers">Número de Profesores</label>
-                                    <input type="number" id="statsTeachers" value="50">
-                                </div>
-                                <div class="form-group">
-                                    <label for="statsSatisfaction">% Satisfacción</label>
-                                    <input type="number" id="statsSatisfaction" value="98" min="0" max="100">
-                                </div>
-                            </div>
-                            <div class="form-actions">
-                                <button type="button" class="btn btn-primary" onclick="updateHomeStats()">Actualizar Estadísticas</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- News Admin -->
-                    <div id="admin-news" class="admin-content">
-                        <form class="admin-form" onsubmit="updateNews(event)">
-                            <h3>Actualizar Noticias</h3>
-                            <div class="form-group">
-                                <label for="newsInput">Texto de la Noticia</label>
-                                <textarea id="newsInput" required>¡¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA!! Válido hasta el 30 de noviembre.</textarea>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-primary">Actualizar</button>
-                                <button type="button" class="btn btn-secondary" onclick="resetForm('news')">Cancelar</button>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    <!-- Courses Admin -->
-                    <div id="admin-courses" class="admin-content">
-                        <div class="admin-form">
-                            <h3>Administrar Cursos</h3>
-                            <div class="form-actions">
-                                <button type="button" class="btn btn-primary" onclick="showAddCourseForm()">Agregar Nuevo Curso</button>
-                            </div>
-                        </div>
-                        
-                        <div id="addCourseForm" style="display: none;" class="admin-form">
-                            <h3>Agregar Nuevo Curso</h3>
-                            <form onsubmit="addCourse(event)">
-                                <div class="form-group">
-                                    <label for="newCourseTitle">Título del Curso</label>
-                                    <input type="text" id="newCourseTitle" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="newCourseTeacher">Profesor</label>
-                                    <input type="text" id="newCourseTeacher" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="newCourseDuration">Duración</label>
-                                    <input type="text" id="newCourseDuration" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="newCourseStudents">Estudiantes</label>
-                                    <input type="text" id="newCourseStudents" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="newCoursePrice">Precio</label>
-                                    <input type="text" id="newCoursePrice" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="newCourseImage">URL de la Imagen</label>
-                                    <input type="text" id="newCourseImage" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="newCourseDescription">Descripción</label>
-                                    <textarea id="newCourseDescription" required></textarea>
-                                </div>
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary">Agregar Curso</button>
-                                    <button type="button" class="btn btn-secondary" onclick="hideAddCourseForm()">Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
-                        
-                        <div class="admin-list" id="adminCoursesList">
-                            <!-- La lista de cursos se cargará dinámicamente aquí -->
-                        </div>
-                    </div>
-                    
-                    <!-- Pricing Admin -->
-                    <div id="admin-pricing" class="admin-content">
-                        <div class="admin-form">
-                            <h3>Administrar Precios</h3>
-                            <div class="form-actions">
-                                <button type="button" class="btn btn-primary" onclick="showAddPricingForm()">Agregar Nuevo Precio</button>
-                            </div>
-                        </div>
-                        
-                        <div id="addPricingForm" style="display: none;" class="admin-form">
-                            <h3>Agregar Nuevo Precio</h3>
-                            <form onsubmit="addPricing(event)">
-                                <div class="form-group">
-                                    <label for="pricingCourse">Curso</label>
-                                    <input type="text" id="pricingCourse" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pricingPrice">Precio</label>
-                                    <input type="text" id="pricingPrice" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pricingSchedule">Horario</label>
-                                    <input type="text" id="pricingSchedule" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pricingDuration">Duración</label>
-                                    <input type="text" id="pricingDuration" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pricingType">Tipo (Mensual/Trimestral/Anual)</label>
-                                    <select id="pricingType" required>
-                                        <option value="monthly">Mensual</option>
-                                        <option value="quarterly">Trimestral</option>
-                                        <option value="yearly">Anual</option>
-                                    </select>
-                                </div>
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary">Agregar Precio</button>
-                                    <button type="button" class="btn btn-secondary" onclick="hideAddPricingForm()">Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
-                        
-                        <div class="admin-list" id="adminPricingList">
-                            <!-- La lista de precios se cargará dinámicamente aquí -->
-                        </div>
-                    </div>
-                    
-                    <!-- Live Classes Admin -->
-                    <div id="admin-live" class="admin-content">
-                        <div class="admin-form">
-                            <h3>Administrar Clases en Vivo</h3>
-                            <div class="form-actions">
-                                <button type="button" class="btn btn-primary" onclick="showAddLiveClassForm()">Agregar Nueva Clase en Vivo</button>
-                            </div>
-                        </div>
-                        
-                        <div id="addLiveClassForm" style="display: none;" class="admin-form">
-                            <h3>Agregar Nueva Clase en Vivo</h3>
-                            <form onsubmit="addLiveClass(event)">
-                                <div class="form-group">
-                                    <label for="liveClassTitle">Título de la Clase</label>
-                                    <input type="text" id="liveClassTitle" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="liveClassDate">Fecha</label>
-                                    <input type="date" id="liveClassDate" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="liveClassTime">Hora</label>
-                                    <input type="time" id="liveClassTime" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="liveClassPlatform">Plataforma (YouTube/Twitch/Facebook)</label>
-                                    <select id="liveClassPlatform" required>
-                                        <option value="youtube">YouTube</option>
-                                        <option value="twitch">Twitch</option>
-                                        <option value="facebook">Facebook</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="liveClassUrl">URL de la Transmisión</label>
-                                    <input type="text" id="liveClassUrl" required>
-                                </div>
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary">Agregar Clase en Vivo</button>
-                                    <button type="button" class="btn btn-secondary" onclick="hideAddLiveClassForm()">Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
-                        
-                        <div class="admin-list" id="adminLiveClassesList">
-                            <!-- La lista de clases en vivo se cargará dinámicamente aquí -->
-                        </div>
-                    </div>
-                    
-                    <!-- Access Classes Admin -->
-                    <div id="admin-access" class="admin-content">
-                        <div class="admin-form">
-                            <h3>Administrar Acceso a Clases</h3>
-                            <div class="form-actions">
-                                <button type="button" class="btn btn-primary" onclick="showAddAccessClassForm()">Agregar Nuevo Acceso a Clase</button>
-                            </div>
-                        </div>
-                        
-                        <div id="addAccessClassForm" style="display: none;" class="admin-form">
-                            <h3>Agregar Nuevo Acceso a Clase</h3>
-                            <form onsubmit="addAccessClass(event)">
-                                <div class="form-group">
-                                    <label for="accessClassTitle">Título de la Clase</label>
-                                    <input type="text" id="accessClassTitle" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="accessClassPlatform">Plataforma (Zoom/Google Meet)</label>
-                                    <select id="accessClassPlatform" required>
-                                        <option value="zoom">Zoom</option>
-                                        <option value="meet">Google Meet</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="accessClassUrl">URL de la Clase</label>
-                                    <input type="text" id="accessClassUrl" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="accessClassTeacher">Profesor</label>
-                                    <input type="text" id="accessClassTeacher" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="accessClassSchedule">Horario</label>
-                                    <input type="text" id="accessClassSchedule" required>
-                                </div>
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary">Agregar Acceso a Clase</button>
-                                    <button type="button" class="btn btn-secondary" onclick="hideAddAccessClassForm()">Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
-                        
-                        <div class="admin-list" id="adminAccessClassesList">
-                            <!-- La lista de acceso a clases se cargará dinámicamente aquí -->
-                        </div>
-                    </div>
-                    
-                    <!-- Banners Admin -->
-                    <div id="admin-banners" class="admin-content">
-                        <div class="admin-form">
-                            <h3>Administrar Banners</h3>
-                            <div class="form-actions">
-                                <button type="button" class="btn btn-primary" onclick="showAddBannerForm()">Agregar Nuevo Banner</button>
-                            </div>
-                        </div>
-                        
-                        <div id="addBannerForm" style="display: none;" class="admin-form">
-                            <h3>Agregar Nuevo Banner</h3>
-                            <form onsubmit="addBanner(event)">
-                                <div class="form-group">
-                                    <label for="bannerTitle">Título del Banner</label>
-                                    <input type="text" id="bannerTitle" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="bannerUrl">URL de la Imagen</label>
-                                    <input type="text" id="bannerUrl" required>
-                                </div>
-                                <div class="form-actions">
-                                    <button type="submit" class="btn btn-primary">Agregar Banner</button>
-                                    <button type="button" class="btn btn-secondary" onclick="hideAddBannerForm()">Cancelar</button>
-                                </div>
-                            </form>
-                        </div>
-                        
-                        <div class="admin-list" id="adminBannersList">
-                            <!-- La lista de banners se cargará dinámicamente aquí -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    
-    <!-- Modal de Inicio de Sesión -->
-    <div class="login-modal" id="loginModal">
-        <div class="login-modal-content">
-            <span class="login-modal-close" onclick="closeLoginModal()">&times;</span>
-            <h2>Iniciar Sesión</h2>
-            <form onsubmit="adminLogin(event)">
-                <div class="form-group">
-                    <label for="adminEmail">Email</label>
-                    <input type="email" id="adminEmail" required>
-                </div>
-                <div class="form-group">
-                    <label for="adminPassword">Contraseña</label>
-                    <input type="password" id="adminPassword" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-            </form>
-        </div>
-    </div>
-    
-    <!-- Chatbot -->
-    <div class="chatbot-icon" id="chatbotIcon" onclick="toggleChat()">
-        <i class="fas fa-comments"></i>
-    </div>
-    <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <i class="fas fa-robot"></i> Asistente Virtual
-        </div>
-        <div class="chat-messages" id="chatMessages">
-            <div class="bot-message">
-                ¡Hola! Soy el asistente virtual de SkyLearn Academy. ¿En qué puedo ayudarte hoy?
-            </div>
-        </div>
-        <div class="chat-input">
-            <input type="text" id="chatInput" placeholder="Escribe tu mensaje..." onkeypress="handleChatKeyPress(event)">
-            <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-about">
-                <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="SkyLearn Academy Logo" class="footer-logo">
-                <p>SkyLearn Academy es una institución líder en la enseñanza del inglés con métodos innovadores y profesores certificados.</p>
-                <div class="social-links">
-                    <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
-                </div>
-            </div>
-            <div class="footer-links">
-                <h3>Enlaces Rápidos</h3>
-                <ul>
-                    <li><a href="#home" onclick="showSection('home')">Inicio</a></li>
-                    <li><a href="#courses" onclick="showSection('courses')">Cursos</a></li>
-                    <li><a href="#pricing" onclick="showSection('pricing')">Precios</a></li>
-                    <li><a href="#live" onclick="showSection('live')">Clases en Vivo</a></li>
-                    <li><a href="#access" onclick="showSection('access')">Acceso a Clases</a></li>
-                    <li><a href="#contact" onclick="showSection('contact')">Contacto</a></li>
-                </ul>
-            </div>
-            <div class="footer-contact">
-                <h3>Contacto</h3>
-                <p><i class="fas fa-envelope"></i> info@skylearn.com</p>
-                <p><i class="fas fa-phone"></i> +51 929601732</p>
-                <p><i class="fas fa-map-marker-alt"></i> Oficina virtual - Atendemos a estudiantes de todo el mundo</p>
-            </div>
-            <div class="footer-newsletter">
-                <h3>Boletín Informativo</h3>
-                <p>Suscríbete para recibir nuestras últimas noticias y ofertas.</p>
-                <form class="footer-newsletter-form" onsubmit="subscribeNewsletter(event)">
-                    <input type="email" placeholder="Tu email" required>
-                    <button type="submit">Suscribirse</button>
-                </form>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 SkyLearn Academy. Todos los derechos reservados.</p>
-            <p class="admin-link-footer" onclick="showAdminLogin()">Acceso Administrador</p>
-        </div>
-    </footer>
-    
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
-    <script src="js/admin.js"></script>
+    // Limpiar el formulario
+    event.target.reset();
+}
+</script>
 </body>
 </html>
