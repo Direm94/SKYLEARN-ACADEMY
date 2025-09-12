@@ -34,7 +34,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-    <script src="js/firebaseConfig.js"></script>
+    <!-- Firebase Config -->
+    <script type="module" src="js/firebaseConfig.js"></script>
 </head>
 <body>
     <!-- Loading Bar -->
@@ -44,7 +45,6 @@
     <!-- Pantalla de Bienvenida -->
     <div class="login-screen" id="loginScreen">
         <div class="logo-container">
-            <!-- CORRECCIÓN: Cambio de 'logo-spin' a 'logo' y añadido 'alt' correcto -->
             <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="Logo SkyLearn Academy" class="logo">
         </div>
         <h1>READY TO LEARN ENGLISH?</h1>
@@ -772,7 +772,7 @@
     </footer>
 
     <!-- Scripts: MUY IMPORTANTE - Se cargan AL FINAL del BODY para garantizar que el HTML esté cargado -->
-    <script src="js/main.js"></script>
-    <script src="js/admin.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/admin.js"></script>
 </body>
 </html>
