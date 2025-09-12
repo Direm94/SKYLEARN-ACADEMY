@@ -601,7 +601,7 @@ function adminLogin(event) {
     const password = document.getElementById('adminPassword').value;
 
     // Verificar credenciales (esto es solo un ejemplo)
-    if (email === 'admin@skylearn.com' && password === 'admin123') {
+    if (email === 'desarrollador@skylearn.com' && password === 'skylearn2025') {
         // Cerrar el modal
         closeLoginModal();
 
@@ -1176,11 +1176,14 @@ window.addEventListener('load', checkFirstVisit);
 
 <!-- Pantalla de Bienvenida -->
 <div class="login-screen" id="loginScreen">
+<div class="login-background"></div>
+<div class="login-content">
 <div class="logo-container">
-<img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="Logo SkyLearn Academy" class="logo-spin">
+<img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="Logo SkyLearn Academy" class="logo-pulse">
 </div>
 <h1>READY TO LEARN ENGLISH?</h1>
 <button class="btn btn-primary" onclick="showMainContent()">COMENZAR</button>
+</div>
 </div>
 
 <!-- Navegación -->
