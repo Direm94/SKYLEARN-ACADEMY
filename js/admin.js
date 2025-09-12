@@ -16,7 +16,7 @@ function adminLogin(event) {
     const password = document.getElementById('adminPassword').value;
 
     // Verificar credenciales (esto es solo un ejemplo)
-    if (email === 'admin@skylearn.com' && password === 'admin123') {
+    if (email === 'desarrollador@skylearn.com' && password === 'skylearn2025') {
         // Cerrar el modal
         closeLoginModal();
 
