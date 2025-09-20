@@ -620,7 +620,7 @@ function adminLogin(event) {
     const password = document.getElementById('adminPassword').value;
     
     // Simple authentication (in a real app, this would be done server-side)
-    if (username === 'admin' && password === 'admin123') {
+    if (username === 'desarrollador@skylearn.com' && password === 'skylearn2025') {
         isAdminLoggedIn = true;
         localStorage.setItem('isAdminLoggedIn', 'true');
         
