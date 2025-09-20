@@ -1,583 +1,720 @@
-// admin.js
-// Load admin courses list
-function loadAdminCoursesList() {
+// Función para cargar cursos en el panel de administración
+function loadAdminCourses() {
     const adminCoursesList = document.getElementById('adminCoursesList');
-    const courses = JSON.parse(localStorage.getItem('courses')) || getDefaultCourses();
+    
+    // Limpiar el contenedor
     adminCoursesList.innerHTML = '';
-    courses.forEach(course => {
-        const adminItem = document.createElement('div');
-        adminItem.className = 'admin-item';
-        adminItem.innerHTML = `
-            <div>
-                <strong>${course.title}</strong>
-                <div>Profesor: ${course.teacher} | Precio: ${course.price}</div>
-            </div>
-            <div class="admin-item-actions">
-                <button class="btn-primary btn-small" onclick="editCourse(${course.id})">Editar</button>
-                <button class="btn-danger btn-small" onclick="deleteCourse(${course.id})">Eliminar</button>
-            </div>
-        `;
-        adminCoursesList.appendChild(adminItem);
+    
+    // Cargar datos desde Firebase
+    db.collection('courses').get().then((querySnapshot) => {
+        const courses = [];
+        querySnapshot.forEach((doc) => {
+            courses.push({ id: doc.id, ...doc.data() });
+        });
+        
+        // Si no hay cursos en Firebase, usar datos de ejemplo
+        if (courses.length === 0) {
+            courses.push(
+                { id: 1, title: "Inglés Básico", teacher: "Prof. John Smith", duration: "8 semanas", students: "120", price: "$99" },
+                { id: 2, title: "Inglés Intermedio", teacher: "Prof. Sarah Johnson", duration: "12 semanas", students: "85", price: "$149" },
+                { id: 3, title: "Inglés Avanzado", teacher: "Prof. Michael Brown", duration: "16 semanas", students: "65", price: "$199" },
+                { id: 4, title: "Preparación TOEFL", teacher: "Prof. Emily Davis", duration: "10 semanas", students: "45", price: "$179" }
+            );
+        }
+        
+        // Generar la lista de cursos
+        courses.forEach(course => {
+            const courseItem = document.createElement('div');
+            courseItem.className = 'admin-item';
+            courseItem.innerHTML = `
+                <div>
+                    <strong>${course.title}</strong> - ${course.teacher} - ${course.duration} - ${course.students} estudiantes - ${course.price}
+                </div>
+                <div class="admin-actions">
+                    <button class="btn btn-secondary" onclick="editCourse('${course.id}')">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteCourse('${course.id}')">Eliminar</button>
+                </div>
+            `;
+            adminCoursesList.appendChild(courseItem);
+        });
     });
 }
 
-// Show add course form
-function showAddCourseForm() {
-    document.getElementById('addCourseForm').style.display = 'block';
-}
-
-// Hide add course form
-function hideAddCourseForm() {
-    document.getElementById('addCourseForm').style.display = 'none';
-    document.getElementById('newCourseTitle').value = '';
-    document.getElementById('newCourseTeacher').value = '';
-    document.getElementById('newCourseDuration').value = '';
-    document.getElementById('newCourseStudents').value = '';
-    document.getElementById('newCoursePrice').value = '';
-    document.getElementById('newCourseImage').value = '';
-    document.getElementById('newCourseDescription').value = '';
-}
-
-// Add course
+// Función para agregar curso desde el panel de administración
 function addCourse(event) {
     event.preventDefault();
-    const courses = JSON.parse(localStorage.getItem('courses')) || [];
-    const newCourse = {
-        id: Date.now(),
-        title: document.getElementById('newCourseTitle').value,
-        teacher: document.getElementById('newCourseTeacher').value,
-        duration: document.getElementById('newCourseDuration').value,
-        students: document.getElementById('newCourseStudents').value,
-        price: document.getElementById('newCoursePrice').value,
-        image: document.getElementById('newCourseImage').value,
-        description: document.getElementById('newCourseDescription').value
+    
+    // Obtener valores del formulario
+    const title = document.getElementById('newCourseTitle').value;
+    const teacher = document.getElementById('newCourseTeacher').value;
+    const duration = document.getElementById('newCourseDuration').value;
+    const students = document.getElementById('newCourseStudents').value;
+    const price = document.getElementById('newCoursePrice').value;
+    const image = document.getElementById('newCourseImage').value;
+    const description = document.getElementById('newCourseDescription').value;
+    
+    // Crear objeto con los datos del curso
+    const courseData = {
+        title,
+        teacher,
+        duration,
+        students,
+        price,
+        image,
+        description
     };
-    courses.push(newCourse);
-    localStorage.setItem('courses', JSON.stringify(courses));
-    // Reload courses
-    loadCourses();
-    loadAdminCoursesList();
-    // Hide form
-    hideAddCourseForm();
-    showNotification('Curso agregado exitosamente', 'success');
-}
-
-// Edit course
-function editCourse(courseId) {
-    const courses = JSON.parse(localStorage.getItem('courses')) || [];
-    const course = courses.find(c => c.id === courseId);
-    if (course) {
-        // Fill form with course data
-        document.getElementById('newCourseTitle').value = course.title;
-        document.getElementById('newCourseTeacher').value = course.teacher;
-        document.getElementById('newCourseDuration').value = course.duration;
-        document.getElementById('newCourseStudents').value = course.students;
-        document.getElementById('newCoursePrice').value = course.price;
-        document.getElementById('newCourseImage').value = course.image;
-        document.getElementById('newCourseDescription').value = course.description;
-        // Show form
-        showAddCourseForm();
-        // Change form submit function
-        const form = document.querySelector('#addCourseForm form');
-        form.onsubmit = function(event) {
-            event.preventDefault();
-            // Update course
-            course.title = document.getElementById('newCourseTitle').value;
-            course.teacher = document.getElementById('newCourseTeacher').value;
-            course.duration = document.getElementById('newCourseDuration').value;
-            course.students = document.getElementById('newCourseStudents').value;
-            course.price = document.getElementById('newCoursePrice').value;
-            course.image = document.getElementById('newCourseImage').value;
-            course.description = document.getElementById('newCourseDescription').value;
-            localStorage.setItem('courses', JSON.stringify(courses));
-            // Reload courses
-            loadCourses();
-            loadAdminCoursesList();
-            // Hide form
+    
+    // Guardar en Firebase
+    db.collection('courses').add(courseData)
+        .then(() => {
+            alert(`Curso "${title}" agregado correctamente.`);
             hideAddCourseForm();
-            // Reset form submit function
-            form.onsubmit = addCourse;
-            showNotification('Curso actualizado exitosamente', 'success');
-        };
-    }
+            // Los cursos se recargarán automáticamente gracias al listener en tiempo real
+        })
+        .catch((error) => {
+            console.error("Error al agregar curso: ", error);
+            alert("Error al agregar el curso. Por favor, inténtalo de nuevo.");
+        });
 }
 
-// Delete course
-function deleteCourse(courseId) {
-    if (confirm('¿Estás seguro de que quieres eliminar este curso?')) {
-        const courses = JSON.parse(localStorage.getItem('courses')) || [];
-        const filteredCourses = courses.filter(c => c.id !== courseId);
-        localStorage.setItem('courses', JSON.stringify(filteredCourses));
-        // Reload courses
-        loadCourses();
-        loadAdminCoursesList();
-        showNotification('Curso eliminado exitosamente', 'success');
-    }
-}
-
-// Load admin pricing list
-function loadAdminPricingList() {
-    const adminPricingList = document.getElementById('adminPricingList');
-    const pricing = JSON.parse(localStorage.getItem('pricing')) || getDefaultPricing();
-    adminPricingList.innerHTML = '';
-    pricing.forEach(item => {
-        const adminItem = document.createElement('div');
-        adminItem.className = 'admin-item';
-        adminItem.innerHTML = `
-            <div>
-                <strong>${item.course}</strong>
-                <div>Precio: ${item.price} | Tipo: ${item.type}</div>
-            </div>
-            <div class="admin-item-actions">
-                <button class="btn-primary btn-small" onclick="editPricing(${item.id})">Editar</button>
-                <button class="btn-danger btn-small" onclick="deletePricing(${item.id})">Eliminar</button>
-            </div>
-        `;
-        adminPricingList.appendChild(adminItem);
+// Función para editar curso
+function editCourse(id) {
+    // Obtener datos actuales del curso
+    db.collection('courses').doc(id).get().then((doc) => {
+        if (doc.exists) {
+            const course = doc.data();
+            
+            // Llenar el formulario con los datos actuales
+            document.getElementById('editCourseId').value = id;
+            document.getElementById('editCourseTitle').value = course.title;
+            document.getElementById('editCourseTeacher').value = course.teacher;
+            document.getElementById('editCourseDuration').value = course.duration;
+            document.getElementById('editCourseStudents').value = course.students;
+            document.getElementById('editCoursePrice').value = course.price;
+            document.getElementById('editCourseImage').value = course.image;
+            document.getElementById('editCourseDescription').value = course.description;
+            
+            // Mostrar el formulario de edición
+            document.getElementById('editCourseForm').style.display = 'block';
+        }
     });
 }
 
-// Show add pricing form
-function showAddPricingForm() {
-    document.getElementById('addPricingForm').style.display = 'block';
+// Función para guardar cambios de curso editado
+function saveEditedCourse(event) {
+    event.preventDefault();
+    
+    const id = document.getElementById('editCourseId').value;
+    const title = document.getElementById('editCourseTitle').value;
+    const teacher = document.getElementById('editCourseTeacher').value;
+    const duration = document.getElementById('editCourseDuration').value;
+    const students = document.getElementById('editCourseStudents').value;
+    const price = document.getElementById('editCoursePrice').value;
+    const image = document.getElementById('editCourseImage').value;
+    const description = document.getElementById('editCourseDescription').value;
+    
+    // Crear objeto con los datos actualizados
+    const updatedCourse = {
+        title,
+        teacher,
+        duration,
+        students,
+        price,
+        image,
+        description
+    };
+    
+    // Actualizar en Firebase
+    db.collection('courses').doc(id).update(updatedCourse)
+        .then(() => {
+            alert(`Curso "${title}" actualizado correctamente.`);
+            document.getElementById('editCourseForm').style.display = 'none';
+            // Los cursos se recargarán automáticamente gracias al listener en tiempo real
+        })
+        .catch((error) => {
+            console.error("Error al actualizar curso: ", error);
+            alert("Error al actualizar el curso. Por favor, inténtalo de nuevo.");
+        });
 }
 
-// Hide add pricing form
-function hideAddPricingForm() {
-    document.getElementById('addPricingForm').style.display = 'none';
-    document.getElementById('pricingCourse').value = '';
-    document.getElementById('pricingPrice').value = '';
-    document.getElementById('pricingSchedule').value = '';
-    document.getElementById('pricingDuration').value = '';
-    document.getElementById('pricingType').value = 'monthly';
+// Función para eliminar curso
+function deleteCourse(id) {
+    if (confirm('¿Estás seguro de que quieres eliminar este curso?')) {
+        db.collection('courses').doc(id).delete()
+            .then(() => {
+                alert('Curso eliminado correctamente.');
+                // Los cursos se recargarán automáticamente gracias al listener en tiempo real
+            })
+            .catch((error) => {
+                console.error("Error al eliminar curso: ", error);
+                alert("Error al eliminar el curso. Por favor, inténtalo de nuevo.");
+            });
+    }
 }
 
-// Add pricing
+// Función para cargar precios en el panel de administración
+function loadAdminPricing() {
+    const adminPricingList = document.getElementById('adminPricingList');
+    
+    // Limpiar el contenedor
+    adminPricingList.innerHTML = '';
+    
+    // Cargar datos desde Firebase
+    db.collection('pricing').get().then((querySnapshot) => {
+        const pricing = [];
+        querySnapshot.forEach((doc) => {
+            pricing.push({ id: doc.id, ...doc.data() });
+        });
+        
+        // Si no hay precios en Firebase, usar datos de ejemplo
+        if (pricing.length === 0) {
+            pricing.push(
+                { id: 1, course: "Inglés Básico", price: "$99", schedule: "Lunes y Miércoles 18:00-20:00", duration: "8 semanas", type: "monthly" },
+                { id: 2, course: "Inglés Intermedio", price: "$149", schedule: "Martes y Jueves 18:00-20:00", duration: "12 semanas", type: "monthly" },
+                { id: 3, course: "Inglés Avanzado", price: "$199", schedule: "Lunes y Miércoles 20:00-22:00", duration: "16 semanas", type: "monthly" },
+                { id: 4, course: "Preparación TOEFL", price: "$179", schedule: "Sábados 10:00-13:00", duration: "10 semanas", type: "monthly" }
+            );
+        }
+        
+        // Generar la lista de precios
+        pricing.forEach(item => {
+            const pricingItem = document.createElement('div');
+            pricingItem.className = 'admin-item';
+            pricingItem.innerHTML = `
+                <div>
+                    <strong>${item.course}</strong> - ${item.price} - ${item.schedule} - ${item.duration} - ${item.type}
+                </div>
+                <div class="admin-actions">
+                    <button class="btn btn-secondary" onclick="editPricing('${item.id}')">Editar</button>
+                    <button class="btn btn-danger" onclick="deletePricing('${item.id}')">Eliminar</button>
+                </div>
+            `;
+            adminPricingList.appendChild(pricingItem);
+        });
+    });
+}
+
+// Función para agregar precio
 function addPricing(event) {
     event.preventDefault();
-    const pricing = JSON.parse(localStorage.getItem('pricing')) || [];
-    const newPricing = {
-        id: Date.now(),
-        course: document.getElementById('pricingCourse').value,
-        price: document.getElementById('pricingPrice').value,
-        schedule: document.getElementById('pricingSchedule').value,
-        duration: document.getElementById('pricingDuration').value,
-        type: document.getElementById('pricingType').value
+    
+    // Obtener valores del formulario
+    const course = document.getElementById('pricingCourse').value;
+    const price = document.getElementById('pricingPrice').value;
+    const schedule = document.getElementById('pricingSchedule').value;
+    const duration = document.getElementById('pricingDuration').value;
+    const type = document.getElementById('pricingType').value;
+    
+    // Crear objeto con los datos del precio
+    const pricingData = {
+        course,
+        price,
+        schedule,
+        duration,
+        type
     };
-    pricing.push(newPricing);
-    localStorage.setItem('pricing', JSON.stringify(pricing));
-    // Reload pricing
-    loadPricing('monthly');
-    loadAdminPricingList();
-    // Hide form
-    hideAddPricingForm();
-    showNotification('Precio agregado exitosamente', 'success');
-}
-
-// Edit pricing
-function editPricing(pricingId) {
-    const pricing = JSON.parse(localStorage.getItem('pricing')) || [];
-    const pricingItem = pricing.find(p => p.id === pricingId);
-    if (pricingItem) {
-        // Fill form with pricing data
-        document.getElementById('pricingCourse').value = pricingItem.course;
-        document.getElementById('pricingPrice').value = pricingItem.price;
-        document.getElementById('pricingSchedule').value = pricingItem.schedule;
-        document.getElementById('pricingDuration').value = pricingItem.duration;
-        document.getElementById('pricingType').value = pricingItem.type;
-        // Show form
-        showAddPricingForm();
-        // Change form submit function
-        const form = document.querySelector('#addPricingForm form');
-        form.onsubmit = function(event) {
-            event.preventDefault();
-            // Update pricing
-            pricingItem.course = document.getElementById('pricingCourse').value;
-            pricingItem.price = document.getElementById('pricingPrice').value;
-            pricingItem.schedule = document.getElementById('pricingSchedule').value;
-            pricingItem.duration = document.getElementById('pricingDuration').value;
-            pricingItem.type = document.getElementById('pricingType').value;
-            localStorage.setItem('pricing', JSON.stringify(pricing));
-            // Reload pricing
-            loadPricing('monthly');
-            loadAdminPricingList();
-            // Hide form
+    
+    // Guardar en Firebase
+    db.collection('pricing').add(pricingData)
+        .then(() => {
+            alert(`Precio para "${course}" agregado correctamente.`);
             hideAddPricingForm();
-            // Reset form submit function
-            form.onsubmit = addPricing;
-            showNotification('Precio actualizado exitosamente', 'success');
-        };
-    }
+            // Los precios se recargarán automáticamente gracias al listener en tiempo real
+        })
+        .catch((error) => {
+            console.error("Error al agregar precio: ", error);
+            alert("Error al agregar el precio. Por favor, inténtalo de nuevo.");
+        });
 }
 
-// Delete pricing
-function deletePricing(pricingId) {
-    if (confirm('¿Estás seguro de que quieres eliminar este precio?')) {
-        const pricing = JSON.parse(localStorage.getItem('pricing')) || [];
-        const filteredPricing = pricing.filter(p => p.id !== pricingId);
-        localStorage.setItem('pricing', JSON.stringify(filteredPricing));
-        // Reload pricing
-        loadPricing('monthly');
-        loadAdminPricingList();
-        showNotification('Precio eliminado exitosamente', 'success');
-    }
-}
-
-// Load admin live classes list
-function loadAdminLiveClassesList() {
-    const adminLiveClassesList = document.getElementById('adminLiveClassesList');
-    const liveClasses = JSON.parse(localStorage.getItem('liveClasses')) || getDefaultLiveClasses();
-    adminLiveClassesList.innerHTML = '';
-    liveClasses.forEach(liveClass => {
-        const adminItem = document.createElement('div');
-        adminItem.className = 'admin-item';
-        adminItem.innerHTML = `
-            <div>
-                <strong>${liveClass.title}</strong>
-                <div>Fecha: ${liveClass.date} ${liveClass.time} | Plataforma: ${liveClass.platform}</div>
-            </div>
-            <div class="admin-item-actions">
-                <button class="btn-primary btn-small" onclick="editLiveClass(${liveClass.id})">Editar</button>
-                <button class="btn-danger btn-small" onclick="deleteLiveClass(${liveClass.id})">Eliminar</button>
-            </div>
-        `;
-        adminLiveClassesList.appendChild(adminItem);
+// Función para editar precio
+function editPricing(id) {
+    // Obtener datos actuales del precio
+    db.collection('pricing').doc(id).get().then((doc) => {
+        if (doc.exists) {
+            const pricing = doc.data();
+            
+            // Llenar el formulario con los datos actuales
+            document.getElementById('editPricingId').value = id;
+            document.getElementById('editPricingCourse').value = pricing.course;
+            document.getElementById('editPricingPrice').value = pricing.price;
+            document.getElementById('editPricingSchedule').value = pricing.schedule;
+            document.getElementById('editPricingDuration').value = pricing.duration;
+            document.getElementById('editPricingType').value = pricing.type;
+            
+            // Mostrar el formulario de edición
+            document.getElementById('editPricingForm').style.display = 'block';
+        }
     });
 }
 
-// Show add live class form
-function showAddLiveClassForm() {
-    document.getElementById('addLiveClassForm').style.display = 'block';
+// Función para guardar cambios de precio editado
+function saveEditedPricing(event) {
+    event.preventDefault();
+    
+    const id = document.getElementById('editPricingId').value;
+    const course = document.getElementById('editPricingCourse').value;
+    const price = document.getElementById('editPricingPrice').value;
+    const schedule = document.getElementById('editPricingSchedule').value;
+    const duration = document.getElementById('editPricingDuration').value;
+    const type = document.getElementById('editPricingType').value;
+    
+    // Crear objeto con los datos actualizados
+    const updatedPricing = {
+        course,
+        price,
+        schedule,
+        duration,
+        type
+    };
+    
+    // Actualizar en Firebase
+    db.collection('pricing').doc(id).update(updatedPricing)
+        .then(() => {
+            alert(`Precio para "${course}" actualizado correctamente.`);
+            document.getElementById('editPricingForm').style.display = 'none';
+            // Los precios se recargarán automáticamente gracias al listener en tiempo real
+        })
+        .catch((error) => {
+            console.error("Error al actualizar precio: ", error);
+            alert("Error al actualizar el precio. Por favor, inténtalo de nuevo.");
+        });
 }
 
-// Hide add live class form
-function hideAddLiveClassForm() {
-    document.getElementById('addLiveClassForm').style.display = 'none';
-    document.getElementById('liveClassTitle').value = '';
-    document.getElementById('liveClassDate').value = '';
-    document.getElementById('liveClassTime').value = '';
-    document.getElementById('liveClassPlatform').value = 'youtube';
-    document.getElementById('liveClassUrl').value = '';
+// Función para eliminar precio
+function deletePricing(id) {
+    if (confirm('¿Estás seguro de que quieres eliminar este precio?')) {
+        db.collection('pricing').doc(id).delete()
+            .then(() => {
+                alert('Precio eliminado correctamente.');
+                // Los precios se recargarán automáticamente gracias al listener en tiempo real
+            })
+            .catch((error) => {
+                console.error("Error al eliminar precio: ", error);
+                alert("Error al eliminar el precio. Por favor, inténtalo de nuevo.");
+            });
+    }
 }
 
-// Add live class
+// Función para cargar clases en vivo en el panel de administración
+function loadAdminLiveClasses() {
+    const adminLiveClassesList = document.getElementById('adminLiveClassesList');
+    
+    // Limpiar el contenedor
+    adminLiveClassesList.innerHTML = '';
+    
+    // Cargar datos desde Firebase
+    db.collection('liveClasses').get().then((querySnapshot) => {
+        const liveClasses = [];
+        querySnapshot.forEach((doc) => {
+            liveClasses.push({ id: doc.id, ...doc.data() });
+        });
+        
+        // Si no hay clases en vivo en Firebase, usar datos de ejemplo
+        if (liveClasses.length === 0) {
+            liveClasses.push(
+                { id: 1, title: "Conversación en Inglés", date: "2023-11-15", time: "18:00", platform: "YouTube" },
+                { id: 2, title: "Gramática Avanzada", date: "2023-11-17", time: "19:30", platform: "Twitch" },
+                { id: 3, title: "Pronunciación Perfecta", date: "2023-11-20", time: "17:00", platform: "YouTube" },
+                { id: 4, title: "Vocabulario de Negocios", date: "2023-11-22", time: "20:00", platform: "Facebook" }
+            );
+        }
+        
+        // Generar la lista de clases en vivo
+        liveClasses.forEach(classItem => {
+            const classItemElement = document.createElement('div');
+            classItemElement.className = 'admin-item';
+            classItemElement.innerHTML = `
+                <div>
+                    <strong>${classItem.title}</strong> - ${formatDate(classItem.date)} - ${classItem.time} - ${classItem.platform}
+                </div>
+                <div class="admin-actions">
+                    <button class="btn btn-secondary" onclick="editLiveClass('${classItem.id}')">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteLiveClass('${classItem.id}')">Eliminar</button>
+                </div>
+            `;
+            adminLiveClassesList.appendChild(classItemElement);
+        });
+    });
+}
+
+// Función para agregar clase en vivo
 function addLiveClass(event) {
     event.preventDefault();
-    const liveClasses = JSON.parse(localStorage.getItem('liveClasses')) || [];
-    const newLiveClass = {
-        id: Date.now(),
-        title: document.getElementById('liveClassTitle').value,
-        date: document.getElementById('liveClassDate').value,
-        time: document.getElementById('liveClassTime').value,
-        platform: document.getElementById('liveClassPlatform').value,
-        url: document.getElementById('liveClassUrl').value
+    
+    // Obtener valores del formulario
+    const title = document.getElementById('liveClassTitle').value;
+    const date = document.getElementById('liveClassDate').value;
+    const time = document.getElementById('liveClassTime').value;
+    const platform = document.getElementById('liveClassPlatform').value;
+    const url = document.getElementById('liveClassUrl').value;
+    
+    // Crear objeto con los datos de la clase en vivo
+    const liveClassData = {
+        title,
+        date,
+        time,
+        platform,
+        url
     };
-    liveClasses.push(newLiveClass);
-    localStorage.setItem('liveClasses', JSON.stringify(liveClasses));
-    // Reload live classes
-    loadLiveClasses();
-    loadAdminLiveClassesList();
-    // Hide form
-    hideAddLiveClassForm();
-    showNotification('Clase en vivo agregada exitosamente', 'success');
-}
-
-// Edit live class
-function editLiveClass(liveClassId) {
-    const liveClasses = JSON.parse(localStorage.getItem('liveClasses')) || [];
-    const liveClass = liveClasses.find(l => l.id === liveClassId);
-    if (liveClass) {
-        // Fill form with live class data
-        document.getElementById('liveClassTitle').value = liveClass.title;
-        document.getElementById('liveClassDate').value = liveClass.date;
-        document.getElementById('liveClassTime').value = liveClass.time;
-        document.getElementById('liveClassPlatform').value = liveClass.platform;
-        document.getElementById('liveClassUrl').value = liveClass.url;
-        // Show form
-        showAddLiveClassForm();
-        // Change form submit function
-        const form = document.querySelector('#addLiveClassForm form');
-        form.onsubmit = function(event) {
-            event.preventDefault();
-            // Update live class
-            liveClass.title = document.getElementById('liveClassTitle').value;
-            liveClass.date = document.getElementById('liveClassDate').value;
-            liveClass.time = document.getElementById('liveClassTime').value;
-            liveClass.platform = document.getElementById('liveClassPlatform').value;
-            liveClass.url = document.getElementById('liveClassUrl').value;
-            localStorage.setItem('liveClasses', JSON.stringify(liveClasses));
-            // Reload live classes
-            loadLiveClasses();
-            loadAdminLiveClassesList();
-            // Hide form
+    
+    // Guardar en Firebase
+    db.collection('liveClasses').add(liveClassData)
+        .then(() => {
+            alert(`Clase en vivo "${title}" agregada correctamente.`);
             hideAddLiveClassForm();
-            // Reset form submit function
-            form.onsubmit = addLiveClass;
-            showNotification('Clase en vivo actualizada exitosamente', 'success');
-        };
-    }
+            // Las clases en vivo se recargarán automáticamente gracias al listener en tiempo real
+        })
+        .catch((error) => {
+            console.error("Error al agregar clase en vivo: ", error);
+            alert("Error al agregar la clase en vivo. Por favor, inténtalo de nuevo.");
+        });
 }
 
-// Delete live class
-function deleteLiveClass(liveClassId) {
-    if (confirm('¿Estás seguro de que quieres eliminar esta clase en vivo?')) {
-        const liveClasses = JSON.parse(localStorage.getItem('liveClasses')) || [];
-        const filteredLiveClasses = liveClasses.filter(l => l.id !== liveClassId);
-        localStorage.setItem('liveClasses', JSON.stringify(filteredLiveClasses));
-        // Reload live classes
-        loadLiveClasses();
-        loadAdminLiveClassesList();
-        showNotification('Clase en vivo eliminada exitosamente', 'success');
-    }
-}
-
-// Load admin access classes list
-function loadAdminAccessClassesList() {
-    const adminAccessClassesList = document.getElementById('adminAccessClassesList');
-    const accessClasses = JSON.parse(localStorage.getItem('accessClasses')) || getDefaultAccessClasses();
-    adminAccessClassesList.innerHTML = '';
-    accessClasses.forEach(accessClass => {
-        const adminItem = document.createElement('div');
-        adminItem.className = 'admin-item';
-        adminItem.innerHTML = `
-            <div>
-                <strong>${accessClass.title}</strong>
-                <div>Profesor: ${accessClass.teacher} | Plataforma: ${accessClass.platform}</div>
-            </div>
-            <div class="admin-item-actions">
-                <button class="btn-primary btn-small" onclick="editAccessClass(${accessClass.id})">Editar</button>
-                <button class="btn-danger btn-small" onclick="deleteAccessClass(${accessClass.id})">Eliminar</button>
-            </div>
-        `;
-        adminAccessClassesList.appendChild(adminItem);
+// Función para editar clase en vivo
+function editLiveClass(id) {
+    // Obtener datos actuales de la clase en vivo
+    db.collection('liveClasses').doc(id).get().then((doc) => {
+        if (doc.exists) {
+            const liveClass = doc.data();
+            
+            // Llenar el formulario con los datos actuales
+            document.getElementById('editLiveClassId').value = id;
+            document.getElementById('editLiveClassTitle').value = liveClass.title;
+            document.getElementById('editLiveClassDate').value = liveClass.date;
+            document.getElementById('editLiveClassTime').value = liveClass.time;
+            document.getElementById('editLiveClassPlatform').value = liveClass.platform;
+            document.getElementById('editLiveClassUrl').value = liveClass.url;
+            
+            // Mostrar el formulario de edición
+            document.getElementById('editLiveClassForm').style.display = 'block';
+        }
     });
 }
 
-// Show add access class form
-function showAddAccessClassForm() {
-    document.getElementById('addAccessClassForm').style.display = 'block';
+// Función para guardar cambios de clase en vivo editada
+function saveEditedLiveClass(event) {
+    event.preventDefault();
+    
+    const id = document.getElementById('editLiveClassId').value;
+    const title = document.getElementById('editLiveClassTitle').value;
+    const date = document.getElementById('editLiveClassDate').value;
+    const time = document.getElementById('editLiveClassTime').value;
+    const platform = document.getElementById('editLiveClassPlatform').value;
+    const url = document.getElementById('editLiveClassUrl').value;
+    
+    // Crear objeto con los datos actualizados
+    const updatedLiveClass = {
+        title,
+        date,
+        time,
+        platform,
+        url
+    };
+    
+    // Actualizar en Firebase
+    db.collection('liveClasses').doc(id).update(updatedLiveClass)
+        .then(() => {
+            alert(`Clase en vivo "${title}" actualizada correctamente.`);
+            document.getElementById('editLiveClassForm').style.display = 'none';
+            // Las clases en vivo se recargarán automáticamente gracias al listener en tiempo real
+        })
+        .catch((error) => {
+            console.error("Error al actualizar clase en vivo: ", error);
+            alert("Error al actualizar la clase en vivo. Por favor, inténtalo de nuevo.");
+        });
 }
 
-// Hide add access class form
-function hideAddAccessClassForm() {
-    document.getElementById('addAccessClassForm').style.display = 'none';
-    document.getElementById('accessClassTitle').value = '';
-    document.getElementById('accessClassPlatform').value = 'zoom';
-    document.getElementById('accessClassUrl').value = '';
-    document.getElementById('accessClassTeacher').value = '';
-    document.getElementById('accessClassSchedule').value = '';
+// Función para eliminar clase en vivo
+function deleteLiveClass(id) {
+    if (confirm('¿Estás seguro de que quieres eliminar esta clase en vivo?')) {
+        db.collection('liveClasses').doc(id).delete()
+            .then(() => {
+                alert('Clase en vivo eliminada correctamente.');
+                // Las clases en vivo se recargarán automáticamente gracias al listener en tiempo real
+            })
+            .catch((error) => {
+                console.error("Error al eliminar clase en vivo: ", error);
+                alert("Error al eliminar la clase en vivo. Por favor, inténtalo de nuevo.");
+            });
+    }
 }
 
-// Add access class
+// Función para cargar acceso a clases en el panel de administración
+function loadAdminAccessClasses() {
+    const adminAccessClassesList = document.getElementById('adminAccessClassesList');
+    
+    // Limpiar el contenedor
+    adminAccessClassesList.innerHTML = '';
+    
+    // Cargar datos desde Firebase
+    db.collection('accessClasses').get().then((querySnapshot) => {
+        const accessClasses = [];
+        querySnapshot.forEach((doc) => {
+            accessClasses.push({ id: doc.id, ...doc.data() });
+        });
+        
+        // Si no hay acceso a clases en Firebase, usar datos de ejemplo
+        if (accessClasses.length === 0) {
+            accessClasses.push(
+                { id: 1, title: "Inglés Básico - Grupo A", platform: "Zoom", teacher: "Prof. John Smith", schedule: "Lunes y Miércoles 18:00-20:00" },
+                { id: 2, title: "Inglés Intermedio - Grupo B", platform: "Google Meet", teacher: "Prof. Sarah Johnson", schedule: "Martes y Jueves 18:00-20:00" },
+                { id: 3, title: "Inglés Avanzado - Grupo A", platform: "Zoom", teacher: "Prof. Michael Brown", schedule: "Lunes y Miércoles 20:00-22:00" },
+                { id: 4, title: "Preparación TOEFL - Grupo A", platform: "Google Meet", teacher: "Prof. Emily Davis", schedule: "Sábados 10:00-13:00" }
+            );
+        }
+        
+        // Generar la lista de acceso a clases
+        accessClasses.forEach(classItem => {
+            const classItemElement = document.createElement('div');
+            classItemElement.className = 'admin-item';
+            classItemElement.innerHTML = `
+                <div>
+                    <strong>${classItem.title}</strong> - ${classItem.platform} - ${classItem.teacher} - ${classItem.schedule}
+                </div>
+                <div class="admin-actions">
+                    <button class="btn btn-secondary" onclick="editAccessClass('${classItem.id}')">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteAccessClass('${classItem.id}')">Eliminar</button>
+                </div>
+            `;
+            adminAccessClassesList.appendChild(classItemElement);
+        });
+    });
+}
+
+// Función para agregar acceso a clase
 function addAccessClass(event) {
     event.preventDefault();
-    const accessClasses = JSON.parse(localStorage.getItem('accessClasses')) || [];
-    const newAccessClass = {
-        id: Date.now(),
-        title: document.getElementById('accessClassTitle').value,
-        platform: document.getElementById('accessClassPlatform').value,
-        url: document.getElementById('accessClassUrl').value,
-        teacher: document.getElementById('accessClassTeacher').value,
-        schedule: document.getElementById('accessClassSchedule').value
+    
+    // Obtener valores del formulario
+    const title = document.getElementById('accessClassTitle').value;
+    const platform = document.getElementById('accessClassPlatform').value;
+    const url = document.getElementById('accessClassUrl').value;
+    const teacher = document.getElementById('accessClassTeacher').value;
+    const schedule = document.getElementById('accessClassSchedule').value;
+    
+    // Crear objeto con los datos del acceso a clase
+    const accessClassData = {
+        title,
+        platform,
+        url,
+        teacher,
+        schedule
     };
-    accessClasses.push(newAccessClass);
-    localStorage.setItem('accessClasses', JSON.stringify(accessClasses));
-    // Reload access classes
-    loadAccessClasses();
-    loadAdminAccessClassesList();
-    // Hide form
-    hideAddAccessClassForm();
-    showNotification('Acceso a clase agregado exitosamente', 'success');
-}
-
-// Edit access class
-function editAccessClass(accessClassId) {
-    const accessClasses = JSON.parse(localStorage.getItem('accessClasses')) || [];
-    const accessClass = accessClasses.find(a => a.id === accessClassId);
-    if (accessClass) {
-        // Fill form with access class data
-        document.getElementById('accessClassTitle').value = accessClass.title;
-        document.getElementById('accessClassPlatform').value = accessClass.platform;
-        document.getElementById('accessClassUrl').value = accessClass.url;
-        document.getElementById('accessClassTeacher').value = accessClass.teacher;
-        document.getElementById('accessClassSchedule').value = accessClass.schedule;
-        // Show form
-        showAddAccessClassForm();
-        // Change form submit function
-        const form = document.querySelector('#addAccessClassForm form');
-        form.onsubmit = function(event) {
-            event.preventDefault();
-            // Update access class
-            accessClass.title = document.getElementById('accessClassTitle').value;
-            accessClass.platform = document.getElementById('accessClassPlatform').value;
-            accessClass.url = document.getElementById('accessClassUrl').value;
-            accessClass.teacher = document.getElementById('accessClassTeacher').value;
-            accessClass.schedule = document.getElementById('accessClassSchedule').value;
-            localStorage.setItem('accessClasses', JSON.stringify(accessClasses));
-            // Reload access classes
-            loadAccessClasses();
-            loadAdminAccessClassesList();
-            // Hide form
+    
+    // Guardar en Firebase
+    db.collection('accessClasses').add(accessClassData)
+        .then(() => {
+            alert(`Acceso a clase "${title}" agregado correctamente.`);
             hideAddAccessClassForm();
-            // Reset form submit function
-            form.onsubmit = addAccessClass;
-            showNotification('Acceso a clase actualizado exitosamente', 'success');
-        };
-    }
+            // Los accesos a clases se recargarán automáticamente gracias al listener en tiempo real
+        })
+        .catch((error) => {
+            console.error("Error al agregar acceso a clase: ", error);
+            alert("Error al agregar el acceso a clase. Por favor, inténtalo de nuevo.");
+        });
 }
 
-// Delete access class
-function deleteAccessClass(accessClassId) {
-    if (confirm('¿Estás seguro de que quieres eliminar este acceso a clase?')) {
-        const accessClasses = JSON.parse(localStorage.getItem('accessClasses')) || [];
-        const filteredAccessClasses = accessClasses.filter(a => a.id !== accessClassId);
-        localStorage.setItem('accessClasses', JSON.stringify(filteredAccessClasses));
-        // Reload access classes
-        loadAccessClasses();
-        loadAdminAccessClassesList();
-        showNotification('Acceso a clase eliminado exitosamente', 'success');
-    }
-}
-
-// Load admin banners list
-function loadAdminBannersList() {
-    const adminBannersList = document.getElementById('adminBannersList');
-    const banners = JSON.parse(localStorage.getItem('banners')) || getDefaultBanners();
-    adminBannersList.innerHTML = '';
-    banners.forEach(banner => {
-        const adminItem = document.createElement('div');
-        adminItem.className = 'admin-item';
-        adminItem.innerHTML = `
-            <div>
-                <strong>${banner.title}</strong>
-                <div>URL: ${banner.url}</div>
-            </div>
-            <div class="admin-item-actions">
-                <button class="btn-primary btn-small" onclick="editBanner(${banner.id})">Editar</button>
-                <button class="btn-danger btn-small" onclick="deleteBanner(${banner.id})">Eliminar</button>
-            </div>
-        `;
-        adminBannersList.appendChild(adminItem);
+// Función para editar acceso a clase
+function editAccessClass(id) {
+    // Obtener datos actuales del acceso a clase
+    db.collection('accessClasses').doc(id).get().then((doc) => {
+        if (doc.exists) {
+            const accessClass = doc.data();
+            
+            // Llenar el formulario con los datos actuales
+            document.getElementById('editAccessClassId').value = id;
+            document.getElementById('editAccessClassTitle').value = accessClass.title;
+            document.getElementById('editAccessClassPlatform').value = accessClass.platform;
+            document.getElementById('editAccessClassUrl').value = accessClass.url;
+            document.getElementById('editAccessClassTeacher').value = accessClass.teacher;
+            document.getElementById('editAccessClassSchedule').value = accessClass.schedule;
+            
+            // Mostrar el formulario de edición
+            document.getElementById('editAccessClassForm').style.display = 'block';
+        }
     });
 }
 
-// Show add banner form
-function showAddBannerForm() {
-    document.getElementById('addBannerForm').style.display = 'block';
+// Función para guardar cambios de acceso a clase editado
+function saveEditedAccessClass(event) {
+    event.preventDefault();
+    
+    const id = document.getElementById('editAccessClassId').value;
+    const title = document.getElementById('editAccessClassTitle').value;
+    const platform = document.getElementById('editAccessClassPlatform').value;
+    const url = document.getElementById('editAccessClassUrl').value;
+    const teacher = document.getElementById('editAccessClassTeacher').value;
+    const schedule = document.getElementById('editAccessClassSchedule').value;
+    
+    // Crear objeto con los datos actualizados
+    const updatedAccessClass = {
+        title,
+        platform,
+        url,
+        teacher,
+        schedule
+    };
+    
+    // Actualizar en Firebase
+    db.collection('accessClasses').doc(id).update(updatedAccessClass)
+        .then(() => {
+            alert(`Acceso a clase "${title}" actualizado correctamente.`);
+            document.getElementById('editAccessClassForm').style.display = 'none';
+            // Los accesos a clases se recargarán automáticamente gracias al listener en tiempo real
+        })
+        .catch((error) => {
+            console.error("Error al actualizar acceso a clase: ", error);
+            alert("Error al actualizar el acceso a clase. Por favor, inténtalo de nuevo.");
+        });
 }
 
-// Hide add banner form
-function hideAddBannerForm() {
-    document.getElementById('addBannerForm').style.display = 'none';
-    document.getElementById('bannerTitle').value = '';
-    document.getElementById('bannerUrl').value = '';
+// Función para eliminar acceso a clase
+function deleteAccessClass(id) {
+    if (confirm('¿Estás seguro de que quieres eliminar este acceso a clase?')) {
+        db.collection('accessClasses').doc(id).delete()
+            .then(() => {
+                alert('Acceso a clase eliminado correctamente.');
+                // Los accesos a clases se recargarán automáticamente gracias al listener en tiempo real
+            })
+            .catch((error) => {
+                console.error("Error al eliminar acceso a clase: ", error);
+                alert("Error al eliminar el acceso a clase. Por favor, inténtalo de nuevo.");
+            });
+    }
 }
 
-// Add banner
+// Función para cargar banners en el panel de administración
+function loadAdminBanners() {
+    const adminBannersList = document.getElementById('adminBannersList');
+    
+    // Limpiar el contenedor
+    adminBannersList.innerHTML = '';
+    
+    // Cargar datos desde Firebase
+    db.collection('banners').get().then((querySnapshot) => {
+        const banners = [];
+        querySnapshot.forEach((doc) => {
+            banners.push({ id: doc.id, ...doc.data() });
+        });
+        
+        // Si no hay banners en Firebase, usar datos de ejemplo
+        if (banners.length === 0) {
+            banners.push(
+                { id: 1, title: "Promoción de Verano", url: "https://example.com/banner1.jpg" },
+                { id: 2, title: "Nuevo Curso de Negocios", url: "https://example.com/banner2.jpg" },
+                { id: 3, title: "Clases Gratuitas", url: "https://example.com/banner3.jpg" }
+            );
+        }
+        
+        // Generar la lista de banners
+        banners.forEach(banner => {
+            const bannerItem = document.createElement('div');
+            bannerItem.className = 'admin-item';
+            bannerItem.innerHTML = `
+                <div>
+                    <strong>${banner.title}</strong> - ${banner.url}
+                </div>
+                <div class="admin-actions">
+                    <button class="btn btn-secondary" onclick="editBanner('${banner.id}')">Editar</button>
+                    <button class="btn btn-danger" onclick="deleteBanner('${banner.id}')">Eliminar</button>
+                </div>
+            `;
+            adminBannersList.appendChild(bannerItem);
+        });
+    });
+}
+
+// Función para agregar banner
 function addBanner(event) {
     event.preventDefault();
-    const banners = JSON.parse(localStorage.getItem('banners')) || [];
-    const newBanner = {
-        id: Date.now(),
-        title: document.getElementById('bannerTitle').value,
-        url: document.getElementById('bannerUrl').value
+    
+    // Obtener valores del formulario
+    const title = document.getElementById('bannerTitle').value;
+    const url = document.getElementById('bannerUrl').value;
+    
+    // Crear objeto con los datos del banner
+    const bannerData = {
+        title,
+        url
     };
-    banners.push(newBanner);
-    localStorage.setItem('banners', JSON.stringify(banners));
-    // Reload banners
-    loadBanners();
-    loadAdminBannersList();
-    // Hide form
-    hideAddBannerForm();
-    showNotification('Banner agregado exitosamente', 'success');
-}
-
-// Edit banner
-function editBanner(bannerId) {
-    const banners = JSON.parse(localStorage.getItem('banners')) || [];
-    const banner = banners.find(b => b.id === bannerId);
-    if (banner) {
-        // Fill form with banner data
-        document.getElementById('bannerTitle').value = banner.title;
-        document.getElementById('bannerUrl').value = banner.url;
-        // Show form
-        showAddBannerForm();
-        // Change form submit function
-        const form = document.querySelector('#addBannerForm form');
-        form.onsubmit = function(event) {
-            event.preventDefault();
-            // Update banner
-            banner.title = document.getElementById('bannerTitle').value;
-            banner.url = document.getElementById('bannerUrl').value;
-            localStorage.setItem('banners', JSON.stringify(banners));
-            // Reload banners
-            loadBanners();
-            loadAdminBannersList();
-            // Hide form
+    
+    // Guardar en Firebase
+    db.collection('banners').add(bannerData)
+        .then(() => {
+            alert(`Banner "${title}" agregado correctamente.`);
             hideAddBannerForm();
-            // Reset form submit function
-            form.onsubmit = addBanner;
-            showNotification('Banner actualizado exitosamente', 'success');
-        };
-    }
+            // Los banners se recargarán automáticamente gracias al listener en tiempo real
+        })
+        .catch((error) => {
+            console.error("Error al agregar banner: ", error);
+            alert("Error al agregar el banner. Por favor, inténtalo de nuevo.");
+        });
 }
 
-// Delete banner
-function deleteBanner(bannerId) {
-    if (confirm('¿Estás seguro de que quieres eliminar este banner?')) {
-        const banners = JSON.parse(localStorage.getItem('banners')) || [];
-        const filteredBanners = banners.filter(b => b.id !== bannerId);
-        localStorage.setItem('banners', JSON.stringify(filteredBanners));
-        // Reload banners
-        loadBanners();
-        loadAdminBannersList();
-        showNotification('Banner eliminado exitosamente', 'success');
-    }
+// Función para editar banner
+function editBanner(id) {
+    // Obtener datos actuales del banner
+    db.collection('banners').doc(id).get().then((doc) => {
+        if (doc.exists) {
+            const banner = doc.data();
+            
+            // Llenar el formulario con los datos actuales
+            document.getElementById('editBannerId').value = id;
+            document.getElementById('editBannerTitle').value = banner.title;
+            document.getElementById('editBannerUrl').value = banner.url;
+            
+            // Mostrar el formulario de edición
+            document.getElementById('editBannerForm').style.display = 'block';
+        }
+    });
 }
 
-// Update home stats
-function updateHomeStats() {
-    const statsStudents = document.getElementById('statsStudents').value;
-    const statsCourses = document.getElementById('statsCourses').value;
-    const statsTeachers = document.getElementById('statsTeachers').value;
-    const statsSatisfaction = document.getElementById('statsSatisfaction').value;
-    // Update stat numbers
-    const statNumbers = document.querySelectorAll('.stat-number');
-    if (statNumbers[0]) {
-        statNumbers[0].setAttribute('data-target', statsStudents);
-        statNumbers[0].textContent = '0';
-        animateNumber(statNumbers[0], statsStudents);
-    }
-    if (statNumbers[1]) {
-        statNumbers[1].setAttribute('data-target', statsCourses);
-        statNumbers[1].textContent = '0';
-        animateNumber(statNumbers[1], statsCourses);
-    }
-    if (statNumbers[2]) {
-        statNumbers[2].setAttribute('data-target', statsTeachers);
-        statNumbers[2].textContent = '0';
-        animateNumber(statNumbers[2], statsTeachers);
-    }
-    if (statNumbers[3]) {
-        statNumbers[3].setAttribute('data-target', statsSatisfaction);
-        statNumbers[3].textContent = '0';
-        animateNumber(statNumbers[3], statsSatisfaction);
-    }
-    showNotification('Estadísticas actualizadas exitosamente', 'success');
-}
-
-// Update news
-function updateNews(event) {
+// Función para guardar cambios de banner editado
+function saveEditedBanner(event) {
     event.preventDefault();
-    const newsText = document.getElementById('newsInput').value;
-    // Update news text
-    document.getElementById('newsText').textContent = newsText;
-    showNotification('Noticias actualizadas exitosamente', 'success');
+    
+    const id = document.getElementById('editBannerId').value;
+    const title = document.getElementById('editBannerTitle').value;
+    const url = document.getElementById('editBannerUrl').value;
+    
+    // Crear objeto con los datos actualizados
+    const updatedBanner = {
+        title,
+        url
+    };
+    
+    // Actualizar en Firebase
+    db.collection('banners').doc(id).update(updatedBanner)
+        .then(() => {
+            alert(`Banner "${title}" actualizado correctamente.`);
+            document.getElementById('editBannerForm').style.display = 'none';
+            // Los banners se recargarán automáticamente gracias al listener en tiempo real
+        })
+        .catch((error) => {
+            console.error("Error al actualizar banner: ", error);
+            alert("Error al actualizar el banner. Por favor, inténtalo de nuevo.");
+        });
 }
 
-// Reset form
-function resetForm(formType) {
-    if (formType === 'news') {
-        document.getElementById('newsInput').value = '¡¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA!! Válido hasta el 30 de noviembre.';
+// Función para eliminar banner
+function deleteBanner(id) {
+    if (confirm('¿Estás seguro de que quieres eliminar este banner?')) {
+        db.collection('banners').doc(id).delete()
+            .then(() => {
+                alert('Banner eliminado correctamente.');
+                // Los banners se recargarán automáticamente gracias al listener en tiempo real
+            })
+            .catch((error) => {
+                console.error("Error al eliminar banner: ", error);
+                alert("Error al eliminar el banner. Por favor, inténtalo de nuevo.");
+            });
     }
+}
+
+// Función para formatear fecha
+function formatDate(dateString) {
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-ES', options);
 }
