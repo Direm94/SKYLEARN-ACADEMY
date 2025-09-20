@@ -313,6 +313,38 @@
             background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
         }
         
+        /* Comments Section */
+        .comments-container {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 2rem;
+            padding-right: 10px;
+        }
+        
+        .comments-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .comments-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .comments-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        .comment-item {
+            margin-bottom: 1.5rem;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
         .comments-section form {
             margin-top: 2rem;
             display: flex;
@@ -647,115 +679,18 @@
             margin-right: auto;
         }
         
-        .live-container {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        
         .live-video {
-            flex: 2;
+            width: 100%;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
         }
         
         .live-video iframe {
             width: 100%;
             height: 500px;
             border: none;
-        }
-        
-        .live-chat {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .chat-header {
-            padding: 1rem;
-            background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
-            color: white;
-            font-weight: 600;
-        }
-        
-        .chat-messages {
-            flex: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            background: #f9f9f9;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-        
-        .chat-message {
-            max-width: 80%;
-            padding: 0.8rem 1rem;
-            border-radius: 15px;
-            font-size: 0.9rem;
-        }
-        
-        .user-message {
-            align-self: flex-end;
-            background: var(--primary-color);
-            color: white;
-            border-bottom-right-radius: 5px;
-        }
-        
-        .other-message {
-            align-self: flex-start;
-            background: white;
-            color: var(--dark-color);
-            border-bottom-left-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-        }
-        
-        .chat-input {
-            padding: 1rem;
-            background: white;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 0.8rem;
-        }
-        
-        .chat-input input {
-            flex: 1;
-            padding: 0.8rem;
-            border: 2px solid #eee;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            transition: var(--transition);
-        }
-        
-        .chat-input input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(26, 95, 180, 0.2);
-        }
-        
-        .chat-input button {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(26, 95, 180, 0.3);
-        }
-        
-        .chat-input button:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
         }
         
         .live-schedule {
@@ -1324,15 +1259,7 @@
                 height: 50vh;
             }
             
-            .live-container {
-                flex-direction: column;
-            }
-            
             .live-video {
-                width: 100%;
-            }
-            
-            .live-chat {
                 width: 100%;
             }
         }
@@ -1484,7 +1411,7 @@
 
         <div class="comments-section">
             <h2>Comentarios Recientes</h2>
-            <div id="commentsContainer"></div>
+            <div class="comments-container" id="commentsContainer"></div>
             <form onsubmit="addComment(event)">
                 <input type="text" id="commentInput" placeholder="Escribe un comentario..." required>
                 <button type="submit">
@@ -1573,30 +1500,8 @@
             <h2>Clases en Vivo</h2>
             <p>Únete a nuestras clases interactivas en tiempo real con profesores certificados. Participa, haz preguntas y aprende en un entorno colaborativo.</p>
             <!-- EDITAR CLASES EN VIVO AQUÍ -->
-            <div class="live-container">
-                <div class="live-video">
-                    <iframe src="https://www.youtube.com/embed/live_stream?channel=TU_ID_DEL_CANAL&autoplay=1" allowfullscreen></iframe>
-                </div>
-                <div class="live-chat">
-                    <div class="chat-header">
-                        <i class="fas fa-comments"></i> Chat en Vivo
-                    </div>
-                    <div class="chat-messages" id="liveChatMessages">
-                        <div class="chat-message other-message">
-                            ¡Bienvenidos a la clase de hoy! Vamos a practicar conversación.
-                        </div>
-                        <div class="chat-message user-message">
-                            ¡Hola! Tengo una pregunta sobre la pronunciación.
-                        </div>
-                        <div class="chat-message other-message">
-                            Claro, ¿cuál es tu duda? Estoy aquí para ayudarte.
-                        </div>
-                    </div>
-                    <div class="chat-input">
-                        <input type="text" id="liveChatInput" placeholder="Escribe tu mensaje..." onkeypress="handleLiveChatKeyPress(event)">
-                        <button onclick="sendLiveChatMessage()"><i class="fas fa-paper-plane"></i></button>
-                    </div>
-                </div>
+            <div class="live-video">
+                <iframe src="https://www.youtube.com/embed/live_stream?channel=TU_ID_DEL_CANAL&autoplay=1" allowfullscreen></iframe>
             </div>
             <div class="live-schedule">
                 <h3>Próximas Clases</h3>
@@ -1614,7 +1519,7 @@
             <p>Completa el siguiente formulario para inscribirte en nuestros cursos de inglés. ¡Te contactaremos pronto!</p>
             
             <!-- Formulario de Google Forms - EDITAR AQUÍ -->
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfZqLzT8Y4K9XqJ1XzY7w7f6G5h4j3k2l1m0n9o8p7q6r5s4t3u2v1w/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfXOgR-BEq2U6wck2UXfikqsWcke-pxco3WxniC9EaRPKJu_w/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
         </div>
     </section>
 
@@ -1804,6 +1709,9 @@
             
             // Cargar comentarios existentes
             loadComments();
+            
+            // Verificar nuevos comentarios periódicamente
+            setInterval(checkForNewComments, 5000);
         });
         
         // Función para mostrar secciones
@@ -1901,41 +1809,24 @@
                 const courseCard = document.createElement('div');
                 courseCard.className = 'course-card';
                 courseCard.innerHTML = `
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="course-img-container">
-                                <img src="${course.image}" alt="${course.title}" class="course-img">
-                                <span class="course-badge">${course.badge}</span>
-                            </div>
-                            <div class="course-info">
-                                <h3>${course.title}</h3>
-                                <div class="course-teacher">
-                                    <img src="https://via.placeholder.com/40/1a5fb4/ffffff?text=${course.teacher.charAt(0)}" alt="${course.teacher}" class="teacher-avatar">
-                                    <span class="teacher-name">${course.teacher}</span>
-                                </div>
-                                <div class="course-meta">
-                                    <span><i class="fas fa-clock"></i> ${course.duration}</span>
-                                    <span><i class="fas fa-users"></i> ${course.students} estudiantes</span>
-                                </div>
-                                <div class="course-price">${course.price}</div>
-                                <button onclick="enrollCourse('${course.title}')">
-                                    <i class="fas fa-shopping-cart"></i> Inscribirse
-                                </button>
-                            </div>
+                    <div class="course-img-container">
+                        <img src="${course.image}" alt="${course.title}" class="course-img">
+                        <span class="course-badge">${course.badge}</span>
+                    </div>
+                    <div class="course-info">
+                        <h3>${course.title}</h3>
+                        <div class="course-teacher">
+                            <img src="https://via.placeholder.com/40/1a5fb4/ffffff?text=${course.teacher.charAt(0)}" alt="${course.teacher}" class="teacher-avatar">
+                            <span class="teacher-name">${course.teacher}</span>
                         </div>
-                        <div class="card-back">
-                            <h3>${course.title}</h3>
-                            <ul>
-                                <li>Clases en vivo con profesores nativos</li>
-                                <li>Material de estudio incluido</li>
-                                <li>Certificado al finalizar</li>
-                                <li>Acceso a plataforma online 24/7</li>
-                                <li>Soporte personalizado</li>
-                            </ul>
-                            <button onclick="enrollCourse('${course.title}')">
-                                <i class="fas fa-shopping-cart"></i> Inscribirse
-                            </button>
+                        <div class="course-meta">
+                            <span><i class="fas fa-clock"></i> ${course.duration}</span>
+                            <span><i class="fas fa-users"></i> ${course.students} estudiantes</span>
                         </div>
+                        <div class="course-price">${course.price}</div>
+                        <button onclick="enrollCourse('${course.title}')">
+                            <i class="fas fa-shopping-cart"></i> Inscribirse
+                        </button>
                     </div>
                 `;
                 coursesGrid.appendChild(courseCard);
@@ -2025,42 +1916,6 @@
             });
         }
         
-        // Función para enviar mensaje en el chat en vivo
-        function sendLiveChatMessage() {
-            const chatInput = document.getElementById('liveChatInput');
-            const message = chatInput.value.trim();
-            
-            if (message) {
-                const chatMessages = document.getElementById('liveChatMessages');
-                const messageElement = document.createElement('div');
-                messageElement.className = 'chat-message user-message';
-                messageElement.textContent = message;
-                chatMessages.appendChild(messageElement);
-                
-                // Limpiar input
-                chatInput.value = '';
-                
-                // Scroll al final del chat
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-                
-                // Simular respuesta después de un momento
-                setTimeout(() => {
-                    const responseElement = document.createElement('div');
-                    responseElement.className = 'chat-message other-message';
-                    responseElement.textContent = "Gracias por tu mensaje. Te responderemos pronto.";
-                    chatMessages.appendChild(responseElement);
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }, 1000);
-            }
-        }
-        
-        // Función para manejar tecla Enter en el chat en vivo
-        function handleLiveChatKeyPress(event) {
-            if (event.key === 'Enter') {
-                sendLiveChatMessage();
-            }
-        }
-        
         // Función para agregar comentario
         function addComment(event) {
             event.preventDefault();
@@ -2069,20 +1924,8 @@
             const comment = commentInput.value.trim();
             
             if (comment) {
-                const commentsContainer = document.getElementById('commentsContainer');
-                const commentElement = document.createElement('div');
-                commentElement.className = 'comment-item';
-                commentElement.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                        <img src="https://via.placeholder.com/40/1a5fb4/ffffff?text=U" alt="Usuario" class="teacher-avatar">
-                        <div>
-                            <div style="font-weight: 600;">Usuario Anónimo</div>
-                            <div style="color: var(--gray-color); font-size: 0.9rem;">${new Date().toLocaleDateString()}</div>
-                        </div>
-                    </div>
-                    <p style="background: var(--light-color); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">${comment}</p>
-                `;
-                commentsContainer.appendChild(commentElement);
+                // Guardar comentario en localStorage
+                saveComment(comment);
                 
                 // Limpiar input
                 commentInput.value = '';
@@ -2090,8 +1933,8 @@
                 // Mostrar notificación
                 showNotification('success', '¡Comentario enviado!', 'Tu comentario ha sido publicado correctamente.');
                 
-                // Guardar comentario en localStorage
-                saveComment(comment);
+                // Recargar comentarios
+                loadComments();
             }
         }
         
@@ -2100,7 +1943,8 @@
             const comments = JSON.parse(localStorage.getItem('skylearnComments') || '[]');
             comments.push({
                 text: comment,
-                date: new Date().toISOString()
+                date: new Date().toISOString(),
+                id: Date.now() // ID único para cada comentario
             });
             localStorage.setItem('skylearnComments', JSON.stringify(comments));
         }
@@ -2117,6 +1961,9 @@
                 return;
             }
             
+            // Ordenar comentarios por fecha (más reciente primero)
+            comments.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
             comments.forEach(comment => {
                 const commentDate = new Date(comment.date);
                 const commentElement = document.createElement('div');
@@ -2126,13 +1973,30 @@
                         <img src="https://via.placeholder.com/40/1a5fb4/ffffff?text=U" alt="Usuario" class="teacher-avatar">
                         <div>
                             <div style="font-weight: 600;">Usuario Anónimo</div>
-                            <div style="color: var(--gray-color); font-size: 0.9rem;">${commentDate.toLocaleDateString()}</div>
+                            <div style="color: var(--gray-color); font-size: 0.9rem;">${commentDate.toLocaleDateString()} ${commentDate.toLocaleTimeString()}</div>
                         </div>
                     </div>
                     <p style="background: var(--light-color); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">${comment.text}</p>
                 `;
                 commentsContainer.appendChild(commentElement);
             });
+            
+            // Scroll al final del contenedor para mostrar los comentarios más recientes
+            commentsContainer.scrollTop = commentsContainer.scrollHeight;
+        }
+        
+        // Función para verificar nuevos comentarios
+        function checkForNewComments() {
+            // Solo verificar si estamos en la sección de inicio
+            if (document.getElementById('home').classList.contains('active')) {
+                const currentCommentCount = document.querySelectorAll('.comment-item').length;
+                const storedComments = JSON.parse(localStorage.getItem('skylearnComments') || '[]');
+                
+                if (storedComments.length > currentCommentCount) {
+                    // Hay nuevos comentarios, recargar
+                    loadComments();
+                }
+            }
         }
         
         // Función para inscribirse a un curso
