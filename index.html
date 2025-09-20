@@ -3,10 +3,1255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkyLearn Academy</title>
+    <title>SkyLearn Academy - English Online</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            /* Colores basados en el logo */
+            --primary-color: #1a5fb4;
+            --primary-dark: #1c71d8;
+            --secondary-color: #3584e4;
+            --accent-color: #2ec27e;
+            --dark-color: #1e1e1e;
+            --light-color: #f6f5f4;
+            --gray-color: #9a9996;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --success-color: #2ec27e;
+            --warning-color: #e5a50a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Loading Bar */
+        .loading-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--light-color);
+            z-index: 3000;
+        }
+        
+        .loading-progress {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            transition: width 0.3s ease;
+        }
+        
+        /* Navigation Styles */
+        .navbar {
+            background: white;
+            padding: 1.5rem 5%;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+        
+        .navbar.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            height: 50px;
+            transition: var(--transition);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 600;
+            transition: var(--transition);
+            padding: 0.5rem 0;
+            position: relative;
+            font-size: 1.1rem;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background: var(--primary-color);
+            bottom: 0;
+            left: 0;
+            transition: var(--transition);
+            border-radius: 3px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+        
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        /* Main Content */
+        .section {
+            padding: 100px 5% 5rem;
+            min-height: 100vh;
+            display: none;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+        
+        /* Home Section */
+        .home-slider {
+            height: 65vh;
+            margin: 3rem 0;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .slider-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.2s ease-in-out;
+        }
+        
+        .slider-image.active {
+            opacity: 1;
+        }
+        
+        .slider-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .slider-dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+        
+        /* Stats Section */
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 4rem 0;
+            gap: 2rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: var(--gray-color);
+        }
+        
+        /* News & Comments Sections */
+        .news-section,
+        .comments-section {
+            max-width: 900px;
+            margin: 4rem auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .news-section:hover,
+        .comments-section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .news-section h2,
+        .comments-section h2 {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+        
+        .news-section h2::after,
+        .comments-section h2::after {
+            left: 0;
+            transform: none;
+        }
+        
+        .news-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .news-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+        
+        .news-section p {
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            padding: 1.5rem;
+            background: var(--light-color);
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .news-section p::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+        }
+        
+        .comments-section form {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .comments-section input[type="text"] {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid #eee;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .comments-section input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(26, 95, 180, 0.2);
+        }
+        
+        .comments-section button {
+            padding: 1rem 2.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(26, 95, 180, 0.3);
+        }
+        
+        .comments-section button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(26, 95, 180, 0.4);
+        }
+        
+        /* Courses Grid */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 3rem;
+            padding: 3rem 0;
+        }
+        
+        .course-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+        }
+        
+        .course-img-container {
+            overflow: hidden;
+            height: 220px;
+            position: relative;
+        }
+        
+        .course-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .course-card:hover .course-img {
+            transform: scale(1.1);
+        }
+        
+        .course-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+        
+        .course-info {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .course-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark-color);
+        }
+        
+        .course-teacher {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .teacher-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .teacher-name {
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        .course-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .course-info button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 15px rgba(26, 95, 180, 0.3);
+            margin-top: auto;
+        }
+        
+        .course-info button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(26, 95, 180, 0.4);
+        }
+        
+        /* Pricing Table */
+        .pricing-container {
+            max-width: 1000px;
+            margin: 3rem auto;
+        }
+        
+        .pricing-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            gap: 1rem;
+        }
+        
+        .pricing-tab {
+            padding: 0.8rem 2rem;
+            background: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .pricing-tab.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .pricing-tab:hover:not(.active) {
+            background: rgba(26, 95, 180, 0.1);
+        }
+        
+        .pricing-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            box-shadow: var(--shadow);
+            border-radius: 15px;
+            overflow: hidden;
+            background: white;
+        }
+        
+        .pricing-table th {
+            background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .pricing-table td {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+            background: white;
+            transition: var(--transition);
+        }
+        
+        .pricing-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .pricing-table tr:hover td {
+            background: #f8f9fa;
+        }
+        
+        .highlight {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        /* Contact Section */
+        .contact-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .contact-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .contact-card p {
+            color: var(--gray-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-link {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .contact-link:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(26, 95, 180, 0.3);
+        }
+        
+        /* Live Classes Section */
+        .live-section {
+            max-width: 1200px;
+            margin: 3rem auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .live-section p {
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .live-container {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .live-video {
+            flex: 2;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .live-video iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+        
+        .live-chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chat-header {
+            padding: 1rem;
+            background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+            color: white;
+            font-weight: 600;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: #f9f9f9;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .chat-message {
+            max-width: 80%;
+            padding: 0.8rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .other-message {
+            align-self: flex-start;
+            background: white;
+            color: var(--dark-color);
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chat-input {
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid #eee;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .chat-input input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(26, 95, 180, 0.2);
+        }
+        
+        .chat-input button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(26, 95, 180, 0.3);
+        }
+        
+        .chat-input button:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+        
+        .live-schedule {
+            margin-top: 3rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1.2rem 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .schedule-item:hover {
+            background: #f8f9fa;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            border-radius: 10px;
+        }
+        
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+        
+        .schedule-time {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        /* Terms and Conditions Section */
+        .terms-section {
+            max-width: 900px;
+            margin: 4rem auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .terms-section h3 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin: 2rem 0 1rem;
+        }
+        
+        .terms-section p {
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+            text-align: justify;
+        }
+        
+        .terms-section ul {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .terms-section li {
+            margin-bottom: 0.8rem;
+            color: var(--dark-color);
+        }
+        
+        /* Registration Form */
+        .registration-section {
+            max-width: 700px;
+            margin: 4rem auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+        
+        .registration-form {
+            margin-top: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(26, 95, 180, 0.2);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            width: 100%;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(26, 95, 180, 0.3);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(26, 95, 180, 0.4);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 4rem 5% 2rem;
+            margin-top: 5rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-about p {
+            margin-bottom: 1.5rem;
+            color: var(--gray-color);
+        }
+        
+        .footer-links h3, 
+        .footer-contact h3, 
+        .footer-newsletter h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .footer-links h3::after, 
+        .footer-contact h3::after, 
+        .footer-newsletter h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--gray-color);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            color: var(--gray-color);
+        }
+        
+        .footer-contact i {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            width: 25px;
+        }
+        
+        .footer-newsletter p {
+            margin-bottom: 1.5rem;
+            color: var(--gray-color);
+        }
+        
+        .footer-newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .footer-newsletter input {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .footer-newsletter button {
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        
+        .footer-newsletter button:hover {
+            background: var(--primary-dark);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        /* WhatsApp Button */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 200;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+            font-size: 1.8rem;
+        }
+        
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.5);
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(26, 95, 180, 0.3);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-5px);
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: 350px;
+            transform: translateX(400px);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification-icon {
+            font-size: 2rem;
+        }
+        
+        .notification.success .notification-icon {
+            color: var(--success-color);
+        }
+        
+        .notification.error .notification-icon {
+            color: var(--accent-color);
+        }
+        
+        .notification.warning .notification-icon {
+            color: var(--warning-color);
+        }
+        
+        .notification-content h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+        
+        .notification-content p {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        .notification-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--gray-color);
+            cursor: pointer;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .courses-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+            
+            .home-slider {
+                height: 50vh;
+            }
+            
+            .live-container {
+                flex-direction: column;
+            }
+            
+            .live-video {
+                width: 100%;
+            }
+            
+            .live-chat {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1.5rem;
+            }
+            
+            .section {
+                padding: 80px 5% 3rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .news-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .comments-section form {
+                flex-direction: column;
+            }
+            
+            .comments-section button {
+                width: 100%;
+            }
+            
+            .whatsapp-btn {
+                bottom: 20px;
+                left: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .navbar {
+                padding: 1rem 5%;
+            }
+            
+            .nav-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .home-slider {
+                height: 40vh;
+            }
+            
+            .course-card {
+                max-width: 350px;
+                margin: 0 auto;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .back-to-top {
+                bottom: 90px;
+                right: 20px;
+            }
+            
+            .notification {
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Loading Bar -->
@@ -14,42 +1259,18 @@
         <div class="loading-progress" id="loadingProgress"></div>
     </div>
 
-    <!-- Pre-registration Screen -->
-    <div class="pre-register-screen" id="preRegisterScreen">
-        <div class="pre-register-container">
-            <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="Logo SkyLearn" class="logo-spin">
-            <h2>¡Bienvenido a SkyLearn Academy!</h2>
-            <p>Por favor, ingresa tu nombre para acceder a nuestra plataforma</p>
-            <form id="preRegisterForm">
-                <div class="form-group">
-                    <label for="preName">Nombre Completo</label>
-                    <input type="text" id="preName" required>
-                </div>
-                <button type="submit" class="pre-register-btn">Ingresar</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Pantalla de Bienvenida -->
-    <div class="login-screen" id="loginScreen">
-        <div class="logo-container">
-            <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="Logo SkyLearn" class="logo-spin">
-        </div>
-        <h1>READY TO LEARN ENGLISH?</h1>
-        <button onclick="showMainContent()">COMENZAR</button>
-    </div>
-
     <!-- Navegador -->
     <nav class="navbar" id="navbar">
         <div class="nav-content">
-            <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="Logo" class="logo">
+            <img src="https://z-cdn-media.chatglm.cn/files/d4a29cc3-0dfa-4162-876d-90b0943f4acf_logo%20sky.png?auth_key=1789917040-fee395f1cf8f4148910bb63822b38116-0-64740e7206191bb61a45c64032c935f8" alt="Logo" class="logo">
             <div class="nav-links">
                 <a href="#home" onclick="showSection('home')" class="active">Home</a>
                 <a href="#courses" onclick="showSection('courses')">Cursos</a>
                 <a href="#contact" onclick="showSection('contact')">Contacto</a>
                 <a href="#pricing" onclick="showSection('pricing')">Precios</a>
                 <a href="#live" onclick="showSection('live')">Clases en Vivo</a>
-                <a href="#admin" onclick="showAdminLogin()" class="admin-link" id="adminLink" style="display: none;">Admin Panel</a>
+                <a href="#registration" onclick="showSection('registration')">Inscripción</a>
+                <a href="#terms" onclick="showSection('terms')">Términos y Condiciones</a>
             </div>
         </div>
     </nav>
@@ -57,10 +1278,11 @@
     <!-- Secciones -->
     <!-- Home -->
     <section id="home" class="section active">
+        <!-- EDITAR BANNERS AQUÍ -->
         <div class="home-slider">
-            <img src="https://via.placeholder.com/1200x500/3498db/ffffff?text=Learn+English+with+Us" alt="Banner" class="slider-image active">
-            <img src="https://via.placeholder.com/1200x500/2ecc71/ffffff?text=Native+Teachers" alt="Banner" class="slider-image">
-            <img src="https://via.placeholder.com/1200x500/e74c3c/ffffff?text=Interactive+Classes" alt="Banner" class="slider-image">
+            <img src="https://via.placeholder.com/1200x500/1a5fb4/ffffff?text=Learn+English+with+Us" alt="Banner" class="slider-image active">
+            <img src="https://via.placeholder.com/1200x500/2ec27e/ffffff?text=Native+Teachers" alt="Banner" class="slider-image">
+            <img src="https://via.placeholder.com/1200x500/3584e4/ffffff?text=Interactive+Classes" alt="Banner" class="slider-image">
             <div class="slider-controls">
                 <div class="slider-dot active" onclick="goToSlide(0)"></div>
                 <div class="slider-dot" onclick="goToSlide(1)"></div>
@@ -88,6 +1310,7 @@
             </div>
         </div>
 
+        <!-- EDITAR NOTICIAS AQUÍ -->
         <div class="news-section">
             <h2>Últimas Noticias</h2>
             <div class="news-content">
@@ -113,8 +1336,9 @@
     <!-- Cursos -->
     <section id="courses" class="section">
         <h2>Cursos de Inglés Disponibles</h2>
+        <!-- EDITAR CURSOS AQUÍ -->
         <div class="courses-grid" id="coursesGrid">
-            <!-- Courses will be dynamically loaded here -->
+            <!-- Los cursos se cargarán dinámicamente aquí -->
         </div>
     </section>
 
@@ -166,6 +1390,7 @@
                 <div class="pricing-tab" onclick="showPricing('quarterly')">Trimestral</div>
                 <div class="pricing-tab" onclick="showPricing('yearly')">Anual</div>
             </div>
+            <!-- EDITAR PRECIOS AQUÍ -->
             <table class="pricing-table">
                 <thead>
                     <tr>
@@ -176,7 +1401,7 @@
                     </tr>
                 </thead>
                 <tbody id="pricingTableBody">
-                    <!-- Pricing data will be dynamically loaded here -->
+                    <!-- Los precios se cargarán dinámicamente aquí -->
                 </tbody>
             </table>
         </div>
@@ -187,6 +1412,7 @@
         <div class="live-section">
             <h2>Clases en Vivo</h2>
             <p>Únete a nuestras clases interactivas en tiempo real con profesores certificados. Participa, haz preguntas y aprende en un entorno colaborativo.</p>
+            <!-- EDITAR CLASES EN VIVO AQUÍ -->
             <div class="live-container">
                 <div class="live-video">
                     <iframe src="https://www.youtube.com/embed/live_stream?channel=TU_ID_DEL_CANAL&autoplay=1" allowfullscreen></iframe>
@@ -215,457 +1441,136 @@
             <div class="live-schedule">
                 <h3>Próximas Clases</h3>
                 <div id="liveScheduleContainer">
-                    <!-- Live schedule will be dynamically loaded here -->
+                    <!-- El horario de clases se cargará dinámicamente aquí -->
                 </div>
-            </div>
-        </div>
-
-        <!-- Calendar -->
-        <div class="calendar-container">
-            <div class="calendar-header">
-                <h3 id="currentMonth">Noviembre 2023</h3>
-                <div class="calendar-nav">
-                    <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
-                    <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
-                </div>
-            </div>
-            <div class="calendar-grid" id="calendarGrid">
-                <!-- Calendar will be generated by JavaScript -->
             </div>
         </div>
     </section>
 
-    <!-- Admin Panel -->
-    <section id="admin" class="section">
-        <div class="admin-panel">
-            <div class="admin-header">
-                <h2>Panel de Administración</h2>
-                <button class="admin-logout" onclick="adminLogout()">
-                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-                </button>
-            </div>
-            <div class="admin-tabs">
-                <button class="admin-tab active" onclick="showAdminTab('dashboard')">Dashboard</button>
-                <button class="admin-tab" onclick="showAdminTab('home')">Home</button>
-                <button class="admin-tab" onclick="showAdminTab('news')">Noticias</button>
-                <button class="admin-tab" onclick="showAdminTab('courses')">Cursos</button>
-                <button class="admin-tab" onclick="showAdminTab('pricing')">Precios</button>
-                <button class="admin-tab" onclick="showAdminTab('contact')">Contacto</button>
-                <button class="admin-tab" onclick="showAdminTab('live')">Clases en Vivo</button>
-                <button class="admin-tab" onclick="showAdminTab('calendar')">Calendario</button>
-                <button class="admin-tab" onclick="showAdminTab('banners')">Banners</button>
-                <button class="admin-tab" onclick="showAdminTab('users')">Usuarios</button>
-            </div>
+    <!-- Inscripción -->
+    <section id="registration" class="section">
+        <div class="registration-section">
+            <h2>Formulario de Inscripción</h2>
+            <p>Completa el siguiente formulario para inscribirte en nuestros cursos de inglés. ¡Te contactaremos pronto!</p>
+            
+            <!-- Formulario de Google Forms - EDITAR AQUÍ -->
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfZqLzT8Y4K9XqJ1XzY7w7f6G5h4j3k2l1m0n9o8p7q6r5s4t3u2v1w/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
+        </div>
+    </section>
 
-            <!-- Dashboard Admin -->
-            <div id="admin-dashboard" class="admin-content active">
-                <div class="admin-form">
-                    <h3>Resumen del Sistema</h3>
-                    <div class="stats-container">
-                        <div class="stat-item">
-                            <div class="stat-number" id="totalStudents">0</div>
-                            <div class="stat-label">Estudiantes Registrados</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" id="totalCourses">0</div>
-                            <div class="stat-label">Cursos Activos</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number" id="totalComments">0</div>
-                            <div class="stat-label">Comentarios</div>
-                        </div>
-                        <div class="stat-item" id="adminStatContainer">
-                            <div class="stat-number" id="totalAdmins">1</div>
-                            <div class="stat-label">Administradores</div>
-                        </div>
-                    </div>
-                    <div class="admin-form">
-                        <h3>Actividad Reciente</h3>
-                        <div class="admin-list" id="recentActivity">
-                            <div class="admin-item">
-                                <div>
-                                    <strong>Último comentario:</strong> <span id="lastComment">No hay comentarios recientes</span>
-                                </div>
-                            </div>
-                            <div class="admin-item">
-                                <div>
-                                    <strong>Último registro:</strong> <span id="lastRegistration">No hay registros recientes</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Términos y Condiciones -->
+    <section id="terms" class="section">
+        <div class="terms-section">
+            <h2>Términos y Condiciones</h2>
+            
+            <h3>Sobre SkyLearn Academy</h3>
+            <p>SkyLearn Academy es una institución educativa especializada en la enseñanza del idioma inglés para niños, jóvenes y adultos. Nuestro objetivo es proporcionar una experiencia de aprendizaje integral y efectiva, adaptada a las necesidades específicas de cada grupo etario.</p>
+            
+            <h3>Compromiso Educativo</h3>
+            <p>Nos comprometemos a ofrecer:</p>
+            <ul>
+                <li>Programas educativos diseñados específicamente para niños, jóvenes y adultos.</li>
+                <li>Profesores certificados y con experiencia en la enseñanza del inglés como segundo idioma.</li>
+                <li>Metodologías de enseñanza innovadoras y adaptadas a los diferentes estilos de aprendizaje.</li>
+                <li>Un ambiente de aprendizaje inclusivo y estimulante.</li>
+                <li>Recursos educativos de calidad actualizados constantemente.</li>
+            </ul>
+            
+            <h3>Programas por Edad</h3>
+            <p><strong>Niños (6-12 años):</strong> Nuestro programa para niños se centra en el aprendizaje lúdico y interactivo, utilizando juegos, canciones y actividades creativas para introducir el inglés de manera natural y divertida.</p>
+            
+            <p><strong>Jóvenes (13-17 años):</strong> Para adolescentes, ofrecemos un programa que combina el aprendizaje académico con situaciones reales de comunicación, preparándolos para usar el inglés en contextos sociales y educativos.</p>
+            
+            <p><strong>Adultos (18+ años):</strong> Nuestros programas para adultos están diseñados para adaptarse a diferentes objetivos, ya sea para el crecimiento profesional, viajes o desarrollo personal, con horarios flexibles y contenido práctico.</p>
+            
+            <h3>Términos de Servicio</h3>
+            <p>Al inscribirte en SkyLearn Academy, aceptas los siguientes términos:</p>
+            <ul>
+                <li>El pago de la matrícula debe realizarse antes del inicio del curso.</li>
+                <li>Las clases tienen una duración establecida y cualquier cambio debe ser notificado con al menos 48 horas de anticipación.</li>
+                <li>El material educativo proporcionado es para uso exclusivo del estudiante durante su período de formación.</li>
+                <li>La asistencia mínima requerida para la certificación es del 80% de las clases.</li>
+                <li>Los certificados se otorgarán únicamente a aquellos estudiantes que completen satisfactoriamente el programa.</li>
+            </ul>
+            
+            <h3>Política de Cancelación y Reembolso</h3>
+            <p>Si deseas cancelar tu inscripción:</p>
+            <ul>
+                <li>Con 15 días o más de anticipación al inicio del curso: Reembolso del 100%.</li>
+                <li>Con 7 a 14 días de anticipación: Reembolso del 50%.</li>
+                <li>Menos de 7 días de anticipación: No hay reembolso.</li>
+            </ul>
+            
+            <h3>Privacidad y Protección de Datos</h3>
+            <p>En SkyLearn Academy nos comprometemos a proteger la privacidad de nuestros estudiantes. La información personal proporcionada será utilizada exclusivamente para fines educativos y administrativos, y no será compartida con terceros sin consentimiento previo, excepto cuando sea requerido por ley.</p>
+            
+            <h3>Contacto</h3>
+            <p>Para cualquier duda o aclaración sobre estos términos y condiciones, por favor contacta a nuestro equipo de atención al cliente a través de:</p>
+            <ul>
+                <li>Email: info@skylearn.com</li>
+                <li>Teléfono: +51 929601732</li>
+                <li>Dirección: Av. Educación 1234, Ciudad del Aprendizaje</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <img src="https://z-cdn-media.chatglm.cn/files/d4a29cc3-0dfa-4162-876d-90b0943f4acf_logo%20sky.png?auth_key=1789917040-fee395f1cf8f4148910bb63822b38116-0-64740e7206191bb61a45c64032c935f8" alt="Logo" class="footer-logo">
+                <p>SkyLearn Academy es una institución educativa especializada en la enseñanza del idioma inglés para niños, jóvenes y adultos, con metodologías innovadoras y profesores certificados.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
-
-            <!-- Home Admin -->
-            <div id="admin-home" class="admin-content">
-                <div class="admin-form">
-                    <h3>Editar Estadísticas de Home</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="statsStudents">Número de Estudiantes</label>
-                            <input type="number" id="statsStudents" value="5000">
-                        </div>
-                        <div class="form-group">
-                            <label for="statsCourses">Número de Cursos</label>
-                            <input type="number" id="statsCourses" value="120">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="statsTeachers">Número de Profesores</label>
-                            <input type="number" id="statsTeachers" value="50">
-                        </div>
-                        <div class="form-group">
-                            <label for="statsSatisfaction">% Satisfacción</label>
-                            <input type="number" id="statsSatisfaction" value="98" min="0" max="100">
-                        </div>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="updateHomeStats()">Actualizar Estadísticas</button>
-                    </div>
-                </div>
+            
+            <div class="footer-links">
+                <h3>Enlaces Rápidos</h3>
+                <ul>
+                    <li><a href="#home" onclick="showSection('home')"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#courses" onclick="showSection('courses')"><i class="fas fa-chevron-right"></i> Cursos</a></li>
+                    <li><a href="#pricing" onclick="showSection('pricing')"><i class="fas fa-chevron-right"></i> Precios</a></li>
+                    <li><a href="#live" onclick="showSection('live')"><i class="fas fa-chevron-right"></i> Clases en Vivo</a></li>
+                    <li><a href="#registration" onclick="showSection('registration')"><i class="fas fa-chevron-right"></i> Inscripción</a></li>
+                    <li><a href="#terms" onclick="showSection('terms')"><i class="fas fa-chevron-right"></i> Términos y Condiciones</a></li>
+                </ul>
             </div>
-
-            <!-- News Admin -->
-            <div id="admin-news" class="admin-content">
-                <form class="admin-form" onsubmit="updateNews(event)">
-                    <h3>Actualizar Noticias</h3>
-                    <div class="form-group">
-                        <label for="newsInput">Texto de la Noticia</label>
-                        <textarea id="newsInput" required>¡¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA!! Válido hasta el 30 de noviembre.</textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Actualizar</button>
-                        <button type="button" class="btn-secondary" onclick="resetForm('news')">Cancelar</button>
-                    </div>
+            
+            <div class="footer-contact">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Av. Educación 1234, Ciudad del Aprendizaje</p>
+                <p><i class="fas fa-phone"></i> +51 929601732</p>
+                <p><i class="fas fa-envelope"></i> info@skylearn.com</p>
+                <p><i class="fas fa-clock"></i> Lunes a Viernes: 9:00 - 18:00</p>
+            </div>
+            
+            <div class="footer-newsletter">
+                <h3>Boletín Informativo</h3>
+                <p>Suscríbete para recibir nuestras últimas noticias y ofertas especiales.</p>
+                <form class="footer-newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" placeholder="Tu email" required>
+                    <button type="submit">Suscribirse</button>
                 </form>
             </div>
-
-            <!-- Courses Admin -->
-            <div id="admin-courses" class="admin-content">
-                <div class="admin-form">
-                    <h3>Administrar Cursos</h3>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="showAddCourseForm()">Agregar Nuevo Curso</button>
-                    </div>
-                </div>
-                <div id="addCourseForm" style="display: none;" class="admin-form">
-                    <h3>Agregar Nuevo Curso</h3>
-                    <form onsubmit="addCourse(event)">
-                        <div class="form-group">
-                            <label for="newCourseTitle">Título del Curso</label>
-                            <input type="text" id="newCourseTitle" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newCourseTeacher">Profesor</label>
-                            <input type="text" id="newCourseTeacher" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newCourseDuration">Duración</label>
-                            <input type="text" id="newCourseDuration" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newCourseStudents">Estudiantes</label>
-                            <input type="text" id="newCourseStudents" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newCoursePrice">Precio</label>
-                            <input type="text" id="newCoursePrice" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newCourseImage">URL de la Imagen</label>
-                            <input type="text" id="newCourseImage" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newCourseBadge">Etiqueta (opcional)</label>
-                            <input type="text" id="newCourseBadge">
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn-primary">Agregar Curso</button>
-                            <button type="button" class="btn-secondary" onclick="hideAddCourseForm()">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="admin-table-container">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Título</th>
-                                <th>Profesor</th>
-                                <th>Precio</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="coursesTableBody">
-                            <!-- Courses will be dynamically loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Pricing Admin -->
-            <div id="admin-pricing" class="admin-content">
-                <div class="admin-form">
-                    <h3>Administrar Precios</h3>
-                    <div class="form-group">
-                        <label for="pricingPeriod">Período</label>
-                        <select id="pricingPeriod">
-                            <option value="monthly">Mensual</option>
-                            <option value="quarterly">Trimestral</option>
-                            <option value="yearly">Anual</option>
-                        </select>
-                    </div>
-                    <div id="pricingFormContainer">
-                        <!-- Pricing form will be dynamically loaded here -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Contact Admin -->
-            <div id="admin-contact" class="admin-content">
-                <div class="admin-form">
-                    <h3>Actualizar Información de Contacto</h3>
-                    <div class="form-group">
-                        <label for="contactEmailInput">Email</label>
-                        <input type="email" id="contactEmailInput" value="info@skylearn.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="contactPhoneInput">Teléfono</label>
-                        <input type="text" id="contactPhoneInput" value="+51 929601732">
-                    </div>
-                    <div class="form-group">
-                        <label for="contactAddressInput">Dirección</label>
-                        <input type="text" id="contactAddressInput" value="Av. Educación 1234, Ciudad del Aprendizaje">
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="updateContactInfo()">Actualizar Información</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Live Classes Admin -->
-            <div id="admin-live" class="admin-content">
-                <div class="admin-form">
-                    <h3>Administrar Clases en Vivo</h3>
-                    <div class="form-group">
-                        <label for="liveStreamUrl">URL del Stream</label>
-                        <input type="text" id="liveStreamUrl" value="https://www.youtube.com/embed/live_stream?channel=TU_ID_DEL_CANAL&autoplay=1">
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="updateLiveStream()">Actualizar Stream</button>
-                    </div>
-                </div>
-                <div class="admin-form">
-                    <h3>Administrar Programación de Clases</h3>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="showAddScheduleForm()">Agregar Nueva Clase</button>
-                    </div>
-                </div>
-                <div id="addScheduleForm" style="display: none;" class="admin-form">
-                    <h3>Agregar Nueva Clase</h3>
-                    <form onsubmit="addScheduleItem(event)">
-                        <div class="form-group">
-                            <label for="scheduleDay">Día</label>
-                            <select id="scheduleDay" required>
-                                <option value="Lunes">Lunes</option>
-                                <option value="Martes">Martes</option>
-                                <option value="Miércoles">Miércoles</option>
-                                <option value="Jueves">Jueves</option>
-                                <option value="Viernes">Viernes</option>
-                                <option value="Sábado">Sábado</option>
-                                <option value="Domingo">Domingo</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="scheduleTime">Hora</label>
-                            <input type="time" id="scheduleTime" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="scheduleTitle">Título de la Clase</label>
-                            <input type="text" id="scheduleTitle" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="scheduleTeacher">Profesor</label>
-                            <input type="text" id="scheduleTeacher" required>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn-primary">Agregar Clase</button>
-                            <button type="button" class="btn-secondary" onclick="hideAddScheduleForm()">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="admin-table-container">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>Día</th>
-                                <th>Hora</th>
-                                <th>Clase</th>
-                                <th>Profesor</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="scheduleTableBody">
-                            <!-- Schedule items will be dynamically loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Calendar Admin -->
-            <div id="admin-calendar" class="admin-content">
-                <div class="admin-form">
-                    <h3>Administrar Calendario</h3>
-                    <div class="form-group">
-                        <label for="calendarMonth">Mes</label>
-                        <select id="calendarMonth">
-                            <option value="0">Enero</option>
-                            <option value="1">Febrero</option>
-                            <option value="2">Marzo</option>
-                            <option value="3">Abril</option>
-                            <option value="4">Mayo</option>
-                            <option value="5">Junio</option>
-                            <option value="6">Julio</option>
-                            <option value="7">Agosto</option>
-                            <option value="8">Septiembre</option>
-                            <option value="9">Octubre</option>
-                            <option value="10">Noviembre</option>
-                            <option value="11">Diciembre</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="calendarYear">Año</label>
-                        <input type="number" id="calendarYear" value="2023" min="2020" max="2030">
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="updateCalendar()">Actualizar Calendario</button>
-                    </div>
-                </div>
-                <div class="admin-form">
-                    <h3>Agregar Evento al Calendario</h3>
-                    <form onsubmit="addCalendarEvent(event)">
-                        <div class="form-group">
-                            <label for="eventDay">Día</label>
-                            <input type="number" id="eventDay" min="1" max="31" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="eventTitle">Título del Evento</label>
-                            <input type="text" id="eventTitle" required>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn-primary">Agregar Evento</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Banners Admin -->
-            <div id="admin-banners" class="admin-content">
-                <div class="admin-form">
-                    <h3>Administrar Banners</h3>
-                    <div class="form-group">
-                        <label for="banner1Url">URL del Banner 1</label>
-                        <input type="text" id="banner1Url" value="https://via.placeholder.com/1200x500/3498db/ffffff?text=Learn+English+with+Us">
-                    </div>
-                    <div class="form-group">
-                        <label for="banner2Url">URL del Banner 2</label>
-                        <input type="text" id="banner2Url" value="https://via.placeholder.com/1200x500/2ecc71/ffffff?text=Native+Teachers">
-                    </div>
-                    <div class="form-group">
-                        <label for="banner3Url">URL del Banner 3</label>
-                        <input type="text" id="banner3Url" value="https://via.placeholder.com/1200x500/e74c3c/ffffff?text=Interactive+Classes">
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="updateBanners()">Actualizar Banners</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Users Admin -->
-            <div id="admin-users" class="admin-content">
-                <div class="admin-form">
-                    <h3>Administrar Usuarios</h3>
-                    <div class="form-group">
-                        <label for="userSearch">Buscar Usuario</label>
-                        <input type="text" id="userSearch" placeholder="Buscar por nombre o email...">
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" onclick="searchUsers()">Buscar</button>
-                    </div>
-                </div>
-                <div class="admin-table-container">
-                    <table class="admin-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                                <th>Rol</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="usersTableBody">
-                            <!-- Users will be dynamically loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </div>
-    </section>
+        
+        <div class="copyright">
+            <p>&copy; 2023 SkyLearn Academy. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 
-    <!-- Login Modal -->
-    <div class="login-modal" id="loginModal">
-        <div class="login-modal-content">
-            <span class="login-modal-close" onclick="closeLoginModal()">&times;</span>
-            <h2>Iniciar Sesión</h2>
-            <form onsubmit="adminLogin(event)">
-                <div class="form-group">
-                    <label for="adminUsername">Usuario</label>
-                    <input type="text" id="adminUsername" required>
-                </div>
-                <div class="form-group">
-                    <label for="adminPassword">Contraseña</label>
-                    <input type="password" id="adminPassword" required>
-                </div>
-                <button type="submit" class="admin-btn">Iniciar Sesión</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Chatbot -->
-    <div class="chatbot-icon" id="chatbotIcon" onclick="toggleChat()">
-        <i class="fas fa-comments"></i>
-    </div>
-    <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <i class="fas fa-robot"></i> Asistente Virtual
-        </div>
-        <div class="chat-messages" id="chatMessages">
-            <div class="bot-message">
-                ¡Hola! Soy el asistente virtual de SkyLearn Academy. ¿En qué puedo ayudarte hoy?
-            </div>
-        </div>
-        <div class="chat-suggestions">
-            <div class="suggestion-chip" onclick="sendSuggestion('¿Qué cursos ofrecen?')">¿Qué cursos ofrecen?</div>
-            <div class="suggestion-chip" onclick="sendSuggestion('¿Cuáles son los precios?')">¿Cuáles son los precios?</div>
-            <div class="suggestion-chip" onclick="sendSuggestion('¿Cómo me registro?')">¿Cómo me registro?</div>
-        </div>
-        <div class="chat-input">
-            <input type="text" id="chatInput" placeholder="Escribe tu mensaje..." onkeypress="handleChatKeyPress(event)">
-            <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/51929601732" target="_blank" class="whatsapp-btn">
+        <i class="fab fa-whatsapp"></i>
+    </a>
 
     <!-- Back to Top Button -->
     <div class="back-to-top" id="backToTop" onclick="scrollToTop()">
         <i class="fas fa-arrow-up"></i>
-    </div>
-
-    <!-- WhatsApp Button -->
-    <div class="whatsapp-btn" onclick="openWhatsApp()">
-        <i class="fab fa-whatsapp"></i>
     </div>
 
     <!-- Notification -->
@@ -674,56 +1579,547 @@
             <i class="fas fa-check-circle"></i>
         </div>
         <div class="notification-content">
-            <h4>Éxito</h4>
-            <p id="notificationMessage">Operación realizada con éxito</p>
+            <h4>¡Éxito!</h4>
+            <p>Tu acción se ha completado correctamente.</p>
         </div>
-        <span class="notification-close" onclick="closeNotification()">&times;</span>
+        <button class="notification-close" onclick="closeNotification()">
+            <i class="fas fa-times"></i>
+        </button>
     </div>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-about">
-                <img src="https://i.postimg.cc/63d6XxfM/ponerle-fondo-blanco-removebg-preview.png" alt="Logo SkyLearn" class="footer-logo">
-                <p>SkyLearn Academy es una institución educativa dedicada a la enseñanza del inglés con métodos innovadores y profesores certificados.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-            <div class="footer-links">
-                <h3>Enlaces Rápidos</h3>
-                <ul>
-                    <li><a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i> Home</a></li>
-                    <li><a href="#courses" onclick="showSection('courses')"><i class="fas fa-book"></i> Cursos</a></li>
-                    <li><a href="#contact" onclick="showSection('contact')"><i class="fas fa-envelope"></i> Contacto</a></li>
-                    <li><a href="#pricing" onclick="showSection('pricing')"><i class="fas fa-tag"></i> Precios</a></li>
-                    <li><a href="#live" onclick="showSection('live')"><i class="fas fa-video"></i> Clases en Vivo</a></li>
-                </ul>
-            </div>
-            <div class="footer-contact">
-                <h3>Contacto</h3>
-                <p><i class="fas fa-envelope"></i> info@skylearn.com</p>
-                <p><i class="fas fa-phone"></i> +51 929601732</p>
-                <p><i class="fas fa-map-marker-alt"></i> Av. Educación 1234, Ciudad del Aprendizaje</p>
-            </div>
-            <div class="footer-newsletter">
-                <h3>Newsletter</h3>
-                <p>Suscríbete para recibir nuestras últimas noticias y ofertas.</p>
-                <form class="footer-newsletter-form" onsubmit="subscribeNewsletter(event)">
-                    <input type="email" placeholder="Tu email" required>
-                    <button type="submit">Suscribirse</button>
-                </form>
-                <div class="admin-link-footer" onclick="showAdminLogin()">Acceso Administrador</div>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2023 SkyLearn Academy. Todos los derechos reservados.</p>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
+    <script>
+        // Inicialización de la página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simular carga de página
+            const loadingProgress = document.getElementById('loadingProgress');
+            let width = 0;
+            const interval = setInterval(() => {
+                width += 5;
+                loadingProgress.style.width = width + '%';
+                if (width >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.querySelector('.loading-bar').style.display = 'none';
+                    }, 500);
+                }
+            }, 100);
+            
+            // Cargar cursos
+            loadCourses();
+            
+            // Cargar precios
+            loadPricing('monthly');
+            
+            // Cargar horario de clases en vivo
+            loadLiveSchedule();
+            
+            // Inicializar animaciones de números
+            animateStats();
+            
+            // Inicializar slider
+            initSlider();
+            
+            // Inicializar scroll events
+            initScrollEvents();
+            
+            // Cargar comentarios existentes
+            loadComments();
+        });
+        
+        // Función para mostrar secciones
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Actualizar enlaces de navegación
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + sectionId) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Scroll al inicio de la sección
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Función para cargar cursos
+        function loadCourses() {
+            const coursesGrid = document.getElementById('coursesGrid');
+            
+            // EDITAR CURSOS AQUÍ - Puedes agregar, modificar o eliminar cursos
+            const courses = [
+                {
+                    title: "Inglés Básico",
+                    teacher: "John Smith",
+                    duration: "8 semanas",
+                    students: "120",
+                    price: "$120",
+                    image: "https://via.placeholder.com/400x220/1a5fb4/ffffff?text=Basic+English",
+                    badge: "Popular"
+                },
+                {
+                    title: "Inglés Intermedio",
+                    teacher: "Emily Johnson",
+                    duration: "12 semanas",
+                    students: "85",
+                    price: "$180",
+                    image: "https://via.placeholder.com/400x220/3584e4/ffffff?text=Intermediate+English",
+                    badge: "Nuevo"
+                },
+                {
+                    title: "Inglés Avanzado",
+                    teacher: "Michael Brown",
+                    duration: "16 semanas",
+                    students: "65",
+                    price: "$240",
+                    image: "https://via.placeholder.com/400x220/2ec27e/ffffff?text=Advanced+English",
+                    badge: "Premium"
+                },
+                {
+                    title: "Inglés Conversacional",
+                    teacher: "Sarah Davis",
+                    duration: "10 semanas",
+                    students: "95",
+                    price: "$150",
+                    image: "https://via.placeholder.com/400x220/1a5fb4/ffffff?text=Conversational+English",
+                    badge: "Popular"
+                },
+                {
+                    title: "Inglés para Negocios",
+                    teacher: "Robert Wilson",
+                    duration: "14 semanas",
+                    students: "45",
+                    price: "$220",
+                    image: "https://via.placeholder.com/400x220/3584e4/ffffff?text=Business+English",
+                    badge: "Profesional"
+                },
+                {
+                    title: "Preparación TOEFL",
+                    teacher: "Jennifer Martinez",
+                    duration: "8 semanas",
+                    students: "30",
+                    price: "$200",
+                    image: "https://via.placeholder.com/400x220/2ec27e/ffffff?text=TOEFL+Preparation",
+                    badge: "Intensivo"
+                }
+            ];
+            
+            coursesGrid.innerHTML = '';
+            
+            courses.forEach(course => {
+                const courseCard = document.createElement('div');
+                courseCard.className = 'course-card';
+                courseCard.innerHTML = `
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="course-img-container">
+                                <img src="${course.image}" alt="${course.title}" class="course-img">
+                                <span class="course-badge">${course.badge}</span>
+                            </div>
+                            <div class="course-info">
+                                <h3>${course.title}</h3>
+                                <div class="course-teacher">
+                                    <img src="https://via.placeholder.com/40/1a5fb4/ffffff?text=${course.teacher.charAt(0)}" alt="${course.teacher}" class="teacher-avatar">
+                                    <span class="teacher-name">${course.teacher}</span>
+                                </div>
+                                <div class="course-meta">
+                                    <span><i class="fas fa-clock"></i> ${course.duration}</span>
+                                    <span><i class="fas fa-users"></i> ${course.students} estudiantes</span>
+                                </div>
+                                <div class="course-price">${course.price}</div>
+                                <button onclick="enrollCourse('${course.title}')">
+                                    <i class="fas fa-shopping-cart"></i> Inscribirse
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>${course.title}</h3>
+                            <ul>
+                                <li>Clases en vivo con profesores nativos</li>
+                                <li>Material de estudio incluido</li>
+                                <li>Certificado al finalizar</li>
+                                <li>Acceso a plataforma online 24/7</li>
+                                <li>Soporte personalizado</li>
+                            </ul>
+                            <button onclick="enrollCourse('${course.title}')">
+                                <i class="fas fa-shopping-cart"></i> Inscribirse
+                            </button>
+                        </div>
+                    </div>
+                `;
+                coursesGrid.appendChild(courseCard);
+            });
+        }
+        
+        // Función para cargar precios
+        function loadPricing(period) {
+            const pricingTableBody = document.getElementById('pricingTableBody');
+            
+            // EDITAR PRECIOS AQUÍ - Puedes modificar los precios y horarios
+            const pricingData = {
+                monthly: [
+                    { course: "Inglés Básico", price: "$120", schedule: "Lun, Mié, Vie 18:00-20:00", duration: "8 semanas" },
+                    { course: "Inglés Intermedio", price: "$180", schedule: "Mar, Jue 18:00-20:00", duration: "12 semanas" },
+                    { course: "Inglés Avanzado", price: "$240", schedule: "Sábados 10:00-13:00", duration: "16 semanas" },
+                    { course: "Inglés Conversacional", price: "$150", schedule: "Lun, Mié, Vie 19:00-20:30", duration: "10 semanas" },
+                    { course: "Inglés para Negocios", price: "$220", schedule: "Sábados 09:00-12:00", duration: "14 semanas" },
+                    { course: "Preparación TOEFL", price: "$200", schedule: "Mar, Jue 19:00-21:00", duration: "8 semanas" }
+                ],
+                quarterly: [
+                    { course: "Inglés Básico", price: "$320", schedule: "Lun, Mié, Vie 18:00-20:00", duration: "24 semanas" },
+                    { course: "Inglés Intermedio", price: "$480", schedule: "Mar, Jue 18:00-20:00", duration: "36 semanas" },
+                    { course: "Inglés Avanzado", price: "$640", schedule: "Sábados 10:00-13:00", duration: "48 semanas" },
+                    { course: "Inglés Conversacional", price: "$400", schedule: "Lun, Mié, Vie 19:00-20:30", duration: "30 semanas" },
+                    { course: "Inglés para Negocios", price: "$600", schedule: "Sábados 09:00-12:00", duration: "42 semanas" },
+                    { course: "Preparación TOEFL", price: "$550", schedule: "Mar, Jue 19:00-21:00", duration: "24 semanas" }
+                ],
+                yearly: [
+                    { course: "Inglés Básico", price: "$1200", schedule: "Lun, Mié, Vie 18:00-20:00", duration: "96 semanas" },
+                    { course: "Inglés Intermedio", price: "$1800", schedule: "Mar, Jue 18:00-20:00", duration: "144 semanas" },
+                    { course: "Inglés Avanzado", price: "$2400", schedule: "Sábados 10:00-13:00", duration: "192 semanas" },
+                    { course: "Inglés Conversacional", price: "$1500", schedule: "Lun, Mié, Vie 19:00-20:30", duration: "120 semanas" },
+                    { course: "Inglés para Negocios", price: "$2200", schedule: "Sábados 09:00-12:00", duration: "168 semanas" },
+                    { course: "Preparación TOEFL", price: "$2000", schedule: "Mar, Jue 19:00-21:00", duration: "96 semanas" }
+                ]
+            };
+            
+            pricingTableBody.innerHTML = '';
+            
+            pricingData[period].forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.course}</td>
+                    <td class="highlight">${item.price}</td>
+                    <td>${item.schedule}</td>
+                    <td>${item.duration}</td>
+                `;
+                pricingTableBody.appendChild(row);
+            });
+        }
+        
+        // Función para mostrar precios según el período
+        function showPricing(period) {
+            // Actualizar pestañas activas
+            const pricingTabs = document.querySelectorAll('.pricing-tab');
+            pricingTabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.textContent.toLowerCase().includes(period)) {
+                    tab.classList.add('active');
+                }
+            });
+            
+            // Cargar precios para el período seleccionado
+            loadPricing(period);
+        }
+        
+        // Función para cargar horario de clases en vivo
+        function loadLiveSchedule() {
+            const liveScheduleContainer = document.getElementById('liveScheduleContainer');
+            
+            // EDITAR CLASES EN VIVO AQUÍ - Puedes modificar el horario de clases
+            const liveSchedule = [
+                { time: "Lunes 18:00 - 19:30", title: "Conversación Básica", teacher: "John Smith" },
+                { time: "Martes 19:00 - 20:30", title: "Gramática Intermedia", teacher: "Emily Johnson" },
+                { time: "Miércoles 18:00 - 19:30", title: "Pronunciación Avanzada", teacher: "Michael Brown" },
+                { time: "Jueves 19:00 - 20:30", title: "Vocabulario de Negocios", teacher: "Robert Wilson" },
+                { time: "Viernes 18:00 - 19:30", title: "Preparación TOEFL", teacher: "Jennifer Martinez" },
+                { time: "Sábado 10:00 - 12:00", title: "Club de Conversación", teacher: "Sarah Davis" }
+            ];
+            
+            liveScheduleContainer.innerHTML = '';
+            
+            liveSchedule.forEach(item => {
+                const scheduleItem = document.createElement('div');
+                scheduleItem.className = 'schedule-item';
+                scheduleItem.innerHTML = `
+                    <div>
+                        <div class="schedule-time">${item.time}</div>
+                        <div>${item.title}</div>
+                    </div>
+                    <div>${item.teacher}</div>
+                `;
+                liveScheduleContainer.appendChild(scheduleItem);
+            });
+        }
+        
+        // Función para enviar mensaje en el chat en vivo
+        function sendLiveChatMessage() {
+            const chatInput = document.getElementById('liveChatInput');
+            const message = chatInput.value.trim();
+            
+            if (message) {
+                const chatMessages = document.getElementById('liveChatMessages');
+                const messageElement = document.createElement('div');
+                messageElement.className = 'chat-message user-message';
+                messageElement.textContent = message;
+                chatMessages.appendChild(messageElement);
+                
+                // Limpiar input
+                chatInput.value = '';
+                
+                // Scroll al final del chat
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Simular respuesta después de un momento
+                setTimeout(() => {
+                    const responseElement = document.createElement('div');
+                    responseElement.className = 'chat-message other-message';
+                    responseElement.textContent = "Gracias por tu mensaje. Te responderemos pronto.";
+                    chatMessages.appendChild(responseElement);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000);
+            }
+        }
+        
+        // Función para manejar tecla Enter en el chat en vivo
+        function handleLiveChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendLiveChatMessage();
+            }
+        }
+        
+        // Función para agregar comentario
+        function addComment(event) {
+            event.preventDefault();
+            
+            const commentInput = document.getElementById('commentInput');
+            const comment = commentInput.value.trim();
+            
+            if (comment) {
+                const commentsContainer = document.getElementById('commentsContainer');
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment-item';
+                commentElement.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <img src="https://via.placeholder.com/40/1a5fb4/ffffff?text=U" alt="Usuario" class="teacher-avatar">
+                        <div>
+                            <div style="font-weight: 600;">Usuario Anónimo</div>
+                            <div style="color: var(--gray-color); font-size: 0.9rem;">${new Date().toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                    <p style="background: var(--light-color); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">${comment}</p>
+                `;
+                commentsContainer.appendChild(commentElement);
+                
+                // Limpiar input
+                commentInput.value = '';
+                
+                // Mostrar notificación
+                showNotification('success', '¡Comentario enviado!', 'Tu comentario ha sido publicado correctamente.');
+                
+                // Guardar comentario en localStorage
+                saveComment(comment);
+            }
+        }
+        
+        // Función para guardar comentario en localStorage
+        function saveComment(comment) {
+            const comments = JSON.parse(localStorage.getItem('skylearnComments') || '[]');
+            comments.push({
+                text: comment,
+                date: new Date().toISOString()
+            });
+            localStorage.setItem('skylearnComments', JSON.stringify(comments));
+        }
+        
+        // Función para cargar comentarios desde localStorage
+        function loadComments() {
+            const commentsContainer = document.getElementById('commentsContainer');
+            const comments = JSON.parse(localStorage.getItem('skylearnComments') || '[]');
+            
+            commentsContainer.innerHTML = '';
+            
+            if (comments.length === 0) {
+                commentsContainer.innerHTML = '<p style="text-align: center; color: var(--gray-color);">No hay comentarios aún. ¡Sé el primero en comentar!</p>';
+                return;
+            }
+            
+            comments.forEach(comment => {
+                const commentDate = new Date(comment.date);
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment-item';
+                commentElement.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <img src="https://via.placeholder.com/40/1a5fb4/ffffff?text=U" alt="Usuario" class="teacher-avatar">
+                        <div>
+                            <div style="font-weight: 600;">Usuario Anónimo</div>
+                            <div style="color: var(--gray-color); font-size: 0.9rem;">${commentDate.toLocaleDateString()}</div>
+                        </div>
+                    </div>
+                    <p style="background: var(--light-color); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">${comment.text}</p>
+                `;
+                commentsContainer.appendChild(commentElement);
+            });
+        }
+        
+        // Función para inscribirse a un curso
+        function enrollCourse(courseName) {
+            showNotification('success', '¡Inscripción iniciada!', `Redirigiendo al formulario de inscripción para ${courseName}.`);
+            
+            // Redirigir a la sección de inscripción después de un momento
+            setTimeout(() => {
+                showSection('registration');
+            }, 2000);
+        }
+        
+        // Función para suscribirse al boletín
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            
+            const email = event.target.querySelector('input[type="email"]').value;
+            
+            if (email) {
+                showNotification('success', '¡Suscripción exitosa!', 'Te has suscrito correctamente a nuestro boletín informativo.');
+                event.target.reset();
+            }
+        }
+        
+        // Función para mostrar notificación
+        function showNotification(type, title, message) {
+            const notification = document.getElementById('notification');
+            const notificationIcon = notification.querySelector('.notification-icon i');
+            const notificationTitle = notification.querySelector('.notification-content h4');
+            const notificationMessage = notification.querySelector('.notification-content p');
+            
+            // Configurar tipo de notificación
+            notification.className = 'notification ' + type;
+            
+            // Configurar icono según tipo
+            if (type === 'success') {
+                notificationIcon.className = 'fas fa-check-circle';
+            } else if (type === 'error') {
+                notificationIcon.className = 'fas fa-exclamation-circle';
+            } else if (type === 'warning') {
+                notificationIcon.className = 'fas fa-exclamation-triangle';
+            }
+            
+            // Configurar título y mensaje
+            notificationTitle.textContent = title;
+            notificationMessage.textContent = message;
+            
+            // Mostrar notificación
+            notification.classList.add('show');
+            
+            // Ocultar notificación después de 5 segundos
+            setTimeout(() => {
+                closeNotification();
+            }, 5000);
+        }
+        
+        // Función para cerrar notificación
+        function closeNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.remove('show');
+        }
+        
+        // Función para inicializar slider
+        function initSlider() {
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.slider-image');
+            const dots = document.querySelectorAll('.slider-dot');
+            
+            // Función para cambiar slide
+            function goToSlide(slideIndex) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                slides[slideIndex].classList.add('active');
+                dots[slideIndex].classList.add('active');
+                
+                currentSlide = slideIndex;
+            }
+            
+            // Función para siguiente slide
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % slides.length;
+                goToSlide(currentSlide);
+            }
+            
+            // Asignar función a los puntos
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => goToSlide(index));
+            });
+            
+            // Cambiar slide automáticamente cada 5 segundos
+            setInterval(nextSlide, 5000);
+            
+            // Hacer accesible la función globalmente
+            window.goToSlide = goToSlide;
+        }
+        
+        // Función para animar estadísticas
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            
+            const animateValue = (element, start, end, duration) => {
+                let startTimestamp = null;
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    element.textContent = Math.floor(progress * (end - start) + start);
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    }
+                };
+                window.requestAnimationFrame(step);
+            };
+            
+            // Usar Intersection Observer para iniciar animación cuando sea visible
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.getAttribute('data-target'));
+                        animateValue(entry.target, 0, target, 2000);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            
+            statNumbers.forEach(stat => {
+                observer.observe(stat);
+            });
+        }
+        
+        // Función para inicializar eventos de scroll
+        function initScrollEvents() {
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            
+            // Cambiar estilo de navbar al hacer scroll
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+                
+                // Mostrar/ocultar botón "volver arriba"
+                if (window.scrollY > 300) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            });
+        }
+        
+        // Función para volver al inicio
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
 </body>
 </html>
