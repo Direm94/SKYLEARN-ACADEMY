@@ -212,46 +212,8 @@
             transform: scale(1.2);
         }
         
-        /* Stats Section */
-        .stats-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin: 4rem 0;
-            gap: 2rem;
-        }
-        
-        .stat-item {
-            text-align: center;
-            flex: 1;
-            min-width: 200px;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-        
-        .stat-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .stat-label {
-            font-size: 1.1rem;
-            color: var(--gray-color);
-        }
-        
-        /* News & Comments Sections */
-        .news-section,
-        .comments-section {
+        /* News Section */
+        .news-section {
             max-width: 900px;
             margin: 4rem auto;
             background: white;
@@ -261,20 +223,17 @@
             transition: var(--transition);
         }
         
-        .news-section:hover,
-        .comments-section:hover {
+        .news-section:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
         
-        .news-section h2,
-        .comments-section h2 {
+        .news-section h2 {
             text-align: left;
             margin-bottom: 2rem;
         }
         
-        .news-section h2::after,
-        .comments-section h2::after {
+        .news-section h2::after {
             left: 0;
             transform: none;
         }
@@ -311,81 +270,6 @@
             width: 5px;
             height: 100%;
             background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
-        }
-        
-        /* Comments Section */
-        .comments-container {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-bottom: 2rem;
-            padding-right: 10px;
-        }
-        
-        .comments-container::-webkit-scrollbar {
-            width: 8px;
-        }
-        
-        .comments-container::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        
-        .comments-container::-webkit-scrollbar-thumb {
-            background: var(--primary-color);
-            border-radius: 10px;
-        }
-        
-        .comment-item {
-            margin-bottom: 1.5rem;
-            animation: slideIn 0.5s ease;
-        }
-        
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        
-        .comments-section form {
-            margin-top: 2rem;
-            display: flex;
-            gap: 1.5rem;
-        }
-        
-        .comments-section input[type="text"] {
-            flex: 1;
-            padding: 1rem 1.5rem;
-            border: 2px solid #eee;
-            border-radius: 50px;
-            font-size: 1rem;
-            transition: var(--transition);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .comments-section input[type="text"]:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(26, 95, 180, 0.2);
-        }
-        
-        .comments-section button {
-            padding: 1rem 2.5rem;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            box-shadow: 0 4px 15px rgba(26, 95, 180, 0.3);
-        }
-        
-        .comments-section button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(26, 95, 180, 0.4);
         }
         
         /* Courses Grid */
@@ -972,6 +856,156 @@
             margin-bottom: 1.5rem;
         }
         
+        /* Admin Panel Styles */
+        .admin-panel {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .admin-panel.active {
+            display: block;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .admin-tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--gray-color);
+        }
+        
+        .admin-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .admin-tab-content {
+            display: none;
+        }
+        
+        .admin-tab-content.active {
+            display: block;
+        }
+        
+        .admin-form {
+            margin-top: 1.5rem;
+        }
+        
+        .admin-form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .admin-form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        .admin-form-group input,
+        .admin-form-group select,
+        .admin-form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .admin-form-group input:focus,
+        .admin-form-group select:focus,
+        .admin-form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(26, 95, 180, 0.2);
+        }
+        
+        .admin-form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .admin-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            margin-right: 1rem;
+        }
+        
+        .admin-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        .admin-btn-danger {
+            background: #e74c3c;
+        }
+        
+        .admin-btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        .admin-list {
+            margin-top: 1.5rem;
+        }
+        
+        .admin-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .admin-list-item:last-child {
+            border-bottom: none;
+        }
+        
+        .admin-list-item-info {
+            flex-grow: 1;
+        }
+        
+        .admin-list-item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .admin-icon-btn {
+            background: none;
+            border: none;
+            color: var(--gray-color);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+        
+        .admin-icon-btn:hover {
+            color: var(--primary-color);
+        }
+        
+        .admin-icon-btn.delete:hover {
+            color: #e74c3c;
+        }
+        
         /* Footer */
         footer {
             background: var(--dark-color);
@@ -1249,6 +1283,25 @@
             cursor: pointer;
         }
         
+        /* Admin Button (Hidden) */
+        .admin-login-btn {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            color: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 50;
+            transition: var(--transition);
+        }
+        
+        .admin-login-btn:hover {
+            color: var(--primary-color);
+        }
+        
         /* Responsive Design */
         @media (max-width: 992px) {
             .courses-grid {
@@ -1280,14 +1333,6 @@
             .news-content {
                 flex-direction: column;
                 text-align: center;
-            }
-            
-            .comments-section form {
-                flex-direction: column;
-            }
-            
-            .comments-section button {
-                width: 100%;
             }
             
             .whatsapp-btn {
@@ -1378,26 +1423,6 @@
             </div>
         </div>
 
-        <!-- Stats Section -->
-        <div class="stats-container">
-            <div class="stat-item">
-                <div class="stat-number" data-target="5000">0</div>
-                <div class="stat-label">Estudiantes</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" data-target="120">0</div>
-                <div class="stat-label">Cursos</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" data-target="50">0</div>
-                <div class="stat-label">Profesores</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number" data-target="98">0</div>
-                <div class="stat-label">% Satisfacción</div>
-            </div>
-        </div>
-
         <!-- EDITAR NOTICIAS AQUÍ -->
         <div class="news-section">
             <h2>Últimas Noticias</h2>
@@ -1407,17 +1432,6 @@
                 </div>
                 <p id="newsText">¡¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA!! Válido hasta el 30 de noviembre.</p>
             </div>
-        </div>
-
-        <div class="comments-section">
-            <h2>Comentarios Recientes</h2>
-            <div class="comments-container" id="commentsContainer"></div>
-            <form onsubmit="addComment(event)">
-                <input type="text" id="commentInput" placeholder="Escribe un comentario..." required>
-                <button type="submit">
-                    <i class="fas fa-paper-plane"></i> Enviar
-                </button>
-            </form>
         </div>
     </section>
 
@@ -1540,6 +1554,157 @@
             </div>
         </div>
     </section>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="admin-panel">
+        <h2>Panel de Administración</h2>
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="showAdminTab('banners')">Banners</button>
+            <button class="admin-tab" onclick="showAdminTab('courses')">Cursos</button>
+            <button class="admin-tab" onclick="showAdminTab('teachers')">Profesores</button>
+            <button class="admin-tab" onclick="showAdminTab('live')">Clases en Vivo</button>
+            <button class="admin-tab" onclick="showAdminTab('codes')">Códigos de Acceso</button>
+        </div>
+        
+        <!-- Banners Tab -->
+        <div id="bannersTab" class="admin-tab-content active">
+            <h3>Gestionar Banners</h3>
+            <div class="admin-form">
+                <div class="admin-form-group">
+                    <label for="bannerUrl">URL del Banner</label>
+                    <input type="text" id="bannerUrl" placeholder="https://example.com/banner.jpg">
+                </div>
+                <div class="admin-form-group">
+                    <label for="bannerText">Texto del Banner</label>
+                    <input type="text" id="bannerText" placeholder="Texto del banner">
+                </div>
+                <button class="admin-btn" onclick="addBanner()">Agregar Banner</button>
+            </div>
+            <div class="admin-list" id="bannersList">
+                <!-- La lista de banners se cargará dinámicamente aquí -->
+            </div>
+        </div>
+        
+        <!-- Courses Tab -->
+        <div id="coursesTab" class="admin-tab-content">
+            <h3>Gestionar Cursos</h3>
+            <div class="admin-form">
+                <div class="admin-form-group">
+                    <label for="courseTitle">Título del Curso</label>
+                    <input type="text" id="courseTitle" placeholder="Título del curso">
+                </div>
+                <div class="admin-form-group">
+                    <label for="courseTeacher">Profesor</label>
+                    <input type="text" id="courseTeacher" placeholder="Nombre del profesor">
+                </div>
+                <div class="admin-form-group">
+                    <label for="courseDuration">Duración</label>
+                    <input type="text" id="courseDuration" placeholder="8 semanas">
+                </div>
+                <div class="admin-form-group">
+                    <label for="coursePrice">Precio</label>
+                    <input type="text" id="coursePrice" placeholder="$120">
+                </div>
+                <div class="admin-form-group">
+                    <label for="courseImage">URL de la Imagen</label>
+                    <input type="text" id="courseImage" placeholder="https://example.com/course.jpg">
+                </div>
+                <div class="admin-form-group">
+                    <label for="courseBadge">Etiqueta</label>
+                    <input type="text" id="courseBadge" placeholder="Popular">
+                </div>
+                <button class="admin-btn" onclick="addCourse()">Agregar Curso</button>
+            </div>
+            <div class="admin-list" id="coursesList">
+                <!-- La lista de cursos se cargará dinámicamente aquí -->
+            </div>
+        </div>
+        
+        <!-- Teachers Tab -->
+        <div id="teachersTab" class="admin-tab-content">
+            <h3>Gestionar Profesores</h3>
+            <div class="admin-form">
+                <div class="admin-form-group">
+                    <label for="teacherName">Nombre del Profesor</label>
+                    <input type="text" id="teacherName" placeholder="Nombre completo">
+                </div>
+                <div class="admin-form-group">
+                    <label for="teacherEmail">Email</label>
+                    <input type="email" id="teacherEmail" placeholder="profesor@example.com">
+                </div>
+                <div class="admin-form-group">
+                    <label for="teacherPhone">Teléfono</label>
+                    <input type="tel" id="teacherPhone" placeholder="+51 123456789">
+                </div>
+                <div class="admin-form-group">
+                    <label for="teacherBio">Biografía</label>
+                    <textarea id="teacherBio" placeholder="Breve biografía del profesor"></textarea>
+                </div>
+                <button class="admin-btn" onclick="addTeacher()">Agregar Profesor</button>
+            </div>
+            <div class="admin-list" id="teachersList">
+                <!-- La lista de profesores se cargará dinámicamente aquí -->
+            </div>
+        </div>
+        
+        <!-- Live Classes Tab -->
+        <div id="liveTab" class="admin-tab-content">
+            <h3>Gestionar Clases en Vivo</h3>
+            <div class="admin-form">
+                <div class="admin-form-group">
+                    <label for="liveTime">Horario</label>
+                    <input type="text" id="liveTime" placeholder="Lunes 18:00 - 19:30">
+                </div>
+                <div class="admin-form-group">
+                    <label for="liveTitle">Título de la Clase</label>
+                    <input type="text" id="liveTitle" placeholder="Conversación Básica">
+                </div>
+                <div class="admin-form-group">
+                    <label for="liveTeacher">Profesor</label>
+                    <input type="text" id="liveTeacher" placeholder="Nombre del profesor">
+                </div>
+                <div class="admin-form-group">
+                    <label for="liveLink">Enlace de la Clase</label>
+                    <input type="text" id="liveLink" placeholder="https://meet.google.com/xxx-xxx-xxx">
+                </div>
+                <button class="admin-btn" onclick="addLiveClass()">Agregar Clase en Vivo</button>
+            </div>
+            <div class="admin-list" id="liveList">
+                <!-- La lista de clases en vivo se cargará dinámicamente aquí -->
+            </div>
+        </div>
+        
+        <!-- Access Codes Tab -->
+        <div id="codesTab" class="admin-tab-content">
+            <h3>Gestionar Códigos de Acceso</h3>
+            <div class="admin-form">
+                <div class="admin-form-group">
+                    <label for="codeValue">Código</label>
+                    <input type="text" id="codeValue" placeholder="123456">
+                </div>
+                <div class="admin-form-group">
+                    <label for="codeClass">Clase Asociada</label>
+                    <input type="text" id="codeClass" placeholder="Inglés Básico - Grupo A">
+                </div>
+                <div class="admin-form-group">
+                    <label for="codeSchedule">Horario</label>
+                    <input type="text" id="codeSchedule" placeholder="Lunes, Miércoles y Viernes 18:00-20:00">
+                </div>
+                <div class="admin-form-group">
+                    <label for="codeMeet">Enlace Google Meet</label>
+                    <input type="text" id="codeMeet" placeholder="https://meet.google.com/xxx-xxx-xxx">
+                </div>
+                <div class="admin-form-group">
+                    <label for="codeZoom">Enlace Zoom</label>
+                    <input type="text" id="codeZoom" placeholder="https://zoom.us/j/123456789">
+                </div>
+                <button class="admin-btn" onclick="addAccessCode()">Agregar Código</button>
+            </div>
+            <div class="admin-list" id="codesList">
+                <!-- La lista de códigos se cargará dinámicamente aquí -->
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -1672,7 +1837,23 @@
         </button>
     </div>
 
+    <!-- Hidden Admin Login Button -->
+    <button class="admin-login-btn" id="adminLoginBtn" onclick="toggleAdminLogin()"></button>
+
     <script>
+        // Variables globales para datos
+        let banners = [];
+        let courses = [];
+        let teachers = [];
+        let liveClasses = [];
+        let accessCodes = [];
+        let isAdminLoggedIn = false;
+        
+        // Configuración de Google Sheets
+        const SHEET_ID = 'TU_ID_DE_HOJA_DE_CALCULO'; // Reemplazar con tu ID de Google Sheet
+        const API_KEY = 'TU_API_KEY'; // Reemplazar con tu API key de Google
+        const SHEET_NAME = 'Datos'; // Nombre de la hoja de cálculo
+        
         // Inicialización de la página
         document.addEventListener('DOMContentLoaded', function() {
             // Simular carga de página
@@ -1689,6 +1870,9 @@
                 }
             }, 100);
             
+            // Cargar datos desde Google Sheets
+            loadDataFromSheets();
+            
             // Cargar cursos
             loadCourses();
             
@@ -1698,55 +1882,87 @@
             // Cargar horario de clases en vivo
             loadLiveSchedule();
             
-            // Inicializar animaciones de números
-            animateStats();
-            
             // Inicializar slider
             initSlider();
             
             // Inicializar scroll events
             initScrollEvents();
             
-            // Cargar comentarios existentes
-            loadComments();
-            
-            // Verificar nuevos comentarios periódicamente
-            setInterval(checkForNewComments, 5000);
+            // Configurar eventos para el panel de administración
+            setupAdminEvents();
         });
         
-        // Función para mostrar secciones
-        function showSection(sectionId) {
-            // Ocultar todas las secciones
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
+        // Función para cargar datos desde Google Sheets
+        function loadDataFromSheets() {
+            // URL para obtener datos de Google Sheets
+            const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
             
-            // Mostrar la sección seleccionada
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Actualizar enlaces de navegación
-            const navLinks = document.querySelectorAll('.nav-links a');
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + sectionId) {
-                    link.classList.add('active');
-                }
-            });
-            
-            // Scroll al inicio de la sección
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.values && data.values.length > 0) {
+                        // Procesar los datos y asignarlos a las variables globales
+                        processSheetData(data.values);
+                        
+                        // Actualizar la interfaz con los datos cargados
+                        updateUIWithData();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar datos desde Google Sheets:', error);
+                    // Si hay un error, cargar datos de ejemplo
+                    loadSampleData();
+                });
         }
         
-        // Función para cargar cursos
-        function loadCourses() {
-            const coursesGrid = document.getElementById('coursesGrid');
+        // Función para procesar los datos de Google Sheets
+        function processSheetData(values) {
+            // Suponiendo que la primera fila contiene los encabezados
+            const headers = values[0];
             
-            // EDITAR CURSOS AQUÍ - Puedes agregar, modificar o eliminar cursos
-            const courses = [
+            // Procesar banners
+            banners = [];
+            courses = [];
+            teachers = [];
+            liveClasses = [];
+            accessCodes = [];
+            
+            // Procesar cada fila de datos
+            for (let i = 1; i < values.length; i++) {
+                const row = values[i];
+                const rowData = {};
+                
+                // Crear objeto con los datos de la fila
+                for (let j = 0; j < headers.length && j < row.length; j++) {
+                    rowData[headers[j]] = row[j];
+                }
+                
+                // Clasificar los datos según el tipo
+                if (rowData.tipo === 'banner') {
+                    banners.push(rowData);
+                } else if (rowData.tipo === 'curso') {
+                    courses.push(rowData);
+                } else if (rowData.tipo === 'profesor') {
+                    teachers.push(rowData);
+                } else if (rowData.tipo === 'clase_vivo') {
+                    liveClasses.push(rowData);
+                } else if (rowData.tipo === 'codigo_acceso') {
+                    accessCodes.push(rowData);
+                }
+            }
+        }
+        
+        // Función para cargar datos de ejemplo si falla la conexión con Google Sheets
+        function loadSampleData() {
+            // Banners de ejemplo
+            banners = [
+                { url: "https://via.placeholder.com/1200x500/1a5fb4/ffffff?text=Learn+English+with+Us", text: "Learn English with Us" },
+                { url: "https://via.placeholder.com/1200x500/2ec27e/ffffff?text=Native+Teachers", text: "Native Teachers" },
+                { url: "https://via.placeholder.com/1200x500/3584e4/ffffff?text=Interactive+Classes", text: "Interactive Classes" }
+            ];
+            
+            // Cursos de ejemplo
+            courses = [
                 {
                     title: "Inglés Básico",
                     teacher: "John Smith",
@@ -1803,9 +2019,303 @@
                 }
             ];
             
+            // Profesores de ejemplo
+            teachers = [
+                { name: "John Smith", email: "john@skylearn.com", phone: "+51 123456789", bio: "Profesor con 10 años de experiencia" },
+                { name: "Emily Johnson", email: "emily@skylearn.com", phone: "+51 234567890", bio: "Especialista en gramática y pronunciación" },
+                { name: "Michael Brown", email: "michael@skylearn.com", phone: "+51 345678901", bio: "Experto en inglés de negocios" }
+            ];
+            
+            // Clases en vivo de ejemplo
+            liveClasses = [
+                { time: "Lunes 18:00 - 19:30", title: "Conversación Básica", teacher: "John Smith", link: "https://meet.google.com/abc-defg-hij" },
+                { time: "Martes 19:00 - 20:30", title: "Gramática Intermedia", teacher: "Emily Johnson", link: "https://meet.google.com/klm-nopq-rst" },
+                { time: "Miércoles 18:00 - 19:30", title: "Pronunciación Avanzada", teacher: "Michael Brown", link: "https://meet.google.com/uvw-xyz-123" },
+                { time: "Jueves 19:00 - 20:30", title: "Vocabulario de Negocios", teacher: "Robert Wilson", link: "https://meet.google.com/456-789-012" },
+                { time: "Viernes 18:00 - 19:30", title: "Preparación TOEFL", teacher: "Jennifer Martinez", link: "https://meet.google.com/789-012-345" },
+                { time: "Sábado 10:00 - 12:00", title: "Club de Conversación", teacher: "Sarah Davis", link: "https://meet.google.com/012-345-678" }
+            ];
+            
+            // Códigos de acceso de ejemplo
+            accessCodes = [
+                {
+                    code: "123456",
+                    title: "Inglés Básico - Grupo A",
+                    time: "Lunes, Miércoles y Viernes 18:00-20:00",
+                    meetLink: "https://meet.google.com/abc-defg-hij",
+                    zoomLink: "https://zoom.us/j/123456789"
+                },
+                {
+                    code: "234567",
+                    title: "Inglés Intermedio - Grupo B",
+                    time: "Martes y Jueves 19:00-21:00",
+                    meetLink: "https://meet.google.com/klm-nopq-rst",
+                    zoomLink: "https://zoom.us/j/987654321"
+                },
+                {
+                    code: "345678",
+                    title: "Inglés Avanzado - Grupo C",
+                    time: "Sábados 10:00-13:00",
+                    meetLink: "https://meet.google.com/uvw-xyz-123",
+                    zoomLink: "https://zoom.us/j/456789123"
+                },
+                {
+                    code: "456789",
+                    title: "Inglés Conversacional - Grupo D",
+                    time: "Lunes y Miércoles 19:00-20:30",
+                    meetLink: "https://meet.google.com/456-789-012",
+                    zoomLink: "https://zoom.us/j/789123456"
+                }
+            ];
+            
+            // Actualizar la interfaz con los datos de ejemplo
+            updateUIWithData();
+        }
+        
+        // Función para actualizar la interfaz con los datos cargados
+        function updateUIWithData() {
+            // Actualizar banners
+            updateBanners();
+            
+            // Actualizar cursos
+            updateCourses();
+            
+            // Actualizar clases en vivo
+            updateLiveClasses();
+            
+            // Si el administrador está logueado, actualizar las listas del panel de administración
+            if (isAdminLoggedIn) {
+                updateAdminLists();
+            }
+        }
+        
+        // Función para actualizar los banners
+        function updateBanners() {
+            const sliderImages = document.querySelectorAll('.slider-image');
+            
+            if (banners.length > 0) {
+                banners.forEach((banner, index) => {
+                    if (sliderImages[index]) {
+                        sliderImages[index].src = banner.url;
+                        sliderImages[index].alt = banner.text || `Banner ${index + 1}`;
+                    }
+                });
+            }
+        }
+        
+        // Función para actualizar los cursos
+        function updateCourses() {
+            const coursesGrid = document.getElementById('coursesGrid');
             coursesGrid.innerHTML = '';
             
-            courses.forEach(course => {
+            if (courses.length > 0) {
+                courses.forEach(course => {
+                    const courseCard = document.createElement('div');
+                    courseCard.className = 'course-card';
+                    courseCard.innerHTML = `
+                        <div class="course-img-container">
+                            <img src="${course.image}" alt="${course.title}" class="course-img">
+                            <span class="course-badge">${course.badge}</span>
+                        </div>
+                        <div class="course-info">
+                            <h3>${course.title}</h3>
+                            <div class="course-teacher">
+                                <img src="https://via.placeholder.com/40/1a5fb4/ffffff?text=${course.teacher.charAt(0)}" alt="${course.teacher}" class="teacher-avatar">
+                                <span class="teacher-name">${course.teacher}</span>
+                            </div>
+                            <div class="course-meta">
+                                <span><i class="fas fa-clock"></i> ${course.duration}</span>
+                                <span><i class="fas fa-users"></i> ${course.students || 0} estudiantes</span>
+                            </div>
+                            <div class="course-price">${course.price}</div>
+                            <button onclick="enrollCourse('${course.title}')">
+                                <i class="fas fa-shopping-cart"></i> Inscribirse
+                            </button>
+                        </div>
+                    `;
+                    coursesGrid.appendChild(courseCard);
+                });
+            }
+        }
+        
+        // Función para actualizar las clases en vivo
+        function updateLiveClasses() {
+            const liveScheduleContainer = document.getElementById('liveScheduleContainer');
+            liveScheduleContainer.innerHTML = '';
+            
+            if (liveClasses.length > 0) {
+                liveClasses.forEach(item => {
+                    const scheduleItem = document.createElement('div');
+                    scheduleItem.className = 'schedule-item';
+                    scheduleItem.innerHTML = `
+                        <div>
+                            <div class="schedule-time">${item.time}</div>
+                            <div>${item.title}</div>
+                        </div>
+                        <div>${item.teacher}</div>
+                    `;
+                    liveScheduleContainer.appendChild(scheduleItem);
+                });
+            }
+        }
+        
+        // Función para guardar datos en Google Sheets
+        function saveDataToSheets() {
+            // Preparar los datos para enviar
+            const data = [];
+            
+            // Agregar encabezados
+            data.push(['tipo', 'id', 'titulo', 'profesor', 'duracion', 'precio', 'imagen', 'badge', 'enlace', 'horario', 'codigo', 'meetLink', 'zoomLink', 'email', 'telefono', 'bio']);
+            
+            // Agregar banners
+            banners.forEach((banner, index) => {
+                data.push(['banner', `banner_${index}`, banner.text || '', '', '', '', banner.url || '', '', '', '', '', '', '', '', '', '']);
+            });
+            
+            // Agregar cursos
+            courses.forEach((course, index) => {
+                data.push(['curso', `curso_${index}`, course.title || '', course.teacher || '', course.duration || '', course.price || '', course.image || '', course.badge || '', '', '', '', '', '', '', '', '']);
+            });
+            
+            // Agregar profesores
+            teachers.forEach((teacher, index) => {
+                data.push(['profesor', `profesor_${index}`, teacher.name || '', '', '', '', '', '', '', '', '', '', '', teacher.email || '', teacher.phone || '', teacher.bio || '']);
+            });
+            
+            // Agregar clases en vivo
+            liveClasses.forEach((liveClass, index) => {
+                data.push(['clase_vivo', `vivo_${index}`, liveClass.title || '', liveClass.teacher || '', '', '', '', '', liveClass.link || '', liveClass.time || '', '', '', '', '', '', '']);
+            });
+            
+            // Agregar códigos de acceso
+            accessCodes.forEach((code, index) => {
+                data.push(['codigo_acceso', `codigo_${index}`, code.title || '', '', '', '', '', '', '', code.time || '', code.code || '', code.meetLink || '', code.zoomLink || '', '', '', '']);
+            });
+            
+            // Enviar los datos a Google Sheets usando Google Apps Script
+            // Nota: Esta función requiere que configures un script en Google Apps Script
+            // que reciba los datos y los actualice en la hoja de cálculo
+            
+            // URL de tu Google Apps Script desplegado
+            const scriptURL = 'URL_DE_TU_GOOGLE_APPS_SCRIPT'; // Reemplazar con tu URL
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    sheetId: SHEET_ID,
+                    sheetName: SHEET_NAME,
+                    data: data
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Datos guardados exitosamente:', result);
+                showNotification('success', '¡Datos guardados!', 'Los cambios han sido guardados exitosamente en Google Sheets.');
+            })
+            .catch(error => {
+                console.error('Error al guardar datos:', error);
+                showNotification('error', 'Error al guardar', 'No se pudieron guardar los cambios. Inténtalo de nuevo más tarde.');
+            });
+        }
+        
+        // Función para mostrar secciones
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Actualizar enlaces de navegación
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + sectionId) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Scroll al inicio de la sección
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Función para cargar cursos
+        function loadCourses() {
+            const coursesGrid = document.getElementById('coursesGrid');
+            
+            // EDITAR CURSOS AQUÍ - Puedes agregar, modificar o eliminar cursos
+            const defaultCourses = [
+                {
+                    title: "Inglés Básico",
+                    teacher: "John Smith",
+                    duration: "8 semanas",
+                    students: "120",
+                    price: "$120",
+                    image: "https://via.placeholder.com/400x220/1a5fb4/ffffff?text=Basic+English",
+                    badge: "Popular"
+                },
+                {
+                    title: "Inglés Intermedio",
+                    teacher: "Emily Johnson",
+                    duration: "12 semanas",
+                    students: "85",
+                    price: "$180",
+                    image: "https://via.placeholder.com/400x220/3584e4/ffffff?text=Intermediate+English",
+                    badge: "Nuevo"
+                },
+                {
+                    title: "Inglés Avanzado",
+                    teacher: "Michael Brown",
+                    duration: "16 semanas",
+                    students: "65",
+                    price: "$240",
+                    image: "https://via.placeholder.com/400x220/2ec27e/ffffff?text=Advanced+English",
+                    badge: "Premium"
+                },
+                {
+                    title: "Inglés Conversacional",
+                    teacher: "Sarah Davis",
+                    duration: "10 semanas",
+                    students: "95",
+                    price: "$150",
+                    image: "https://via.placeholder.com/400x220/1a5fb4/ffffff?text=Conversational+English",
+                    badge: "Popular"
+                },
+                {
+                    title: "Inglés para Negocios",
+                    teacher: "Robert Wilson",
+                    duration: "14 semanas",
+                    students: "45",
+                    price: "$220",
+                    image: "https://via.placeholder.com/400x220/3584e4/ffffff?text=Business+English",
+                    badge: "Profesional"
+                },
+                {
+                    title: "Preparación TOEFL",
+                    teacher: "Jennifer Martinez",
+                    duration: "8 semanas",
+                    students: "30",
+                    price: "$200",
+                    image: "https://via.placeholder.com/400x220/2ec27e/ffffff?text=TOEFL+Preparation",
+                    badge: "Intensivo"
+                }
+            ];
+            
+            // Usar los cursos cargados desde Google Sheets si están disponibles, de lo contrario usar los cursos por defecto
+            const coursesToUse = courses.length > 0 ? courses : defaultCourses;
+            
+            coursesGrid.innerHTML = '';
+            
+            coursesToUse.forEach(course => {
                 const courseCard = document.createElement('div');
                 courseCard.className = 'course-card';
                 courseCard.innerHTML = `
@@ -1821,7 +2331,7 @@
                         </div>
                         <div class="course-meta">
                             <span><i class="fas fa-clock"></i> ${course.duration}</span>
-                            <span><i class="fas fa-users"></i> ${course.students} estudiantes</span>
+                            <span><i class="fas fa-users"></i> ${course.students || 0} estudiantes</span>
                         </div>
                         <div class="course-price">${course.price}</div>
                         <button onclick="enrollCourse('${course.title}')">
@@ -1891,7 +2401,7 @@
             const liveScheduleContainer = document.getElementById('liveScheduleContainer');
             
             // EDITAR CLASES EN VIVO AQUÍ - Puedes modificar el horario de clases
-            const liveSchedule = [
+            const defaultLiveSchedule = [
                 { time: "Lunes 18:00 - 19:30", title: "Conversación Básica", teacher: "John Smith" },
                 { time: "Martes 19:00 - 20:30", title: "Gramática Intermedia", teacher: "Emily Johnson" },
                 { time: "Miércoles 18:00 - 19:30", title: "Pronunciación Avanzada", teacher: "Michael Brown" },
@@ -1900,9 +2410,12 @@
                 { time: "Sábado 10:00 - 12:00", title: "Club de Conversación", teacher: "Sarah Davis" }
             ];
             
+            // Usar las clases en vivo cargadas desde Google Sheets si están disponibles, de lo contrario usar las clases por defecto
+            const liveScheduleToUse = liveClasses.length > 0 ? liveClasses : defaultLiveSchedule;
+            
             liveScheduleContainer.innerHTML = '';
             
-            liveSchedule.forEach(item => {
+            liveScheduleToUse.forEach(item => {
                 const scheduleItem = document.createElement('div');
                 scheduleItem.className = 'schedule-item';
                 scheduleItem.innerHTML = `
@@ -1914,89 +2427,6 @@
                 `;
                 liveScheduleContainer.appendChild(scheduleItem);
             });
-        }
-        
-        // Función para agregar comentario
-        function addComment(event) {
-            event.preventDefault();
-            
-            const commentInput = document.getElementById('commentInput');
-            const comment = commentInput.value.trim();
-            
-            if (comment) {
-                // Guardar comentario en localStorage
-                saveComment(comment);
-                
-                // Limpiar input
-                commentInput.value = '';
-                
-                // Mostrar notificación
-                showNotification('success', '¡Comentario enviado!', 'Tu comentario ha sido publicado correctamente.');
-                
-                // Recargar comentarios
-                loadComments();
-            }
-        }
-        
-        // Función para guardar comentario en localStorage
-        function saveComment(comment) {
-            const comments = JSON.parse(localStorage.getItem('skylearnComments') || '[]');
-            comments.push({
-                text: comment,
-                date: new Date().toISOString(),
-                id: Date.now() // ID único para cada comentario
-            });
-            localStorage.setItem('skylearnComments', JSON.stringify(comments));
-        }
-        
-        // Función para cargar comentarios desde localStorage
-        function loadComments() {
-            const commentsContainer = document.getElementById('commentsContainer');
-            const comments = JSON.parse(localStorage.getItem('skylearnComments') || '[]');
-            
-            commentsContainer.innerHTML = '';
-            
-            if (comments.length === 0) {
-                commentsContainer.innerHTML = '<p style="text-align: center; color: var(--gray-color);">No hay comentarios aún. ¡Sé el primero en comentar!</p>';
-                return;
-            }
-            
-            // Ordenar comentarios por fecha (más reciente primero)
-            comments.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            comments.forEach(comment => {
-                const commentDate = new Date(comment.date);
-                const commentElement = document.createElement('div');
-                commentElement.className = 'comment-item';
-                commentElement.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                        <img src="https://via.placeholder.com/40/1a5fb4/ffffff?text=U" alt="Usuario" class="teacher-avatar">
-                        <div>
-                            <div style="font-weight: 600;">Usuario Anónimo</div>
-                            <div style="color: var(--gray-color); font-size: 0.9rem;">${commentDate.toLocaleDateString()} ${commentDate.toLocaleTimeString()}</div>
-                        </div>
-                    </div>
-                    <p style="background: var(--light-color); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">${comment.text}</p>
-                `;
-                commentsContainer.appendChild(commentElement);
-            });
-            
-            // Scroll al final del contenedor para mostrar los comentarios más recientes
-            commentsContainer.scrollTop = commentsContainer.scrollHeight;
-        }
-        
-        // Función para verificar nuevos comentarios
-        function checkForNewComments() {
-            // Solo verificar si estamos en la sección de inicio
-            if (document.getElementById('home').classList.contains('active')) {
-                const currentCommentCount = document.querySelectorAll('.comment-item').length;
-                const storedComments = JSON.parse(localStorage.getItem('skylearnComments') || '[]');
-                
-                if (storedComments.length > currentCommentCount) {
-                    // Hay nuevos comentarios, recargar
-                    loadComments();
-                }
-            }
         }
         
         // Función para inscribirse a un curso
@@ -2016,9 +2446,37 @@
             const email = event.target.querySelector('input[type="email"]').value;
             
             if (email) {
+                // Guardar email en Google Sheets
+                saveEmailToSheets(email);
+                
                 showNotification('success', '¡Suscripción exitosa!', 'Te has suscrito correctamente a nuestro boletín informativo.');
                 event.target.reset();
             }
+        }
+        
+        // Función para guardar email en Google Sheets
+        function saveEmailToSheets(email) {
+            // URL de tu Google Apps Script para guardar emails
+            const scriptURL = 'URL_DE_TU_GOOGLE_APPS_SCRIPT'; // Reemplazar con tu URL
+            
+            fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    sheetId: SHEET_ID,
+                    sheetName: 'Newsletter', // Hoja específica para emails del newsletter
+                    data: [[email, new Date().toISOString()]]
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Email guardado exitosamente:', result);
+            })
+            .catch(error => {
+                console.error('Error al guardar email:', error);
+            });
         }
         
         // Función para validar código de acceso y mostrar enlaces de clases
@@ -2026,41 +2484,40 @@
             const accessCode = document.getElementById('accessCode').value.trim();
             const classLinksContainer = document.getElementById('classLinks');
             
-            // EDITAR CÓDIGOS Y ENLACES DE CLASES AQUÍ
-            // Puedes agregar, modificar o eliminar clases según sea necesario
-            const classes = [
-                {
-                    code: "123456", // Código de acceso para esta clase
-                    title: "Inglés Básico - Grupo A",
-                    time: "Lunes, Miércoles y Viernes 18:00-20:00",
-                    meetLink: "https://meet.google.com/abc-defg-hij",
-                    zoomLink: "https://zoom.us/j/123456789"
-                },
-                {
-                    code: "234567", // Código de acceso para esta clase
-                    title: "Inglés Intermedio - Grupo B",
-                    time: "Martes y Jueves 19:00-21:00",
-                    meetLink: "https://meet.google.com/klm-nopq-rst",
-                    zoomLink: "https://zoom.us/j/987654321"
-                },
-                {
-                    code: "345678", // Código de acceso para esta clase
-                    title: "Inglés Avanzado - Grupo C",
-                    time: "Sábados 10:00-13:00",
-                    meetLink: "https://meet.google.com/uvw-xyz-123",
-                    zoomLink: "https://zoom.us/j/456789123"
-                },
-                {
-                    code: "456789", // Código de acceso para esta clase
-                    title: "Inglés Conversacional - Grupo D",
-                    time: "Lunes y Miércoles 19:00-20:30",
-                    meetLink: "https://meet.google.com/456-789-012",
-                    zoomLink: "https://zoom.us/j/789123456"
-                }
-            ];
-            
-            // Filtrar clases por código de acceso
-            const validClasses = classes.filter(cls => cls.code === accessCode);
+            // Usar los códigos de acceso cargados desde Google Sheets si están disponibles
+            const validClasses = accessCodes.length > 0 ? 
+                accessCodes.filter(cls => cls.code === accessCode) :
+                // Si no hay códigos cargados, usar los códigos por defecto
+                [
+                    {
+                        code: "123456",
+                        title: "Inglés Básico - Grupo A",
+                        time: "Lunes, Miércoles y Viernes 18:00-20:00",
+                        meetLink: "https://meet.google.com/abc-defg-hij",
+                        zoomLink: "https://zoom.us/j/123456789"
+                    },
+                    {
+                        code: "234567",
+                        title: "Inglés Intermedio - Grupo B",
+                        time: "Martes y Jueves 19:00-21:00",
+                        meetLink: "https://meet.google.com/klm-nopq-rst",
+                        zoomLink: "https://zoom.us/j/987654321"
+                    },
+                    {
+                        code: "345678",
+                        title: "Inglés Avanzado - Grupo C",
+                        time: "Sábados 10:00-13:00",
+                        meetLink: "https://meet.google.com/uvw-xyz-123",
+                        zoomLink: "https://zoom.us/j/456789123"
+                    },
+                    {
+                        code: "456789",
+                        title: "Inglés Conversacional - Grupo D",
+                        time: "Lunes y Miércoles 19:00-20:30",
+                        meetLink: "https://meet.google.com/456-789-012",
+                        zoomLink: "https://zoom.us/j/789123456"
+                    }
+                ].filter(cls => cls.code === accessCode);
             
             if (validClasses.length > 0) {
                 // Mostrar enlaces de clases
@@ -2181,39 +2638,6 @@
             window.goToSlide = goToSlide;
         }
         
-        // Función para animar estadísticas
-        function animateStats() {
-            const statNumbers = document.querySelectorAll('.stat-number');
-            
-            const animateValue = (element, start, end, duration) => {
-                let startTimestamp = null;
-                const step = (timestamp) => {
-                    if (!startTimestamp) startTimestamp = timestamp;
-                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-                    element.textContent = Math.floor(progress * (end - start) + start);
-                    if (progress < 1) {
-                        window.requestAnimationFrame(step);
-                    }
-                };
-                window.requestAnimationFrame(step);
-            };
-            
-            // Usar Intersection Observer para iniciar animación cuando sea visible
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const target = parseInt(entry.target.getAttribute('data-target'));
-                        animateValue(entry.target, 0, target, 2000);
-                        observer.unobserve(entry.target);
-                    }
-                });
-            });
-            
-            statNumbers.forEach(stat => {
-                observer.observe(stat);
-            });
-        }
-        
         // Función para inicializar eventos de scroll
         function initScrollEvents() {
             const navbar = document.getElementById('navbar');
@@ -2244,13 +2668,364 @@
             });
         }
         
-        // Cerrar modal al hacer clic fuera de él
-        window.onclick = function(event) {
-            const modal = document.getElementById('termsModal');
-            if (event.target === modal) {
-                modal.style.display = 'none';
+        // Funciones del panel de administración
+        function setupAdminEvents() {
+            // Evento para mostrar/ocultar el panel de administración
+            document.addEventListener('keydown', function(event) {
+                // Combinación de teclas para mostrar el botón de administrador (Ctrl+Shift+A)
+                if (event.ctrlKey && event.shiftKey && event.key === 'A') {
+                    const adminBtn = document.getElementById('adminLoginBtn');
+                    adminBtn.style.color = 'var(--primary-color)';
+                    adminBtn.style.background = 'rgba(26, 95, 180, 0.1)';
+                    showNotification('warning', 'Modo Administrador', 'El botón de acceso a administrador está visible en la esquina inferior derecha.');
+                }
+            });
+        }
+        
+        // Función para mostrar/ocultar el login de administrador
+        function toggleAdminLogin() {
+            if (!isAdminLoggedIn) {
+                // Pedir contraseña
+                const password = prompt('Ingrese la contraseña de administrador:');
+                
+                // Verificar contraseña (en un entorno real, esto debería ser más seguro)
+                if (password === 'admin123') {
+                    isAdminLoggedIn = true;
+                    document.getElementById('adminPanel').classList.add('active');
+                    updateAdminLists();
+                    showNotification('success', 'Sesión iniciada', 'Has iniciado sesión como administrador.');
+                } else {
+                    showNotification('error', 'Contraseña incorrecta', 'La contraseña ingresada es incorrecta.');
+                }
+            } else {
+                // Cerrar sesión
+                isAdminLoggedIn = false;
+                document.getElementById('adminPanel').classList.remove('active');
+                showNotification('success', 'Sesión cerrada', 'Has cerrado sesión como administrador.');
             }
         }
-    </script>
-</body>
-</html>
+        
+        // Función para mostrar una pestaña del panel de administración
+        function showAdminTab(tabName) {
+            // Ocultar todas las pestañas
+            const tabs = document.querySelectorAll('.admin-tab-content');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar la pestaña seleccionada
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            
+            // Actualizar pestañas activas
+            const tabButtons = document.querySelectorAll('.admin-tab');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+                if (button.textContent.toLowerCase().includes(tabName)) {
+                    button.classList.add('active');
+                }
+            });
+        }
+        
+        // Función para actualizar las listas del panel de administración
+        function updateAdminLists() {
+            // Actualizar lista de banners
+            updateBannersList();
+            
+            // Actualizar lista de cursos
+            updateCoursesList();
+            
+            // Actualizar lista de profesores
+            updateTeachersList();
+            
+            // Actualizar lista de clases en vivo
+            updateLiveList();
+            
+            // Actualizar lista de códigos de acceso
+            updateCodesList();
+        }
+        
+        // Función para actualizar la lista de banners
+        function updateBannersList() {
+            const bannersList = document.getElementById('bannersList');
+            bannersList.innerHTML = '';
+            
+            if (banners.length > 0) {
+                banners.forEach((banner, index) => {
+                    const listItem = document.createElement('div');
+                    listItem.className = 'admin-list-item';
+                    listItem.innerHTML = `
+                        <div class="admin-list-item-info">
+                            <strong>Banner ${index + 1}:</strong> ${banner.text || 'Sin texto'}
+                        </div>
+                        <div class="admin-list-item-actions">
+                            <button class="admin-icon-btn edit" onclick="editBanner(${index})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="admin-icon-btn delete" onclick="deleteBanner(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    bannersList.appendChild(listItem);
+                });
+            } else {
+                bannersList.innerHTML = '<p>No hay banners configurados.</p>';
+            }
+        }
+        
+        // Función para actualizar la lista de cursos
+        function updateCoursesList() {
+            const coursesList = document.getElementById('coursesList');
+            coursesList.innerHTML = '';
+            
+            if (courses.length > 0) {
+                courses.forEach((course, index) => {
+                    const listItem = document.createElement('div');
+                    listItem.className = 'admin-list-item';
+                    listItem.innerHTML = `
+                        <div class="admin-list-item-info">
+                            <strong>${course.title}</strong> - ${course.teacher} - ${course.price}
+                        </div>
+                        <div class="admin-list-item-actions">
+                            <button class="admin-icon-btn edit" onclick="editCourse(${index})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="admin-icon-btn delete" onclick="deleteCourse(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    coursesList.appendChild(listItem);
+                });
+            } else {
+                coursesList.innerHTML = '<p>No hay cursos configurados.</p>';
+            }
+        }
+        
+        // Función para actualizar la lista de profesores
+        function updateTeachersList() {
+            const teachersList = document.getElementById('teachersList');
+            teachersList.innerHTML = '';
+            
+            if (teachers.length > 0) {
+                teachers.forEach((teacher, index) => {
+                    const listItem = document.createElement('div');
+                    listItem.className = 'admin-list-item';
+                    listItem.innerHTML = `
+                        <div class="admin-list-item-info">
+                            <strong>${teacher.name}</strong> - ${teacher.email}
+                        </div>
+                        <div class="admin-list-item-actions">
+                            <button class="admin-icon-btn edit" onclick="editTeacher(${index})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="admin-icon-btn delete" onclick="deleteTeacher(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    teachersList.appendChild(listItem);
+                });
+            } else {
+                teachersList.innerHTML = '<p>No hay profesores configurados.</p>';
+            }
+        }
+        
+        // Función para actualizar la lista de clases en vivo
+        function updateLiveList() {
+            const liveList = document.getElementById('liveList');
+            liveList.innerHTML = '';
+            
+            if (liveClasses.length > 0) {
+                liveClasses.forEach((liveClass, index) => {
+                    const listItem = document.createElement('div');
+                    listItem.className = 'admin-list-item';
+                    listItem.innerHTML = `
+                        <div class="admin-list-item-info">
+                            <strong>${liveClass.title}</strong> - ${liveClass.time} - ${liveClass.teacher}
+                        </div>
+                        <div class="admin-list-item-actions">
+                            <button class="admin-icon-btn edit" onclick="editLiveClass(${index})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="admin-icon-btn delete" onclick="deleteLiveClass(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    liveList.appendChild(listItem);
+                });
+            } else {
+                liveList.innerHTML = '<p>No hay clases en vivo configuradas.</p>';
+            }
+        }
+        
+        // Función para actualizar la lista de códigos de acceso
+        function updateCodesList() {
+            const codesList = document.getElementById('codesList');
+            codesList.innerHTML = '';
+            
+            if (accessCodes.length > 0) {
+                accessCodes.forEach((code, index) => {
+                    const listItem = document.createElement('div');
+                    listItem.className = 'admin-list-item';
+                    listItem.innerHTML = `
+                        <div class="admin-list-item-info">
+                            <strong>${code.code}</strong> - ${code.title}
+                        </div>
+                        <div class="admin-list-item-actions">
+                            <button class="admin-icon-btn edit" onclick="editAccessCode(${index})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="admin-icon-btn delete" onclick="deleteAccessCode(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    codesList.appendChild(listItem);
+                });
+            } else {
+                codesList.innerHTML = '<p>No hay códigos de acceso configurados.</p>';
+            }
+        }
+        
+        // Funciones para agregar elementos
+        function addBanner() {
+            const url = document.getElementById('bannerUrl').value.trim();
+            const text = document.getElementById('bannerText').value.trim();
+            
+            if (url) {
+                banners.push({ url, text });
+                updateBannersList();
+                updateBanners();
+                saveDataToSheets();
+                
+                // Limpiar formulario
+                document.getElementById('bannerUrl').value = '';
+                document.getElementById('bannerText').value = '';
+                
+                showNotification('success', 'Banner agregado', 'El banner ha sido agregado exitosamente.');
+            } else {
+                showNotification('error', 'Error', 'Por favor, complete todos los campos requeridos.');
+            }
+        }
+        
+        function addCourse() {
+            const title = document.getElementById('courseTitle').value.trim();
+            const teacher = document.getElementById('courseTeacher').value.trim();
+            const duration = document.getElementById('courseDuration').value.trim();
+            const price = document.getElementById('coursePrice').value.trim();
+            const image = document.getElementById('courseImage').value.trim();
+            const badge = document.getElementById('courseBadge').value.trim();
+            
+            if (title && teacher && duration && price) {
+                courses.push({ title, teacher, duration, students: "0", price, image, badge });
+                updateCoursesList();
+                updateCourses();
+                saveDataToSheets();
+                
+                // Limpiar formulario
+                document.getElementById('courseTitle').value = '';
+                document.getElementById('courseTeacher').value = '';
+                document.getElementById('courseDuration').value = '';
+                document.getElementById('coursePrice').value = '';
+                document.getElementById('courseImage').value = '';
+                document.getElementById('courseBadge').value = '';
+                
+                showNotification('success', 'Curso agregado', 'El curso ha sido agregado exitosamente.');
+            } else {
+                showNotification('error', 'Error', 'Por favor, complete todos los campos requeridos.');
+            }
+        }
+        
+        function addTeacher() {
+            const name = document.getElementById('teacherName').value.trim();
+            const email = document.getElementById('teacherEmail').value.trim();
+            const phone = document.getElementById('teacherPhone').value.trim();
+            const bio = document.getElementById('teacherBio').value.trim();
+            
+            if (name && email) {
+                teachers.push({ name, email, phone, bio });
+                updateTeachersList();
+                saveDataToSheets();
+                
+                // Limpiar formulario
+                document.getElementById('teacherName').value = '';
+                document.getElementById('teacherEmail').value = '';
+                document.getElementById('teacherPhone').value = '';
+                document.getElementById('teacherBio').value = '';
+                
+                showNotification('success', 'Profesor agregado', 'El profesor ha sido agregado exitosamente.');
+            } else {
+                showNotification('error', 'Error', 'Por favor, complete todos los campos requeridos.');
+            }
+        }
+        
+        function addLiveClass() {
+            const time = document.getElementById('liveTime').value.trim();
+            const title = document.getElementById('liveTitle').value.trim();
+            const teacher = document.getElementById('liveTeacher').value.trim();
+            const link = document.getElementById('liveLink').value.trim();
+            
+            if (time && title && teacher) {
+                liveClasses.push({ time, title, teacher, link });
+                updateLiveList();
+                updateLiveClasses();
+                saveDataToSheets();
+                
+                // Limpiar formulario
+                document.getElementById('liveTime').value = '';
+                document.getElementById('liveTitle').value = '';
+                document.getElementById('liveTeacher').value = '';
+                document.getElementById('liveLink').value = '';
+                
+                showNotification('success', 'Clase en vivo agregada', 'La clase en vivo ha sido agregada exitosamente.');
+            } else {
+                showNotification('error', 'Error', 'Por favor, complete todos los campos requeridos.');
+            }
+        }
+        
+        function addAccessCode() {
+            const code = document.getElementById('codeValue').value.trim();
+            const title = document.getElementById('codeClass').value.trim();
+            const time = document.getElementById('codeSchedule').value.trim();
+            const meetLink = document.getElementById('codeMeet').value.trim();
+            const zoomLink = document.getElementById('codeZoom').value.trim();
+            
+            if (code && title && time) {
+                accessCodes.push({ code, title, time, meetLink, zoomLink });
+                updateCodesList();
+                saveDataToSheets();
+                
+                // Limpiar formulario
+                document.getElementById('codeValue').value = '';
+                document.getElementById('codeClass').value = '';
+                document.getElementById('codeSchedule').value = '';
+                document.getElementById('codeMeet').value = '';
+                document.getElementById('codeZoom').value = '';
+                
+                showNotification('success', 'Código agregado', 'El código de acceso ha sido agregado exitosamente.');
+            } else {
+                showNotification('error', 'Error', 'Por favor, complete todos los campos requeridos.');
+            }
+        }
+        
+        // Funciones para editar elementos (simplificadas para este ejemplo)
+        function editBanner(index) {
+            const banner = banners[index];
+            document.getElementById('bannerUrl').value = banner.url || '';
+            document.getElementById('bannerText').value = banner.text || '';
+            
+            // Eliminar el banner actual
+            banners.splice(index, 1);
+            updateBannersList();
+            
+            showNotification('warning', 'Editando banner', 'Modifique los datos y haga clic en "Agregar Banner" para guardar los cambios.');
+        }
+        
+        function editCourse(index) {
+            const course = courses[index];
+            document.getElementById('courseTitle').value = course.title || '';
+            document.getElementById('courseTeacher').value = course.teacher || '';
+            document.getElementById('courseDuration').value = course.duration || '';
+            document.getElementById('coursePrice').value = course.price
