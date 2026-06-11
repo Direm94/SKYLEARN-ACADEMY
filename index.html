@@ -54,7 +54,7 @@
         .news-section:hover { transform: translateY(-10px); }
         .news-content { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
         .news-icon { font-size: 3rem; color: var(--accent-color); }
-        .news-section p { font-size: 1.2rem; padding: 1.5rem; background: var(--light-color); border-radius: 10px; font-weight: 500; position: relative; flex: 1; }
+        .news-section p { font-size: 1.2rem; padding: 1.5rem; background: var(--light-color); border-radius: 10px; font-weight: 500; position: relative; flex: 1; cursor: pointer; }
         .news-section p::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: linear-gradient(to bottom, var(--primary-color), var(--accent-color)); border-radius: 5px 0 0 5px; }
         
         .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem; padding: 3rem 0; }
@@ -119,21 +119,23 @@
         .modal-content { background: white; padding: 2.5rem; border-radius: 15px; max-width: 800px; width: 90%; max-height: 90vh; overflow-y: auto; position: relative; }
         .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; cursor: pointer; }
         
-        .admin-panel { display: none; background: white; padding: 2rem; border-radius: 15px; box-shadow: var(--shadow); margin-bottom: 2rem; }
-        .admin-panel.active { display: block; }
-        .admin-tabs { display: flex; flex-wrap: wrap; margin-bottom: 2rem; border-bottom: 1px solid #eee; gap: 0.5rem; }
-        .admin-tab { padding: 0.8rem 1.5rem; background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; font-weight: 600; color: var(--gray-color); }
-        .admin-tab.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
-        .admin-tab-content { display: none; }
+        .admin-floating-panel { position: fixed; bottom: 100px; right: 20px; width: 350px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 1000; display: none; flex-direction: column; overflow: hidden; transition: var(--transition); }
+        .admin-floating-panel.active { display: flex; }
+        .admin-header { background: var(--primary-color); color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .admin-header h3 { margin: 0; }
+        .admin-header button { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; }
+        .admin-tabs { display: flex; background: var(--light-color); border-bottom: 1px solid #ddd; }
+        .admin-tab { flex: 1; padding: 0.8rem; background: none; border: none; cursor: pointer; font-weight: 600; transition: var(--transition); }
+        .admin-tab.active { background: white; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); }
+        .admin-tab-content { padding: 1rem; display: none; max-height: 400px; overflow-y: auto; }
         .admin-tab-content.active { display: block; }
-        .admin-form-group { margin-bottom: 1.5rem; }
-        .admin-form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
-        .admin-form-group input, .admin-form-group select, .admin-form-group textarea { width: 100%; padding: 0.8rem; border: 2px solid #eee; border-radius: 8px; font-size: 1rem; font-family: 'Poppins', sans-serif; }
-        .admin-form-group input:focus, .admin-form-group textarea:focus { outline: none; border-color: var(--primary-color); }
-        .admin-btn { background: var(--primary-color); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 8px; cursor: pointer; font-weight: 600; margin-right: 1rem; }
+        .admin-form-group { margin-bottom: 1rem; }
+        .admin-form-group label { display: block; margin-bottom: 0.3rem; font-size: 0.9rem; font-weight: 500; }
+        .admin-form-group input, .admin-form-group textarea { width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; font-size: 0.9rem; }
+        .admin-btn { background: var(--primary-color); color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; margin-right: 0.5rem; margin-bottom: 0.5rem; font-size: 0.9rem; }
         .admin-btn-danger { background: #e74c3c; }
-        .admin-list-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid #eee; flex-wrap: wrap; gap: 0.5rem; }
-        .admin-icon-btn { background: none; border: none; color: var(--gray-color); cursor: pointer; font-size: 1.2rem; padding: 0.3rem; }
+        .admin-list-item { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem; border-bottom: 1px solid #eee; font-size: 0.8rem; }
+        .admin-icon-btn { background: none; border: none; cursor: pointer; margin-left: 0.5rem; color: var(--gray-color); }
         .admin-icon-btn.delete:hover { color: #e74c3c; }
         .admin-icon-btn.edit:hover { color: var(--primary-color); }
         
@@ -147,20 +149,19 @@
         .footer-links li { margin-bottom: 0.8rem; }
         .footer-links a { color: var(--gray-color); text-decoration: none; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem; }
         .footer-links a:hover { color: white; transform: translateX(5px); }
-        .footer-newsletter-form { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-        .footer-newsletter input { flex: 1; padding: 0.8rem; border: none; border-radius: 5px; }
-        .footer-newsletter button { padding: 0.8rem 1.5rem; background: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer; }
         .copyright { text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); color: var(--gray-color); }
+        .admin-login-footer { text-align: center; margin-top: 2rem; }
+        .admin-login-btn { background: none; border: 1px solid var(--gray-color); color: var(--gray-color); padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; transition: var(--transition); font-size: 0.8rem; }
+        .admin-login-btn:hover { background: var(--primary-color); border-color: var(--primary-color); color: white; }
         
-        .whatsapp-btn { position: fixed; bottom: 40px; left: 40px; width: 60px; height: 60px; background: #25d366; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 200; transition: var(--transition); font-size: 1.8rem; }
+        .whatsapp-btn { position: fixed; bottom: 40px; left: 40px; width: 60px; height: 60px; background: #25d366; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 200; transition: var(--transition); font-size: 1.8rem; text-decoration: none; }
         .whatsapp-btn:hover { transform: scale(1.1); }
         .back-to-top { position: fixed; bottom: 40px; right: 40px; width: 50px; height: 50px; background: var(--primary-color); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 100; opacity: 0; visibility: hidden; transition: var(--transition); }
         .back-to-top.visible { opacity: 1; visibility: visible; }
-        .notification { position: fixed; top: 100px; right: 20px; background: white; padding: 1.5rem; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); z-index: 3000; display: flex; align-items: center; gap: 1rem; max-width: 350px; transform: translateX(400px); transition: transform 0.5s; }
+        .notification { position: fixed; top: 100px; right: 20px; background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); z-index: 3000; display: flex; align-items: center; gap: 1rem; max-width: 350px; transform: translateX(400px); transition: transform 0.5s; }
         .notification.show { transform: translateX(0); }
-        .notification.success .notification-icon { color: var(--accent-color); }
-        .notification.error .notification-icon { color: #e74c3c; }
-        .admin-login-btn { position: fixed; bottom: 10px; right: 10px; width: 30px; height: 30px; background: transparent; border: none; cursor: pointer; z-index: 50; }
+        .notification.success { border-left: 5px solid var(--accent-color); }
+        .notification.error { border-left: 5px solid #e74c3c; }
         
         @media (max-width: 768px) {
             .nav-content { flex-direction: column; }
@@ -169,6 +170,7 @@
             .live-video iframe { height: 250px; }
             .whatsapp-btn { bottom: 20px; left: 20px; width: 50px; height: 50px; font-size: 1.5rem; }
             .back-to-top { bottom: 20px; right: 20px; width: 40px; height: 40px; }
+            .admin-floating-panel { width: 90%; right: 5%; left: 5%; bottom: 20px; }
         }
     </style>
 </head>
@@ -177,36 +179,30 @@
 
     <nav class="navbar" id="navbar">
         <div class="nav-content">
-            <img src="https://z-cdn-media.chatglm.cn/files/d4a29cc3-0dfa-4162-876d-90b0943f4acf_logo%20sky.png?auth_key=1789917040-fee395f1cf8f4148910bb63822b38116-0-64740e7206191bb61a45c64032c935f8" alt="Logo" class="logo">
+            <img src="https://z-cdn-media.chatglm.cn/files/d4a29cc3-0dfa-4162-876d-90b0943f4acf_logo%20sky.png?auth_key=1789917040-fee395f1cf8f4148910bb63822b38116-0-64740e7206191bb61a45c64032c935f8" alt="Logo" class="logo" id="logoImage">
             <div class="nav-links">
                 <a href="#home" onclick="showSection('home')" class="active">Home</a>
                 <a href="#courses" onclick="showSection('courses')">Cursos</a>
-                <a href="#contact" onclick="showSection('contact')">Contacto</a>
                 <a href="#pricing" onclick="showSection('pricing')">Precios</a>
                 <a href="#live" onclick="showSection('live')">Clases en Vivo</a>
                 <a href="#registration" onclick="showSection('registration')">Inscripción</a>
                 <a href="#class-access" onclick="showSection('class-access')">Ingreso a Clases</a>
+                <a href="#contact" onclick="showSection('contact')">Contacto</a>
             </div>
         </div>
     </nav>
 
     <!-- HOME SECTION -->
     <section id="home" class="section active">
-        <div class="home-slider">
-            <img src="https://via.placeholder.com/1200x500/1a5fb4/ffffff?text=Learn+English+with+Us" alt="Banner 1" class="slider-image active">
-            <img src="https://via.placeholder.com/1200x500/2ec27e/ffffff?text=Native+Teachers" alt="Banner 2" class="slider-image">
-            <img src="https://via.placeholder.com/1200x500/3584e4/ffffff?text=Interactive+Classes" alt="Banner 3" class="slider-image">
-            <div class="slider-controls">
-                <div class="slider-dot active" onclick="goToSlide(0)"></div>
-                <div class="slider-dot" onclick="goToSlide(1)"></div>
-                <div class="slider-dot" onclick="goToSlide(2)"></div>
-            </div>
+        <div class="home-slider" id="homeSlider">
+            <!-- Los banners se cargarán dinámicamente -->
+            <div class="slider-controls" id="sliderControls"></div>
         </div>
         <div class="news-section">
             <h2>Últimas Noticias</h2>
             <div class="news-content">
                 <div class="news-icon"><i class="fas fa-bullhorn"></i></div>
-                <p id="newsText">🎉 ¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA! 🎉 Válido hasta el 30 de noviembre.</p>
+                <p id="newsText" onclick="if(isAdminLoggedIn) editNews()">🎉 ¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA! 🎉 Válido hasta el 30 de noviembre.</p>
             </div>
         </div>
     </section>
@@ -217,40 +213,13 @@
         <div class="courses-grid" id="coursesGrid"></div>
     </section>
 
-    <!-- CONTACT SECTION -->
-    <section id="contact" class="section">
-        <h2>Contacto</h2>
-        <div class="contact-container">
-            <div class="contact-grid">
-                <div class="contact-card">
-                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-                    <h3>Email</h3>
-                    <p>Envíanos tus consultas y te responderemos en menos de 24 horas</p>
-                    <a href="mailto:info@skylearn.com" class="contact-link"><i class="fas fa-paper-plane"></i> Enviar Email</a>
-                </div>
-                <div class="contact-card">
-                    <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
-                    <h3>Teléfono</h3>
-                    <p>Disponibles de lunes a viernes de 9:00 a 18:00 horas</p>
-                    <a href="tel:+51929601732" class="contact-link"><i class="fas fa-phone"></i> Llamar Ahora</a>
-                </div>
-                <div class="contact-card">
-                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
-                    <h3>Oficina</h3>
-                    <p>Av. Educación 1234, Ciudad del Aprendizaje</p>
-                    <a href="https://maps.google.com" target="_blank" class="contact-link"><i class="fas fa-directions"></i> Cómo Llegar</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- PRICING SECTION -->
     <section id="pricing" class="section">
         <h2>Precios y Horarios</h2>
         <div class="pricing-container">
             <div class="pricing-tabs">
-                <div class="pricing-tab active" onclick="showPricing('monthly')">Mensual</div>
-                <div class="pricing-tab" onclick="showPricing('one-time')">Pago Único</div>
+                <div class="pricing-tab active" data-period="monthly" onclick="showPricing('monthly')">Mensual</div>
+                <div class="pricing-tab" data-period="one-time" onclick="showPricing('one-time')">Pago Único</div>
             </div>
             <table class="pricing-table">
                 <thead><tr><th>Curso</th><th>Precio</th><th>Horario</th><th>Duración</th></tr></thead>
@@ -265,7 +234,7 @@
             <h2>Clases en Vivo</h2>
             <p>Únete a nuestras clases interactivas en tiempo real con profesores certificados.</p>
             <div class="live-video">
-                <iframe src="https://www.youtube.com/embed/live_stream?channel=UCVXbMqB8n5TQ8Z8q8q8q8q8" allowfullscreen></iframe>
+                <iframe id="liveStreamIframe" src="https://www.youtube.com/embed/live_stream?channel=UCVXbMqB8n5TQ8Z8q8q8q8q8" allowfullscreen></iframe>
             </div>
             <div class="live-schedule">
                 <h3>Próximas Clases</h3>
@@ -279,7 +248,7 @@
         <div class="registration-section">
             <h2>Formulario de Inscripción</h2>
             <p>Completa el siguiente formulario para inscribirte en nuestros cursos de inglés.</p>
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfXOgR-BEq2U6wck2UXfikqsWcke-pxco3WxniC9EaRPKJu_w/viewform?embedded=true" width="100%" height="800" frameborder="0">Cargando…</iframe>
+            <iframe id="registrationIframe" src="https://docs.google.com/forms/d/e/1FAIpQLSfXOgR-BEq2U6wck2UXfikqsWcke-pxco3WxniC9EaRPKJu_w/viewform?embedded=true" width="100%" height="800" frameborder="0">Cargando…</iframe>
         </div>
     </section>
 
@@ -296,80 +265,7 @@
         </div>
     </section>
 
-    <!-- ADMIN PANEL -->
-    <div id="adminPanel" class="admin-panel">
-        <h2>Panel de Administración</h2>
-        <div class="admin-tabs">
-            <button class="admin-tab active" onclick="showAdminTab('banners')">Banners</button>
-            <button class="admin-tab" onclick="showAdminTab('courses')">Cursos</button>
-            <button class="admin-tab" onclick="showAdminTab('teachers')">Profesores</button>
-            <button class="admin-tab" onclick="showAdminTab('live')">Clases en Vivo</button>
-            <button class="admin-tab" onclick="showAdminTab('codes')">Códigos</button>
-        </div>
-        
-        <div id="bannersTab" class="admin-tab-content active">
-            <h3>Gestionar Banners</h3>
-            <div class="admin-form">
-                <div class="admin-form-group"><label>URL del Banner</label><input type="text" id="bannerUrl" placeholder="https://ejemplo.com/banner.jpg"></div>
-                <div class="admin-form-group"><label>Texto del Banner</label><input type="text" id="bannerText" placeholder="Texto del banner"></div>
-                <button class="admin-btn" onclick="addBanner()">Agregar Banner</button>
-            </div>
-            <div class="admin-list" id="bannersList"></div>
-        </div>
-        
-        <div id="coursesTab" class="admin-tab-content">
-            <h3>Gestionar Cursos</h3>
-            <div class="admin-form">
-                <div class="admin-form-group"><label>Título</label><input type="text" id="courseTitle" placeholder="Título del curso"></div>
-                <div class="admin-form-group"><label>Profesor</label><input type="text" id="courseTeacher" placeholder="Nombre del profesor"></div>
-                <div class="admin-form-group"><label>Duración</label><input type="text" id="courseDuration" placeholder="8 semanas"></div>
-                <div class="admin-form-group"><label>Precio</label><input type="text" id="coursePrice" placeholder="$120"></div>
-                <div class="admin-form-group"><label>URL Imagen</label><input type="text" id="courseImage" placeholder="https://ejemplo.com/curso.jpg"></div>
-                <div class="admin-form-group"><label>Etiqueta</label><input type="text" id="courseBadge" placeholder="Popular"></div>
-                <button class="admin-btn" onclick="addCourse()">Agregar Curso</button>
-            </div>
-            <div class="admin-list" id="coursesList"></div>
-        </div>
-        
-        <div id="teachersTab" class="admin-tab-content">
-            <h3>Gestionar Profesores</h3>
-            <div class="admin-form">
-                <div class="admin-form-group"><label>Nombre</label><input type="text" id="teacherName" placeholder="Nombre completo"></div>
-                <div class="admin-form-group"><label>Email</label><input type="email" id="teacherEmail" placeholder="profesor@ejemplo.com"></div>
-                <div class="admin-form-group"><label>Teléfono</label><input type="tel" id="teacherPhone" placeholder="+51 123456789"></div>
-                <div class="admin-form-group"><label>Biografía</label><textarea id="teacherBio" placeholder="Breve biografía"></textarea></div>
-                <button class="admin-btn" onclick="addTeacher()">Agregar Profesor</button>
-            </div>
-            <div class="admin-list" id="teachersList"></div>
-        </div>
-        
-        <div id="liveTab" class="admin-tab-content">
-            <h3>Gestionar Clases en Vivo</h3>
-            <div class="admin-form">
-                <div class="admin-form-group"><label>Horario</label><input type="text" id="liveTime" placeholder="Lunes 18:00 - 19:30"></div>
-                <div class="admin-form-group"><label>Título</label><input type="text" id="liveTitle" placeholder="Conversación Básica"></div>
-                <div class="admin-form-group"><label>Profesor</label><input type="text" id="liveTeacher" placeholder="Nombre del profesor"></div>
-                <div class="admin-form-group"><label>Enlace</label><input type="text" id="liveLink" placeholder="https://meet.google.com/xxx"></div>
-                <button class="admin-btn" onclick="addLiveClass()">Agregar Clase</button>
-            </div>
-            <div class="admin-list" id="liveList"></div>
-        </div>
-        
-        <div id="codesTab" class="admin-tab-content">
-            <h3>Gestionar Códigos de Acceso</h3>
-            <div class="admin-form">
-                <div class="admin-form-group"><label>Código</label><input type="text" id="codeValue" placeholder="123456" maxlength="6"></div>
-                <div class="admin-form-group"><label>Clase Asociada</label><input type="text" id="codeClass" placeholder="Inglés Básico - Grupo A"></div>
-                <div class="admin-form-group"><label>Horario</label><input type="text" id="codeSchedule" placeholder="Lunes y Miércoles 18:00-20:00"></div>
-                <div class="admin-form-group"><label>Enlace Google Meet</label><input type="text" id="codeMeet" placeholder="https://meet.google.com/xxx"></div>
-                <div class="admin-form-group"><label>Enlace Zoom</label><input type="text" id="codeZoom" placeholder="https://zoom.us/j/123456"></div>
-                <button class="admin-btn" onclick="addAccessCode()">Agregar Código</button>
-            </div>
-            <div class="admin-list" id="codesList"></div>
-        </div>
-    </div>
-
-    <!-- FOOTER -->
+    <!-- FOOTER (con login de admin al final) -->
     <footer>
         <div class="footer-container">
             <div class="footer-about">
@@ -408,7 +304,10 @@
                 <a href="#" onclick="openTermsModal()" class="terms-link" style="color: var(--gray-color); margin-top: 1rem; display: inline-block;">Términos y Condiciones</a>
             </div>
         </div>
-        <div class="copyright"><p>&copy; 2023 SkyLearn Academy. Todos los derechos reservados.</p></div>
+        <div class="copyright"><p>&copy; 2025 SkyLearn Academy. Todos los derechos reservados.</p></div>
+        <div class="admin-login-footer">
+            <button class="admin-login-btn" id="adminLoginFooterBtn" onclick="toggleAdminLogin()">🔐 Acceso Administrador</button>
+        </div>
     </footer>
 
     <!-- MODAL -->
@@ -422,6 +321,86 @@
         </div>
     </div>
 
+    <!-- ADMIN FLOATING PANEL -->
+    <div id="adminPanel" class="admin-floating-panel">
+        <div class="admin-header">
+            <h3>Panel de Administración</h3>
+            <button onclick="toggleAdminLogin()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="showAdminTab('general')">General</button>
+            <button class="admin-tab" onclick="showAdminTab('banners')">Banners</button>
+            <button class="admin-tab" onclick="showAdminTab('courses')">Cursos</button>
+            <button class="admin-tab" onclick="showAdminTab('pricing')">Precios</button>
+            <button class="admin-tab" onclick="showAdminTab('live')">Clases</button>
+            <button class="admin-tab" onclick="showAdminTab('codes')">Códigos</button>
+        </div>
+        
+        <div id="generalTab" class="admin-tab-content active">
+            <h4>Editar Noticia</h4>
+            <div class="admin-form-group"><label>Texto de la noticia</label><textarea id="editNewsText" rows="3"></textarea></div>
+            <button class="admin-btn" onclick="saveNews()">Guardar Noticia</button>
+            <hr style="margin: 1rem 0;">
+            <h4>Editar Enlaces Externos</h4>
+            <div class="admin-form-group"><label>URL Clase en Vivo (YouTube)</label><input type="text" id="editLiveStreamUrl" placeholder="https://www.youtube.com/embed/..."></div>
+            <div class="admin-form-group"><label>URL Formulario de Inscripción</label><input type="text" id="editRegistrationUrl" placeholder="https://docs.google.com/forms/..."></div>
+            <button class="admin-btn" onclick="saveExternalLinks()">Guardar Enlaces</button>
+        </div>
+        
+        <div id="bannersTab" class="admin-tab-content">
+            <h4>Agregar/Editar Banner</h4>
+            <div class="admin-form-group"><label>URL Imagen</label><input type="text" id="bannerUrl" placeholder="https://ejemplo.com/banner.jpg"></div>
+            <div class="admin-form-group"><label>Texto alternativo</label><input type="text" id="bannerText" placeholder="Descripción"></div>
+            <button class="admin-btn" onclick="addBanner()">Agregar Banner</button>
+            <h4>Lista de Banners</h4>
+            <div id="bannersList"></div>
+        </div>
+        
+        <div id="coursesTab" class="admin-tab-content">
+            <h4>Agregar/Editar Curso</h4>
+            <div class="admin-form-group"><label>Título</label><input type="text" id="courseTitle" placeholder="Título"></div>
+            <div class="admin-form-group"><label>Profesor</label><input type="text" id="courseTeacher" placeholder="Nombre"></div>
+            <div class="admin-form-group"><label>Duración</label><input type="text" id="courseDuration" placeholder="8 semanas"></div>
+            <div class="admin-form-group"><label>Precio</label><input type="text" id="coursePrice" placeholder="$120"></div>
+            <div class="admin-form-group"><label>URL Imagen</label><input type="text" id="courseImage" placeholder="https://..."></div>
+            <div class="admin-form-group"><label>Etiqueta</label><input type="text" id="courseBadge" placeholder="Popular"></div>
+            <button class="admin-btn" onclick="addCourse()">Agregar Curso</button>
+            <h4>Lista de Cursos</h4>
+            <div id="coursesList"></div>
+        </div>
+        
+        <div id="pricingTab" class="admin-tab-content">
+            <h4>Editar Precios (Mensual)</h4>
+            <div id="pricingMonthlyEditor"></div>
+            <h4>Editar Precios (Pago Único)</h4>
+            <div id="pricingOneTimeEditor"></div>
+            <button class="admin-btn" onclick="savePricing()">Guardar Precios</button>
+        </div>
+        
+        <div id="liveTab" class="admin-tab-content">
+            <h4>Agregar/Editar Clase en Vivo</h4>
+            <div class="admin-form-group"><label>Horario</label><input type="text" id="liveTime" placeholder="Lunes 18:00 - 19:30"></div>
+            <div class="admin-form-group"><label>Título</label><input type="text" id="liveTitle" placeholder="Conversación Básica"></div>
+            <div class="admin-form-group"><label>Profesor</label><input type="text" id="liveTeacher" placeholder="Nombre"></div>
+            <div class="admin-form-group"><label>Enlace Meet/Zoom</label><input type="text" id="liveLink" placeholder="https://meet.google.com/..."></div>
+            <button class="admin-btn" onclick="addLiveClass()">Agregar Clase</button>
+            <h4>Lista de Clases</h4>
+            <div id="liveList"></div>
+        </div>
+        
+        <div id="codesTab" class="admin-tab-content">
+            <h4>Agregar/Editar Código de Acceso</h4>
+            <div class="admin-form-group"><label>Código (6 dígitos)</label><input type="text" id="codeValue" placeholder="123456" maxlength="6"></div>
+            <div class="admin-form-group"><label>Clase Asociada</label><input type="text" id="codeClass" placeholder="Inglés Básico"></div>
+            <div class="admin-form-group"><label>Horario</label><input type="text" id="codeSchedule" placeholder="Lunes y Miércoles 18:00"></div>
+            <div class="admin-form-group"><label>Enlace Google Meet</label><input type="text" id="codeMeet" placeholder="https://meet.google.com/..."></div>
+            <div class="admin-form-group"><label>Enlace Zoom</label><input type="text" id="codeZoom" placeholder="https://zoom.us/j/..."></div>
+            <button class="admin-btn" onclick="addAccessCode()">Agregar Código</button>
+            <h4>Lista de Códigos</h4>
+            <div id="codesList"></div>
+        </div>
+    </div>
+
     <!-- FLOATING BUTTONS -->
     <a href="https://wa.me/51929601732" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i></a>
     <div class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></div>
@@ -430,61 +409,131 @@
         <div class="notification-content"><h4>¡Éxito!</h4><p>Acción completada.</p></div>
         <button class="notification-close" onclick="closeNotification()"><i class="fas fa-times"></i></button>
     </div>
-    <button class="admin-login-btn" id="adminLoginBtn" onclick="toggleAdminLogin()"></button>
 
     <script>
-        // ========== DATOS GLOBALES ==========
-        let banners = [
-            { url: "https://via.placeholder.com/1200x500/1a5fb4/ffffff?text=Learn+English+with+Us", text: "Learn English with Us" },
-            { url: "https://via.placeholder.com/1200x500/2ec27e/ffffff?text=Native+Teachers", text: "Native Teachers" },
-            { url: "https://via.placeholder.com/1200x500/3584e4/ffffff?text=Interactive+Classes", text: "Interactive Classes" }
-        ];
-        
-        let courses = [
-            { title: "Inglés Básico", teacher: "John Smith", duration: "8 semanas", students: "120", price: "$120", image: "https://via.placeholder.com/400x220/1a5fb4/ffffff?text=Basic+English", badge: "Popular" },
-            { title: "Inglés Intermedio", teacher: "Emily Johnson", duration: "12 semanas", students: "85", price: "$180", image: "https://via.placeholder.com/400x220/3584e4/ffffff?text=Intermediate+English", badge: "Nuevo" },
-            { title: "Inglés Avanzado", teacher: "Michael Brown", duration: "16 semanas", students: "65", price: "$240", image: "https://via.placeholder.com/400x220/2ec27e/ffffff?text=Advanced+English", badge: "Premium" },
-            { title: "Inglés Conversacional", teacher: "Sarah Davis", duration: "10 semanas", students: "95", price: "$150", image: "https://via.placeholder.com/400x220/1a5fb4/ffffff?text=Conversational+English", badge: "Popular" }
-        ];
-        
-        let teachers = [
-            { name: "John Smith", email: "john@skylearn.com", phone: "+51 123456789", bio: "Profesor con 10 años de experiencia" },
-            { name: "Emily Johnson", email: "emily@skylearn.com", phone: "+51 234567890", bio: "Especialista en gramática" }
-        ];
-        
-        let liveClasses = [
-            { time: "Lunes 18:00 - 19:30", title: "Conversación Básica", teacher: "John Smith", link: "https://meet.google.com/abc-defg-hij" },
-            { time: "Martes 19:00 - 20:30", title: "Gramática Intermedia", teacher: "Emily Johnson", link: "https://meet.google.com/klm-nopq-rst" },
-            { time: "Miércoles 18:00 - 19:30", title: "Pronunciación Avanzada", teacher: "Michael Brown", link: "https://meet.google.com/uvw-xyz-123" }
-        ];
-        
-        let accessCodes = [
-            { code: "123456", title: "Inglés Básico - Grupo A", time: "Lunes, Miércoles y Viernes 18:00-20:00", meetLink: "https://meet.google.com/abc-defg-hij", zoomLink: "https://zoom.us/j/123456789" },
-            { code: "234567", title: "Inglés Intermedio - Grupo B", time: "Martes y Jueves 19:00-21:00", meetLink: "https://meet.google.com/klm-nopq-rst", zoomLink: "https://zoom.us/j/987654321" }
-        ];
-        
+        // ========== VARIABLES GLOBALES ==========
         let isAdminLoggedIn = false;
+        let currentPricingPeriod = 'monthly';
         
-        // ========== FUNCIONES DE INICIALIZACIÓN ==========
-        document.addEventListener('DOMContentLoaded', function() {
-            let width = 0;
-            const interval = setInterval(() => {
-                width += 5;
-                document.getElementById('loadingProgress').style.width = width + '%';
-                if (width >= 100) { clearInterval(interval); document.querySelector('.loading-bar').style.display = 'none'; }
-            }, 100);
-            
-            loadCourses();
-            loadPricing('monthly');
-            loadLiveSchedule();
-            initSlider();
-            initScrollEvents();
-        });
+        // Datos por defecto (se cargarán desde localStorage si existen)
+        let siteData = {
+            news: "🎉 ¡OBTÉN UN 30% DE DESCUENTO AL INSCRIBIRTE AHORA! 🎉 Válido hasta el 30 de noviembre.",
+            liveStreamUrl: "https://www.youtube.com/embed/live_stream?channel=UCVXbMqB8n5TQ8Z8q8q8q8q8",
+            registrationUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfXOgR-BEq2U6wck2UXfikqsWcke-pxco3WxniC9EaRPKJu_w/viewform?embedded=true",
+            banners: [
+                { url: "https://via.placeholder.com/1200x500/1a5fb4/ffffff?text=Learn+English+with+Us", text: "Learn English with Us" },
+                { url: "https://via.placeholder.com/1200x500/2ec27e/ffffff?text=Native+Teachers", text: "Native Teachers" },
+                { url: "https://via.placeholder.com/1200x500/3584e4/ffffff?text=Interactive+Classes", text: "Interactive Classes" }
+            ],
+            courses: [
+                { title: "Inglés Básico", teacher: "John Smith", duration: "8 semanas", students: "120", price: "$120", image: "https://via.placeholder.com/400x220/1a5fb4/ffffff?text=Basic+English", badge: "Popular" },
+                { title: "Inglés Intermedio", teacher: "Emily Johnson", duration: "12 semanas", students: "85", price: "$180", image: "https://via.placeholder.com/400x220/3584e4/ffffff?text=Intermediate+English", badge: "Nuevo" },
+                { title: "Inglés Avanzado", teacher: "Michael Brown", duration: "16 semanas", students: "65", price: "$240", image: "https://via.placeholder.com/400x220/2ec27e/ffffff?text=Advanced+English", badge: "Premium" },
+                { title: "Inglés Conversacional", teacher: "Sarah Davis", duration: "10 semanas", students: "95", price: "$150", image: "https://via.placeholder.com/400x220/1a5fb4/ffffff?text=Conversational+English", badge: "Popular" }
+            ],
+            pricing: {
+                monthly: [
+                    { course: "Inglés Básico", price: "$120", schedule: "Lun, Mié, Vie 18:00-20:00", duration: "8 semanas" },
+                    { course: "Inglés Intermedio", price: "$180", schedule: "Mar, Jue 18:00-20:00", duration: "12 semanas" },
+                    { course: "Inglés Avanzado", price: "$240", schedule: "Sábados 10:00-13:00", duration: "16 semanas" },
+                    { course: "Inglés Conversacional", price: "$150", schedule: "Lun, Mié, Vie 19:00-20:30", duration: "10 semanas" }
+                ],
+                'one-time': [
+                    { course: "Inglés Básico", price: "$960", schedule: "Lun, Mié, Vie 18:00-20:00", duration: "8 semanas" },
+                    { course: "Inglés Intermedio", price: "$1440", schedule: "Mar, Jue 18:00-20:00", duration: "12 semanas" },
+                    { course: "Inglés Avanzado", price: "$1920", schedule: "Sábados 10:00-13:00", duration: "16 semanas" },
+                    { course: "Inglés Conversacional", price: "$1200", schedule: "Lun, Mié, Vie 19:00-20:30", duration: "10 semanas" }
+                ]
+            },
+            liveClasses: [
+                { time: "Lunes 18:00 - 19:30", title: "Conversación Básica", teacher: "John Smith", link: "https://meet.google.com/abc-defg-hij" },
+                { time: "Martes 19:00 - 20:30", title: "Gramática Intermedia", teacher: "Emily Johnson", link: "https://meet.google.com/klm-nopq-rst" },
+                { time: "Miércoles 18:00 - 19:30", title: "Pronunciación Avanzada", teacher: "Michael Brown", link: "https://meet.google.com/uvw-xyz-123" }
+            ],
+            accessCodes: [
+                { code: "123456", title: "Inglés Básico - Grupo A", time: "Lunes, Miércoles y Viernes 18:00-20:00", meetLink: "https://meet.google.com/abc-defg-hij", zoomLink: "https://zoom.us/j/123456789" },
+                { code: "234567", title: "Inglés Intermedio - Grupo B", time: "Martes y Jueves 19:00-21:00", meetLink: "https://meet.google.com/klm-nopq-rst", zoomLink: "https://zoom.us/j/987654321" }
+            ]
+        };
         
-        function loadCourses() {
+        // ========== CARGA Y GUARDADO EN LOCALSTORAGE ==========
+        function loadSiteData() {
+            const saved = localStorage.getItem('skylearn_academy_data');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    // Merge para no perder ninguna propiedad
+                    siteData = { ...siteData, ...parsed };
+                } catch(e) { console.error("Error loading data", e); }
+            }
+            applyDataToDOM();
+        }
+        
+        function saveSiteData() {
+            localStorage.setItem('skylearn_academy_data', JSON.stringify(siteData));
+            applyDataToDOM();
+            if(isAdminLoggedIn) showNotification('success', 'Datos guardados', 'Los cambios se han aplicado en tiempo real');
+        }
+        
+        function applyDataToDOM() {
+            // Aplicar noticia
+            document.getElementById('newsText').innerText = siteData.news;
+            // Aplicar enlaces externos
+            document.getElementById('liveStreamIframe').src = siteData.liveStreamUrl;
+            document.getElementById('registrationIframe').src = siteData.registrationUrl;
+            // Aplicar banners
+            renderBanners();
+            // Aplicar cursos
+            renderCourses();
+            // Aplicar precios
+            renderPricing(currentPricingPeriod);
+            // Aplicar clases en vivo
+            renderLiveSchedule();
+            // Si el admin está logueado, actualizar los formularios del panel
+            if(isAdminLoggedIn) {
+                document.getElementById('editNewsText').value = siteData.news;
+                document.getElementById('editLiveStreamUrl').value = siteData.liveStreamUrl;
+                document.getElementById('editRegistrationUrl').value = siteData.registrationUrl;
+                updateAdminLists();
+                renderPricingEditors();
+            }
+        }
+        
+        // ========== RENDERIZADO DE COMPONENTES ==========
+        function renderBanners() {
+            const slider = document.getElementById('homeSlider');
+            const controls = document.getElementById('sliderControls');
+            let slidesHtml = '';
+            let dotsHtml = '';
+            siteData.banners.forEach((banner, idx) => {
+                const activeClass = idx === 0 ? 'active' : '';
+                slidesHtml += `<img src="${banner.url}" alt="${banner.text}" class="slider-image ${activeClass}">`;
+                dotsHtml += `<div class="slider-dot ${activeClass}" onclick="goToSlide(${idx})"></div>`;
+            });
+            slider.innerHTML = slidesHtml + `<div class="slider-controls">${dotsHtml}</div>`;
+            // Reiniciar el slider automático
+            if(window.sliderInterval) clearInterval(window.sliderInterval);
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.slider-image');
+            const dots = document.querySelectorAll('.slider-dot');
+            window.goToSlide = function(index) {
+                slides.forEach(s => s.classList.remove('active'));
+                dots.forEach(d => d.classList.remove('active'));
+                slides[index].classList.add('active');
+                dots[index].classList.add('active');
+                currentSlide = index;
+            };
+            window.sliderInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                window.goToSlide(currentSlide);
+            }, 5000);
+        }
+        
+        function renderCourses() {
             const grid = document.getElementById('coursesGrid');
+            if(!grid) return;
             grid.innerHTML = '';
-            courses.forEach(course => {
+            siteData.courses.forEach(course => {
                 const card = document.createElement('div');
                 card.className = 'course-card';
                 card.innerHTML = `
@@ -501,34 +550,28 @@
             });
         }
         
-        function loadPricing(period) {
-            const pricingData = {
-                monthly: [
-                    { course: "Inglés Básico", price: "$120", schedule: "Lun, Mié, Vie 18:00-20:00", duration: "8 semanas" },
-                    { course: "Inglés Intermedio", price: "$180", schedule: "Mar, Jue 18:00-20:00", duration: "12 semanas" },
-                    { course: "Inglés Avanzado", price: "$240", schedule: "Sábados 10:00-13:00", duration: "16 semanas" },
-                    { course: "Inglés Conversacional", price: "$150", schedule: "Lun, Mié, Vie 19:00-20:30", duration: "10 semanas" }
-                ],
-                'one-time': [
-                    { course: "Inglés Básico", price: "$960", schedule: "Lun, Mié, Vie 18:00-20:00", duration: "8 semanas" },
-                    { course: "Inglés Intermedio", price: "$1440", schedule: "Mar, Jue 18:00-20:00", duration: "12 semanas" },
-                    { course: "Inglés Avanzado", price: "$1920", schedule: "Sábados 10:00-13:00", duration: "16 semanas" },
-                    { course: "Inglés Conversacional", price: "$1200", schedule: "Lun, Mié, Vie 19:00-20:30", duration: "10 semanas" }
-                ]
-            };
+        function renderPricing(period) {
+            currentPricingPeriod = period;
             const tbody = document.getElementById('pricingTableBody');
+            if(!tbody) return;
             tbody.innerHTML = '';
-            pricingData[period].forEach(item => {
+            siteData.pricing[period].forEach(item => {
                 const row = document.createElement('tr');
                 row.innerHTML = `<td>${item.course}</td><td class="highlight">${item.price}</td><td>${item.schedule}</td><td>${item.duration}</td>`;
                 tbody.appendChild(row);
             });
+            // Actualizar tabs visualmente
+            document.querySelectorAll('.pricing-tab').forEach(tab => {
+                if(tab.dataset.period === period) tab.classList.add('active');
+                else tab.classList.remove('active');
+            });
         }
         
-        function loadLiveSchedule() {
+        function renderLiveSchedule() {
             const container = document.getElementById('liveScheduleContainer');
+            if(!container) return;
             container.innerHTML = '';
-            liveClasses.forEach(item => {
+            siteData.liveClasses.forEach(item => {
                 const div = document.createElement('div');
                 div.className = 'schedule-item';
                 div.innerHTML = `<div><div class="schedule-time">${item.time}</div><div>${item.title}</div></div><div>${item.teacher}</div>`;
@@ -536,40 +579,277 @@
             });
         }
         
-        function initSlider() {
-            let currentSlide = 0;
-            const slides = document.querySelectorAll('.slider-image');
-            const dots = document.querySelectorAll('.slider-dot');
-            window.goToSlide = function(index) {
-                slides.forEach(s => s.classList.remove('active'));
-                dots.forEach(d => d.classList.remove('active'));
-                slides[index].classList.add('active');
-                dots[index].classList.add('active');
-                currentSlide = index;
-            };
-            setInterval(() => { currentSlide = (currentSlide + 1) % slides.length; window.goToSlide(currentSlide); }, 5000);
+        function renderPricingEditors() {
+            // Editor de precios mensuales
+            const monthlyDiv = document.getElementById('pricingMonthlyEditor');
+            if(monthlyDiv) {
+                monthlyDiv.innerHTML = '';
+                siteData.pricing.monthly.forEach((item, idx) => {
+                    monthlyDiv.innerHTML += `
+                        <div style="border:1px solid #ddd; padding:0.5rem; margin-bottom:0.5rem;">
+                            <input type="text" id="monthly_course_${idx}" value="${item.course}" placeholder="Curso">
+                            <input type="text" id="monthly_price_${idx}" value="${item.price}" placeholder="Precio">
+                            <input type="text" id="monthly_schedule_${idx}" value="${item.schedule}" placeholder="Horario">
+                            <input type="text" id="monthly_duration_${idx}" value="${item.duration}" placeholder="Duración">
+                            <button class="admin-icon-btn delete" onclick="deletePricingItem('monthly', ${idx})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+                });
+                monthlyDiv.innerHTML += '<button class="admin-btn" onclick="addPricingItem(\'monthly\')">+ Agregar precio mensual</button>';
+            }
+            // Editor de precios pago único
+            const oneTimeDiv = document.getElementById('pricingOneTimeEditor');
+            if(oneTimeDiv) {
+                oneTimeDiv.innerHTML = '';
+                siteData.pricing['one-time'].forEach((item, idx) => {
+                    oneTimeDiv.innerHTML += `
+                        <div style="border:1px solid #ddd; padding:0.5rem; margin-bottom:0.5rem;">
+                            <input type="text" id="onetime_course_${idx}" value="${item.course}" placeholder="Curso">
+                            <input type="text" id="onetime_price_${idx}" value="${item.price}" placeholder="Precio">
+                            <input type="text" id="onetime_schedule_${idx}" value="${item.schedule}" placeholder="Horario">
+                            <input type="text" id="onetime_duration_${idx}" value="${item.duration}" placeholder="Duración">
+                            <button class="admin-icon-btn delete" onclick="deletePricingItem('one-time', ${idx})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+                });
+                oneTimeDiv.innerHTML += '<button class="admin-btn" onclick="addPricingItem(\'one-time\')">+ Agregar precio pago único</button>';
+            }
         }
         
-        function initScrollEvents() {
-            const navbar = document.getElementById('navbar');
-            const backToTop = document.getElementById('backToTop');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) navbar.classList.add('scrolled');
-                else navbar.classList.remove('scrolled');
-                if (window.scrollY > 300) backToTop.classList.add('visible');
-                else backToTop.classList.remove('visible');
-            });
+        // ========== FUNCIONES DE ADMIN ==========
+        function toggleAdminLogin() {
+            if (!isAdminLoggedIn) {
+                const pwd = prompt('Contraseña de administrador:');
+                if (pwd === 'ENGLISH2026TEAM') {
+                    isAdminLoggedIn = true;
+                    document.getElementById('adminPanel').classList.add('active');
+                    document.getElementById('adminLoginFooterBtn').innerText = '🔒 Cerrar Sesión Admin';
+                    loadSiteData(); // Recargar datos y mostrar panel
+                    showNotification('success', 'Admin', 'Sesión iniciada correctamente');
+                } else showNotification('error', 'Error', 'Contraseña incorrecta');
+            } else {
+                isAdminLoggedIn = false;
+                document.getElementById('adminPanel').classList.remove('active');
+                document.getElementById('adminLoginFooterBtn').innerText = '🔐 Acceso Administrador';
+                showNotification('success', 'Admin', 'Sesión cerrada');
+            }
         }
         
-        // ========== FUNCIONES DE NAVEGACIÓN ==========
+        function showAdminTab(tabName) {
+            document.querySelectorAll('.admin-tab-content').forEach(t => t.classList.remove('active'));
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            if(tabName === 'pricing') renderPricingEditors();
+        }
+        
+        function saveNews() {
+            const newText = document.getElementById('editNewsText').value;
+            siteData.news = newText;
+            saveSiteData();
+        }
+        
+        function saveExternalLinks() {
+            siteData.liveStreamUrl = document.getElementById('editLiveStreamUrl').value;
+            siteData.registrationUrl = document.getElementById('editRegistrationUrl').value;
+            saveSiteData();
+        }
+        
+        function addBanner() {
+            const url = document.getElementById('bannerUrl').value.trim();
+            const text = document.getElementById('bannerText').value.trim();
+            if(url) {
+                siteData.banners.push({ url, text });
+                saveSiteData();
+                document.getElementById('bannerUrl').value = '';
+                document.getElementById('bannerText').value = '';
+                updateAdminLists();
+                showNotification('success', 'Banner agregado', '');
+            } else showNotification('error', 'Error', 'Ingresa URL de la imagen');
+        }
+        
+        function deleteBanner(index) {
+            siteData.banners.splice(index, 1);
+            saveSiteData();
+            updateAdminLists();
+        }
+        
+        function addCourse() {
+            const title = document.getElementById('courseTitle').value.trim();
+            const teacher = document.getElementById('courseTeacher').value.trim();
+            if(title && teacher) {
+                siteData.courses.push({
+                    title, teacher,
+                    duration: document.getElementById('courseDuration').value || "8 semanas",
+                    students: "0",
+                    price: document.getElementById('coursePrice').value || "$100",
+                    image: document.getElementById('courseImage').value || "https://via.placeholder.com/400x220/1a5fb4/ffffff?text=Curso",
+                    badge: document.getElementById('courseBadge').value || "Nuevo"
+                });
+                saveSiteData();
+                clearCourseForm();
+                updateAdminLists();
+                showNotification('success', 'Curso agregado', '');
+            } else showNotification('error', 'Error', 'Título y profesor requeridos');
+        }
+        
+        function deleteCourse(index) {
+            siteData.courses.splice(index, 1);
+            saveSiteData();
+            updateAdminLists();
+        }
+        
+        function addLiveClass() {
+            const time = document.getElementById('liveTime').value.trim();
+            const title = document.getElementById('liveTitle').value.trim();
+            if(time && title) {
+                siteData.liveClasses.push({
+                    time, title,
+                    teacher: document.getElementById('liveTeacher').value || "Profesor",
+                    link: document.getElementById('liveLink').value || ""
+                });
+                saveSiteData();
+                clearLiveForm();
+                updateAdminLists();
+                showNotification('success', 'Clase agregada', '');
+            } else showNotification('error', 'Error', 'Horario y título requeridos');
+        }
+        
+        function deleteLiveClass(index) {
+            siteData.liveClasses.splice(index, 1);
+            saveSiteData();
+            updateAdminLists();
+        }
+        
+        function addAccessCode() {
+            const code = document.getElementById('codeValue').value.trim();
+            const title = document.getElementById('codeClass').value.trim();
+            if(code && title) {
+                siteData.accessCodes.push({
+                    code, title,
+                    time: document.getElementById('codeSchedule').value || "",
+                    meetLink: document.getElementById('codeMeet').value || "",
+                    zoomLink: document.getElementById('codeZoom').value || ""
+                });
+                saveSiteData();
+                clearCodeForm();
+                updateAdminLists();
+                showNotification('success', 'Código agregado', '');
+            } else showNotification('error', 'Error', 'Código y clase requeridos');
+        }
+        
+        function deleteAccessCode(index) {
+            siteData.accessCodes.splice(index, 1);
+            saveSiteData();
+            updateAdminLists();
+        }
+        
+        function savePricing() {
+            // Guardar precios mensuales
+            const monthlyItems = [];
+            const monthlyDiv = document.getElementById('pricingMonthlyEditor');
+            if(monthlyDiv) {
+                const items = monthlyDiv.querySelectorAll('[id^="monthly_course_"]');
+                items.forEach((input, idx) => {
+                    monthlyItems.push({
+                        course: document.getElementById(`monthly_course_${idx}`).value,
+                        price: document.getElementById(`monthly_price_${idx}`).value,
+                        schedule: document.getElementById(`monthly_schedule_${idx}`).value,
+                        duration: document.getElementById(`monthly_duration_${idx}`).value
+                    });
+                });
+            }
+            // Guardar precios pago único
+            const oneTimeItems = [];
+            const oneTimeDiv = document.getElementById('pricingOneTimeEditor');
+            if(oneTimeDiv) {
+                const items = oneTimeDiv.querySelectorAll('[id^="onetime_course_"]');
+                items.forEach((input, idx) => {
+                    oneTimeItems.push({
+                        course: document.getElementById(`onetime_course_${idx}`).value,
+                        price: document.getElementById(`onetime_price_${idx}`).value,
+                        schedule: document.getElementById(`onetime_schedule_${idx}`).value,
+                        duration: document.getElementById(`onetime_duration_${idx}`).value
+                    });
+                });
+            }
+            if(monthlyItems.length) siteData.pricing.monthly = monthlyItems;
+            if(oneTimeItems.length) siteData.pricing['one-time'] = oneTimeItems;
+            saveSiteData();
+        }
+        
+        function addPricingItem(period) {
+            siteData.pricing[period].push({ course: "Nuevo Curso", price: "$0", schedule: "Horario", duration: "0 semanas" });
+            renderPricingEditors();
+            showNotification('success', 'Item agregado', 'Completa los datos y guarda');
+        }
+        
+        function deletePricingItem(period, index) {
+            siteData.pricing[period].splice(index, 1);
+            renderPricingEditors();
+            showNotification('success', 'Item eliminado', 'Guarda los cambios para aplicarlos');
+        }
+        
+        function updateAdminLists() {
+            // Banners list
+            const bannersList = document.getElementById('bannersList');
+            if(bannersList) {
+                bannersList.innerHTML = '';
+                siteData.banners.forEach((b, i) => {
+                    bannersList.innerHTML += `<div class="admin-list-item"><div><strong>Banner ${i+1}</strong><br><small>${b.text || 'Sin texto'}</small></div><div><button class="admin-icon-btn delete" onclick="deleteBanner(${i})"><i class="fas fa-trash"></i></button></div></div>`;
+                });
+            }
+            // Courses list
+            const coursesList = document.getElementById('coursesList');
+            if(coursesList) {
+                coursesList.innerHTML = '';
+                siteData.courses.forEach((c, i) => {
+                    coursesList.innerHTML += `<div class="admin-list-item"><div><strong>${c.title}</strong><br><small>${c.teacher} - ${c.price}</small></div><div><button class="admin-icon-btn delete" onclick="deleteCourse(${i})"><i class="fas fa-trash"></i></button></div></div>`;
+                });
+            }
+            // Live classes list
+            const liveList = document.getElementById('liveList');
+            if(liveList) {
+                liveList.innerHTML = '';
+                siteData.liveClasses.forEach((l, i) => {
+                    liveList.innerHTML += `<div class="admin-list-item"><div><strong>${l.title}</strong><br><small>${l.time}</small></div><div><button class="admin-icon-btn delete" onclick="deleteLiveClass(${i})"><i class="fas fa-trash"></i></button></div></div>`;
+                });
+            }
+            // Access codes list
+            const codesList = document.getElementById('codesList');
+            if(codesList) {
+                codesList.innerHTML = '';
+                siteData.accessCodes.forEach((c, i) => {
+                    codesList.innerHTML += `<div class="admin-list-item"><div><strong>Código: ${c.code}</strong><br><small>${c.title}</small></div><div><button class="admin-icon-btn delete" onclick="deleteAccessCode(${i})"><i class="fas fa-trash"></i></button></div></div>`;
+                });
+            }
+        }
+        
+        function clearCourseForm() {
+            ['courseTitle', 'courseTeacher', 'courseDuration', 'coursePrice', 'courseImage', 'courseBadge'].forEach(id => document.getElementById(id).value = '');
+        }
+        
+        function clearLiveForm() {
+            ['liveTime', 'liveTitle', 'liveTeacher', 'liveLink'].forEach(id => document.getElementById(id).value = '');
+        }
+        
+        function clearCodeForm() {
+            ['codeValue', 'codeClass', 'codeSchedule', 'codeMeet', 'codeZoom'].forEach(id => document.getElementById(id).value = '');
+        }
+        
+        // ========== FUNCIONES PÚBLICAS ==========
         function showSection(sectionId) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(sectionId).classList.add('active');
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + sectionId) link.classList.add('active');
+                if(link.getAttribute('href') === '#' + sectionId) link.classList.add('active');
             });
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function showPricing(period) {
+            renderPricing(period);
         }
         
         function enrollCourse(courseName) {
@@ -577,16 +857,10 @@
             setTimeout(() => showSection('registration'), 1500);
         }
         
-        function showPricing(period) {
-            document.querySelectorAll('.pricing-tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
-            loadPricing(period);
-        }
-        
         function validateAccessCode() {
             const code = document.getElementById('accessCode').value.trim();
             const container = document.getElementById('classLinks');
-            const valid = accessCodes.filter(c => c.code === code);
+            const valid = siteData.accessCodes.filter(c => c.code === code);
             if (valid.length > 0) {
                 container.innerHTML = '';
                 valid.forEach(cls => {
@@ -612,7 +886,6 @@
             }
         }
         
-        // ========== FUNCIONES DE MODAL Y NOTIFICACIONES ==========
         function openTermsModal() { document.getElementById('termsModal').style.display = 'flex'; }
         function closeTermsModal() { document.getElementById('termsModal').style.display = 'none'; }
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -629,224 +902,38 @@
         
         function closeNotification() { document.getElementById('notification').classList.remove('show'); }
         
-        // ========== ADMIN PANEL FUNCTIONS ==========
-        function toggleAdminLogin() {
-            if (!isAdminLoggedIn) {
-                const pwd = prompt('Contraseña de administrador:');
-                if (pwd === 'admin123') {
-                    isAdminLoggedIn = true;
-                    document.getElementById('adminPanel').classList.add('active');
-                    updateAdminLists();
-                    showNotification('success', 'Admin', 'Sesión iniciada');
-                } else showNotification('error', 'Error', 'Contraseña incorrecta');
-            } else {
-                isAdminLoggedIn = false;
-                document.getElementById('adminPanel').classList.remove('active');
-                showNotification('success', 'Admin', 'Sesión cerrada');
+        function editNews() {
+            if(isAdminLoggedIn) {
+                const newText = prompt("Editar noticia:", siteData.news);
+                if(newText) {
+                    siteData.news = newText;
+                    saveSiteData();
+                }
             }
         }
         
-        function showAdminTab(tabName) {
-            document.querySelectorAll('.admin-tab-content').forEach(t => t.classList.remove('active'));
-            document.getElementById(tabName + 'Tab').classList.add('active');
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
-        }
+        // ========== INICIALIZACIÓN ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            let width = 0;
+            const interval = setInterval(() => {
+                width += 5;
+                document.getElementById('loadingProgress').style.width = width + '%';
+                if (width >= 100) { clearInterval(interval); document.querySelector('.loading-bar').style.display = 'none'; }
+            }, 100);
+            
+            loadSiteData();
+            initScrollEvents();
+        });
         
-        function updateAdminLists() {
-            updateBannersList();
-            updateCoursesList();
-            updateTeachersList();
-            updateLiveList();
-            updateCodesList();
-        }
-        
-        function updateBannersList() {
-            const list = document.getElementById('bannersList');
-            list.innerHTML = '';
-            banners.forEach((b, i) => {
-                list.innerHTML += `<div class="admin-list-item"><div><strong>Banner ${i+1}:</strong> ${b.text || 'Sin texto'}</div><div><button class="admin-icon-btn edit" onclick="editBanner(${i})"><i class="fas fa-edit"></i></button><button class="admin-icon-btn delete" onclick="deleteBanner(${i})"><i class="fas fa-trash"></i></button></div></div>`;
+        function initScrollEvents() {
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) navbar.classList.add('scrolled');
+                else navbar.classList.remove('scrolled');
+                if (window.scrollY > 300) backToTop.classList.add('visible');
+                else backToTop.classList.remove('visible');
             });
-            if (!banners.length) list.innerHTML = '<p>No hay banners.</p>';
-        }
-        
-        function updateCoursesList() {
-            const list = document.getElementById('coursesList');
-            list.innerHTML = '';
-            courses.forEach((c, i) => {
-                list.innerHTML += `<div class="admin-list-item"><div><strong>${c.title}</strong> - ${c.teacher} - ${c.price}</div><div><button class="admin-icon-btn edit" onclick="editCourse(${i})"><i class="fas fa-edit"></i></button><button class="admin-icon-btn delete" onclick="deleteCourse(${i})"><i class="fas fa-trash"></i></button></div></div>`;
-            });
-            if (!courses.length) list.innerHTML = '<p>No hay cursos.</p>';
-        }
-        
-        function updateTeachersList() {
-            const list = document.getElementById('teachersList');
-            list.innerHTML = '';
-            teachers.forEach((t, i) => {
-                list.innerHTML += `<div class="admin-list-item"><div><strong>${t.name}</strong> - ${t.email}</div><div><button class="admin-icon-btn edit" onclick="editTeacher(${i})"><i class="fas fa-edit"></i></button><button class="admin-icon-btn delete" onclick="deleteTeacher(${i})"><i class="fas fa-trash"></i></button></div></div>`;
-            });
-            if (!teachers.length) list.innerHTML = '<p>No hay profesores.</p>';
-        }
-        
-        function updateLiveList() {
-            const list = document.getElementById('liveList');
-            list.innerHTML = '';
-            liveClasses.forEach((l, i) => {
-                list.innerHTML += `<div class="admin-list-item"><div><strong>${l.title}</strong> - ${l.time}</div><div><button class="admin-icon-btn edit" onclick="editLiveClass(${i})"><i class="fas fa-edit"></i></button><button class="admin-icon-btn delete" onclick="deleteLiveClass(${i})"><i class="fas fa-trash"></i></button></div></div>`;
-            });
-            if (!liveClasses.length) list.innerHTML = '<p>No hay clases.</p>';
-        }
-        
-        function updateCodesList() {
-            const list = document.getElementById('codesList');
-            list.innerHTML = '';
-            accessCodes.forEach((c, i) => {
-                list.innerHTML += `<div class="admin-list-item"><div><strong>${c.code}</strong> - ${c.title}</div><div><button class="admin-icon-btn edit" onclick="editAccessCode(${i})"><i class="fas fa-edit"></i></button><button class="admin-icon-btn delete" onclick="deleteAccessCode(${i})"><i class="fas fa-trash"></i></button></div></div>`;
-            });
-            if (!accessCodes.length) list.innerHTML = '<p>No hay códigos.</p>';
-        }
-        
-        // CRUD Operations
-        function addBanner() {
-            const url = document.getElementById('bannerUrl').value.trim();
-            const text = document.getElementById('bannerText').value.trim();
-            if (url) { banners.push({ url, text }); updateBannersList(); updateBannersDisplay(); clearBannerForm(); showNotification('success', 'Banner agregado', ''); }
-            else showNotification('error', 'Error', 'Ingresa URL');
-        }
-        
-        function editBanner(index) {
-            const b = banners[index];
-            document.getElementById('bannerUrl').value = b.url;
-            document.getElementById('bannerText').value = b.text;
-            banners.splice(index, 1);
-            updateBannersList();
-            showNotification('warning', 'Editando', 'Modifica y agrega nuevamente');
-        }
-        
-        function deleteBanner(index) { banners.splice(index, 1); updateBannersList(); updateBannersDisplay(); showNotification('success', 'Eliminado', ''); }
-        
-        function updateBannersDisplay() {
-            const slides = document.querySelectorAll('.slider-image');
-            banners.forEach((b, i) => { if (slides[i]) { slides[i].src = b.url; slides[i].alt = b.text; } });
-        }
-        
-        function clearBannerForm() { document.getElementById('bannerUrl').value = ''; document.getElementById('bannerText').value = ''; }
-        
-        function addCourse() {
-            const title = document.getElementById('courseTitle').value.trim();
-            const teacher = document.getElementById('courseTeacher').value.trim();
-            const duration = document.getElementById('courseDuration').value.trim();
-            const price = document.getElementById('coursePrice').value.trim();
-            const image = document.getElementById('courseImage').value.trim();
-            const badge = document.getElementById('courseBadge').value.trim();
-            if (title && teacher && duration && price) {
-                courses.push({ title, teacher, duration, students: "0", price, image: image || "https://via.placeholder.com/400x220/1a5fb4/ffffff?text=Curso", badge: badge || "Nuevo" });
-                updateCoursesList(); loadCourses(); clearCourseForm(); showNotification('success', 'Curso agregado', '');
-            } else showNotification('error', 'Error', 'Completa campos requeridos');
-        }
-        
-        function editCourse(index) {
-            const c = courses[index];
-            document.getElementById('courseTitle').value = c.title;
-            document.getElementById('courseTeacher').value = c.teacher;
-            document.getElementById('courseDuration').value = c.duration;
-            document.getElementById('coursePrice').value = c.price;
-            document.getElementById('courseImage').value = c.image;
-            document.getElementById('courseBadge').value = c.badge;
-            courses.splice(index, 1);
-            updateCoursesList();
-            showNotification('warning', 'Editando', 'Modifica y agrega nuevamente');
-        }
-        
-        function deleteCourse(index) { courses.splice(index, 1); updateCoursesList(); loadCourses(); showNotification('success', 'Eliminado', ''); }
-        
-        function clearCourseForm() {
-            ['courseTitle', 'courseTeacher', 'courseDuration', 'coursePrice', 'courseImage', 'courseBadge'].forEach(id => document.getElementById(id).value = '');
-        }
-        
-        function addTeacher() {
-            const name = document.getElementById('teacherName').value.trim();
-            const email = document.getElementById('teacherEmail').value.trim();
-            if (name && email) {
-                teachers.push({ name, email, phone: document.getElementById('teacherPhone').value, bio: document.getElementById('teacherBio').value });
-                updateTeachersList(); clearTeacherForm(); showNotification('success', 'Profesor agregado', '');
-            } else showNotification('error', 'Error', 'Nombre y email requeridos');
-        }
-        
-        function editTeacher(index) {
-            const t = teachers[index];
-            document.getElementById('teacherName').value = t.name;
-            document.getElementById('teacherEmail').value = t.email;
-            document.getElementById('teacherPhone').value = t.phone;
-            document.getElementById('teacherBio').value = t.bio;
-            teachers.splice(index, 1);
-            updateTeachersList();
-            showNotification('warning', 'Editando', 'Modifica y agrega nuevamente');
-        }
-        
-        function deleteTeacher(index) { teachers.splice(index, 1); updateTeachersList(); showNotification('success', 'Eliminado', ''); }
-        
-        function clearTeacherForm() {
-            ['teacherName', 'teacherEmail', 'teacherPhone', 'teacherBio'].forEach(id => document.getElementById(id).value = '');
-        }
-        
-        function addLiveClass() {
-            const time = document.getElementById('liveTime').value.trim();
-            const title = document.getElementById('liveTitle').value.trim();
-            const teacher = document.getElementById('liveTeacher').value.trim();
-            if (time && title && teacher) {
-                liveClasses.push({ time, title, teacher, link: document.getElementById('liveLink').value });
-                updateLiveList(); loadLiveSchedule(); clearLiveForm(); showNotification('success', 'Clase agregada', '');
-            } else showNotification('error', 'Error', 'Completa campos requeridos');
-        }
-        
-        function editLiveClass(index) {
-            const l = liveClasses[index];
-            document.getElementById('liveTime').value = l.time;
-            document.getElementById('liveTitle').value = l.title;
-            document.getElementById('liveTeacher').value = l.teacher;
-            document.getElementById('liveLink').value = l.link;
-            liveClasses.splice(index, 1);
-            updateLiveList();
-            showNotification('warning', 'Editando', 'Modifica y agrega nuevamente');
-        }
-        
-        function deleteLiveClass(index) { liveClasses.splice(index, 1); updateLiveList(); loadLiveSchedule(); showNotification('success', 'Eliminado', ''); }
-        
-        function clearLiveForm() {
-            ['liveTime', 'liveTitle', 'liveTeacher', 'liveLink'].forEach(id => document.getElementById(id).value = '');
-        }
-        
-        function addAccessCode() {
-            const code = document.getElementById('codeValue').value.trim();
-            const title = document.getElementById('codeClass').value.trim();
-            if (code && title) {
-                accessCodes.push({
-                    code, title,
-                    time: document.getElementById('codeSchedule').value,
-                    meetLink: document.getElementById('codeMeet').value,
-                    zoomLink: document.getElementById('codeZoom').value
-                });
-                updateCodesList(); clearCodeForm(); showNotification('success', 'Código agregado', '');
-            } else showNotification('error', 'Error', 'Código y clase requeridos');
-        }
-        
-        function editAccessCode(index) {
-            const c = accessCodes[index];
-            document.getElementById('codeValue').value = c.code;
-            document.getElementById('codeClass').value = c.title;
-            document.getElementById('codeSchedule').value = c.time;
-            document.getElementById('codeMeet').value = c.meetLink;
-            document.getElementById('codeZoom').value = c.zoomLink;
-            accessCodes.splice(index, 1);
-            updateCodesList();
-            showNotification('warning', 'Editando', 'Modifica y agrega nuevamente');
-        }
-        
-        function deleteAccessCode(index) { accessCodes.splice(index, 1); updateCodesList(); showNotification('success', 'Eliminado', ''); }
-        
-        function clearCodeForm() {
-            ['codeValue', 'codeClass', 'codeSchedule', 'codeMeet', 'codeZoom'].forEach(id => document.getElementById(id).value = '');
         }
     </script>
 </body>
